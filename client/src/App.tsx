@@ -4,11 +4,13 @@ import Register from "./pages/Register"
 import Layout from "./layout/Layout";
 import Feed from "./pages/Feed";
 import { Routes, Route } from "react-router";
+import ScrollOnTop from "./helpers/ScrollOnTop";
 
 function App() {
 
   return (
     <>
+      <ScrollOnTop />
     <Layout>
     <Routes>
       <Route path="/" element={<GettingStartedPage />} />
