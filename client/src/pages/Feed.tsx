@@ -73,7 +73,7 @@ export default function Feed() {
         </div>
 
         {/* Contacts */}
-        <div className="p-4 border-t-1 border-neutral-700 decoration-0">
+        <div className="p-4 border-t border-neutral-700 decoration-0">
           <p className="text-xl mb-5 text-orange-500">Contacts</p>
           {/* {allUsers.length === 0 ? "No users!" : allUsers.map(user => <li key={user.id}>{user.username}</li>)} */}
           <ul className="text-white">
@@ -118,16 +118,16 @@ export default function Feed() {
               className="rounded-2xl border border-neutral-800 p-4 bg-neutral-900/30"
             >
               <div className="flex items-center justify-between text-sm text-neutral-400">
-                <span className="font-medium text-neutral-300">
+                <span className="font-medium text-orange-500">
                   @{p.authorName}
                 </span>
-                <span>5 mins ago</span>
+                <span className="text-orange-500">5 mins ago</span>
               </div>
               <p className="mt-2 text-neutral-100 whitespace-pre-wrap">
                 {p.content}
               </p>
               <div className="mt-3 flex items-center gap-4">
-                <button className="text-sm text-white hover:underline">
+                <button className="text-sm text-orange-500 hover:underline">
                   ♥ {"5"}
                 </button>
               </div>
@@ -151,10 +151,10 @@ export default function Feed() {
       {/* right section */}
       <div className="hidden md:flex sticky top-20 w-[260px] min-h-screen max-w-2xl border-neutral-800 bg-neutral-800/30 space-y-6">
         {/* right section tags */}
-        <div className="flex flex-col gap-5 p-4 border-neutral-700 border-b-1">
+        <div className="flex flex-col gap-5 p-4 border-neutral-700 border-b">
           {/* Sponsored tag */}
           <div className="flex flex-col gap-4 justify-center items-center">
-            <p className="text-xl">Sponsored</p>
+            <p className="text-lg text-orange-500">Sponsored by</p>
             <p>1</p>
             <p>2</p>
             <p>3</p>

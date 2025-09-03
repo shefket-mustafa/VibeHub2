@@ -41,7 +41,7 @@ export default function Footer() {
         </div>
   
         {/* Bottom line */}
-        <div className="text-center text-xs border-t-1 border-neutral-700 text-white mt-4">
+        <div className="text-center text-xs border-t border-neutral-700 text-white mt-4">
           <p className="pt-2"> © {new Date().getFullYear()} VibeHub. All rights reserved.</p>
         </div>
       </footer>
