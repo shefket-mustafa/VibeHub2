@@ -3,6 +3,7 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Layout from "./layout/Layout";
 import { Routes, Route } from "react-router";
+import Feed from "./pages/Feed";
 
 function App() {
 
@@ -11,6 +12,8 @@ function App() {
     <Layout>
     <Routes>
       <Route path="/" element={<GettingStartedPage />} />
+      <Route path="/feed" element={<Feed />} />
+
       <Route path="/auth/login" element={<Login />} />
       <Route path="/auth/register" element={<Register />} />
       
