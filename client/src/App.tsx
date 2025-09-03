@@ -2,8 +2,8 @@ import GettingStartedPage from "./pages/GettingStartedPage";
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Layout from "./layout/Layout";
-import { Routes, Route } from "react-router";
 import Feed from "./pages/Feed";
+import { Routes, Route } from "react-router";
 
 function App() {
 

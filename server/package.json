@@ -1,0 +1,30 @@
+{
+  "name": "vibehub2",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A work-in-progress full-stack social platform built with React, Typescript, Express, MongoDB and styled with TailwindCSS  . You can follow my daily progress on this live deployment as I continue building new features.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shefket-mustafa/VibeHub2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shefket-mustafa/VibeHub2/issues"
+  },
+  "homepage": "https://github.com/shefket-mustafa/VibeHub2#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.0"
+  }
+}
