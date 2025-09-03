@@ -1,7 +1,7 @@
 import { useState } from "react";
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery"
-import GroupsIcon from "@mui/icons-material/Groups"
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
+import GroupsIcon from "@mui/icons-material/Groups";
 
 export default function Feed() {
   type Post = {
@@ -42,48 +42,50 @@ export default function Feed() {
 
   return (
     //main container
-    <div className="w-full flex justify-between ">
+    <div className="w-full flex justify-between z-10">
       {/* left section */}
       <div className="sticky hidden md:flex flex-col top-20 w-[260px] min-h-screen max-w-2xl border-neutral-800 bg-neutral-800/30 space-y-6">
         {/* left section tags */}
         <div className="flex flex-col gap-5 p-4 border-neutral-700 ">
           {/* Profile tag */}
           {/* <div className="flex gap-3 items-center"> */}
-            {/* <AccountCircleIcon /> */}
-            {/* <p className="text-orange-500">{"Pesho"}</p>
+          {/* <AccountCircleIcon /> */}
+          {/* <p className="text-orange-500">{"Pesho"}</p>
           </div> */}
 
           {/* Friends tag */}
-          <div className="flex gap-3 items-center ">
-            <PeopleAltIcon className="text-orange-500"/>
-            <p className=" text-white">Friends</p>
-          </div>
-
-          {/* Memories tag */}
-          <div className="flex gap-3 items-center ">
-            <BrowseGalleryIcon className="text-orange-500"/>
-            <p className=" text-white">Memories</p>
-          </div>
-
-          {/* Groups tag */}
-          <div className="flex gap-3 items-center ">
-            <GroupsIcon className="text-orange-500"/>
-            <p className=" text-white">Groups</p>
+          <div className="flex flex-col gap-5 p-4">
+            {[
+              { icon: <PeopleAltIcon />, label: "Friends" },
+              { icon: <BrowseGalleryIcon />, label: "Memories" },
+              { icon: <GroupsIcon />, label: "Groups" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
+              >
+                <span className="text-orange-500">{item.icon}</span>
+                <p className="text-white">{item.label}</p>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Contacts */}
-        <div className="p-4 border-t border-neutral-700 decoration-0">
-          <p className="text-xl mb-5 text-orange-500">Contacts</p>
-          {/* {allUsers.length === 0 ? "No users!" : allUsers.map(user => <li key={user.id}>{user.username}</li>)} */}
-          <ul className="text-white">
-          <li>user1</li>
-          <li>user2</li>
-          <li>user2</li>
-          <li>user2</li>
-
-          </ul>
-        </div>
+        <div className="p-4 border-t border-neutral-700">
+  <p className="text-lg font-semibold mb-3 text-orange-500">Contacts</p>
+  <ul className="space-y-2 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-700">
+    {["user1", "user2", "user3"].map((u) => (
+      <li
+        key={u}
+        className="flex items-center gap-2 text-white hover:text-orange-400 cursor-pointer transition"
+      >
+        <div className="w-8 h-8 rounded-full bg-neutral-700" />
+        {u}
+      </li>
+    ))}
+  </ul>
+</div>
       </div>
 
       {/* middle section */}
@@ -153,12 +155,24 @@ export default function Feed() {
         {/* right section tags */}
         <div className="flex flex-col gap-5 p-4 border-neutral-700 border-b">
           {/* Sponsored tag */}
-          <div className="flex flex-col gap-4 justify-center items-center">
-            <p className="text-lg text-orange-500">Sponsored by</p>
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
-          </div>
+          <div className="p-4 border-b border-neutral-700">
+  <p className="text-lg font-semibold mb-3 text-orange-500">Sponsored by</p>
+  <div className="space-y-3">
+    {[1, 2, 3].map((n) => (
+      <div
+        key={n}
+        className="rounded-lg overflow-hidden bg-neutral-900/50 border border-neutral-800 cursor-pointer hover:scale-[1.02] transition"
+      >
+        <img
+          src={`https://picsum.photos/seed/${n}/240/160`}
+          alt={`Ad ${n}`}
+          className="w-full h-32 object-cover bg-no-repeat bg-center"
+        />
+        <p className="text-sm text-white p-2">You can place your ads here for 150$/m</p>
+      </div>
+    ))}
+  </div>
+</div>
         </div>
       </div>
     </div>
