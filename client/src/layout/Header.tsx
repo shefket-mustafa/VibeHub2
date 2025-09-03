@@ -1,10 +1,18 @@
 
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { GrLanguage } from "react-icons/gr"
 
 
 export default  function Navbar() {
   const user = "something"; // global state TODO
+  const navigate = useNavigate();
+
+
+  const logout = () => {
+      localStorage.removeItem("User")
+      localStorage.removeItem("token")
+      navigate("/")      
+  }
     
 
 
@@ -30,7 +38,7 @@ export default  function Navbar() {
 
           <div className="max-w-5xl p-4 flex items-center gap-6">
             <GrLanguage className="cursor-pointer"/>
-          {user && <button className="cursor-pointer hover:underline">Logout</button> }
+          {user && <button onClick={logout} className="cursor-pointer hover:underline">Logout</button> }
           </div>
           
         </header>
