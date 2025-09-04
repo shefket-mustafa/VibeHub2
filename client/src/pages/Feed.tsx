@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
 import GroupsIcon from "@mui/icons-material/Groups";
+import { useForm } from "react-hook-form";
+import { postSchema, type FeedPostData } from "../zod/postSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Feed() {
   type Post = {
@@ -11,34 +14,55 @@ export default function Feed() {
     createdAt: string;
   };
 
-  const MockPosts = [
-    {
-      id: "1",
-      authorName: "Pesho",
-      content: "Test-Test-Test-Test-Test-Test-Test-Test-",
-      createdAt: "11:30",
-    },
-    {
-      id: "2",
-      authorName: "Mincho",
-      content: "Test-Test-Test-Test-Test-Test-Test-Test-",
-      createdAt: "11:30",
-    },
-    {
-      id: "3",
-      authorName: "Ricko",
-      content: "Test-Test-Test-Test-Test-Test-Test-Test-",
-      createdAt: "11:30",
-    },
-    {
-      id: "4",
-      authorName: "Ringo",
-      content: "Test-Test-Test-Test-Test-Test-Test-Test-",
-      createdAt: "11:30",
-    },
-  ];
+  const baseUrl = import.meta.env.VITE_API_URL;
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [content, setContent] = useState("");
 
-  const [posts, setPosts] = useState<Post[]>(MockPosts);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: {errors, isSubmitting}
+  } = useForm<FeedPostData>({resolver: zodResolver(postSchema)})
+
+  const onSubmit = async (data: FeedPostData) => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${baseUrl}/posts/create`, {
+      method: "POST", 
+      headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
+      body: JSON.stringify({content: data.content})
+    })
+
+    const result = await res.json();
+
+    if(!res.ok) {
+      setError("root", {
+        type: "server",
+        message: result.error || "Error creating a post. Try again!"
+      })
+    }
+    setPosts(prev => [result, ...prev])
+    reset();
+    setContent("")
+    
+  }
+
+  useEffect(() => {
+
+    const fetchPosts = async () => {
+      const result = await fetch(`${baseUrl}/posts/allPosts`, {
+        method: "GET", 
+        headers: {"Content-Type":"application/json"}})
+
+        const postData = await result.json()
+
+        setPosts(postData)
+    }
+    fetchPosts()
+
+  },[baseUrl])
 
   return (
     //main container
@@ -91,23 +115,26 @@ export default function Feed() {
       {/* middle section */}
       <div className="w-full flex-1 max-w-xl mx-auto space-y-6 py-20">
         {/* Composer */}
-        <form className="rounded-2xl border border-neutral-800 p-4 bg-neutral-900/30">
+        <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl border border-neutral-800 p-4 bg-neutral-900/30">
+        {errors.root && (
+    <p className="text-sm text-red-400">{errors.root.message}</p>
+  )} {/* errors caught by setError on api response */}
           <textarea
             placeholder="Share a vibe..."
             className="w-full h-24 resize-none rounded-md bg-neutral-200 border border-neutral-400 p-3 outline-none focus:border-orange-500"
-            maxLength={200}
-            //   value={content}
-            //   onChange={(e) => setContent(e.target.value)}
+            maxLength={500}
+              value={content}
+              {...register("content")}
+              onChange={(e) => setContent(e.target.value)}
           />
           <div className="flex items-center justify-between text-xs text-neutral-500 mt-2">
-            {/* <span>{200 - content.length}</span> */}
+            <span>{200 - content.length}</span>
             <button
               type="submit"
-              // disabled = {!content.trim() || submitting}
-              className="rounded-xl px-4 py-2 bg-orange-500 text-black font-semibold hover:bg-white transition disabled:opacity-60"
+              disabled = {!content.trim() || isSubmitting}
+              className="rounded-xl px-4 py-2 bg-orange-500 text-black cursor-pointer font-semibold hover:bg-white transition disabled:opacity-60"
             >
-              {/* {submitting ? "Posting..." : "Post"} */}
-              Post
+              {isSubmitting ? "Posting..." : "Post"}
             </button>
           </div>
         </form>

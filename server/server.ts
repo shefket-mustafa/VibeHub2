@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 
 import registerRoute from "./routes/registerRoute.ts";
 import loginRoute from "./routes/loginRoute.ts";
+import { postRoutes } from "./routes/postRoutes.ts";
 
 
 dotenv.config(); //import .env variables
@@ -23,5 +24,6 @@ mongoose.connect(process.env.MONGO_URI) //connecting our server to the backend
 app.get("/", (req, res) => res.send("API RUNNING")) // check if the app is running on / request
 app.use("/auth", registerRoute); //connecting the routes to the server
 app.use("/auth", loginRoute);
+app.use("/posts", postRoutes);
 
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`)); //listen for requests 
