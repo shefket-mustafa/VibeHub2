@@ -111,14 +111,22 @@ export default function Feed() {
     <div className="w-full flex justify-between z-10">
       {/* left section */}
       <div className="sticky hidden md:flex flex-col top-20 w-[260px] min-h-screen max-w-2xl border-neutral-800 bg-neutral-800/30 space-y-6">
+        {/* User Profile  */}
+        <div className="flex items-center gap-3 p-4 border-b border-neutral-700">
+          <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold">
+            {user?.username?.[0]?.toUpperCase() ?? "?"}
+          </div>
+          <div>
+            <p className="text-white font-medium">
+              {user?.username ?? "Guest"}
+            </p>
+            <p className="text-sm text-neutral-400">
+              {user?.email ?? "anonymous"}
+            </p>
+          </div>
+        </div>
         {/* left section tags */}
         <div className="flex flex-col gap-5 p-4 border-neutral-700 ">
-          {/* Profile tag */}
-          {/* <div className="flex gap-3 items-center"> */}
-          {/* <AccountCircleIcon /> */}
-          {/* <p className="text-orange-500">{"Pesho"}</p>
-            </div> */}
-
           {/* Friends tag */}
           <div className="flex flex-col gap-5 p-4">
             {[
@@ -282,13 +290,12 @@ export default function Feed() {
       </div>
 
       {showCommentsFor && (
-  <CommentModal
-    postId={showCommentsFor}
-    isOpen={true}
-    onClose={() => setShowCommentsFor(null)}
-  />
-)}
+        <CommentModal
+          postId={showCommentsFor}
+          isOpen={true}
+          onClose={() => setShowCommentsFor(null)}
+        />
+      )}
     </div>
-    
   );
 }
