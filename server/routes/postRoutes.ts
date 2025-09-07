@@ -1,8 +1,8 @@
 import { Router } from "express";
 import express from "express";
-import { authMiddleware } from "../middlewares/authMiddleware.ts";
-import type { DecodedUser } from "../middlewares/authMiddleware.ts";
-import Post from "../models/Post.ts";
+import { authMiddleware } from "../middlewares/authMiddleware";
+import type { DecodedUser } from "../middlewares/authMiddleware";
+import Post from "../models/Post";
 import mongoose from "mongoose";
 
 export const postRoutes = Router();
