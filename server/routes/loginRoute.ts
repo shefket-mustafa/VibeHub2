@@ -20,7 +20,7 @@ try{
     if(!isMatch) return res.status(401).json({error: "Invalid credentials!"})
 
         const token = jwt.sign(
-            {id: existingUser._id, email: existingUser.email},
+            {id: existingUser._id, email: existingUser.email, username: existingUser.username},
             process.env.JWT_SECRET as string, {expiresIn: "2d"}
         )
 
