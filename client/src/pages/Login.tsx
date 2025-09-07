@@ -2,11 +2,12 @@ import {Link, useNavigate} from "react-router"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { loginSchema, type LoginFormData } from "../zod/loginSchema";
+import { useUser } from "../hooks/user";
 
 export default function AuthPage() {
 
   const baseUrl = import.meta.env.VITE_API_URL;
-
+  const {setUser} = useUser();
   const {
     register, 
     handleSubmit, 
@@ -31,8 +32,8 @@ const navigate = useNavigate();
         });
         return
       }
-      localStorage.setItem("User", JSON.stringify(result))
-      localStorage.setItem("token", result.token);
+      setUser(result.user); 
+  localStorage.setItem("token", result.token);
       navigate("/feed")
 
     }catch(err){
