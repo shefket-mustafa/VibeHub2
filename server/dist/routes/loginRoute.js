@@ -1,6 +1,6 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
-import User from "../models/User";
+import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 const loginRoute = Router();
 loginRoute.post("/login", async (req, res) => {

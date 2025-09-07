@@ -4,9 +4,9 @@ import cors from "cors"
 import mongoose from "mongoose";
 
 
-import registerRoute from "./routes/registerRoute";
-import loginRoute from "./routes/loginRoute";
-import { postRoutes } from "./routes/postRoutes";
+import registerRoute from "./routes/registerRoute.js";
+import loginRoute from "./routes/loginRoute.js";
+import { postRoutes } from "./routes/postRoutes.js";
 
 
 dotenv.config(); //import .env variables

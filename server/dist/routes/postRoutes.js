@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { authMiddleware } from "../middlewares/authMiddleware";
-import Post from "../models/Post";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
+import Post from "../models/Post.js";
 import mongoose from "mongoose";
 export const postRoutes = Router();
 postRoutes.post("/create", authMiddleware, async (req, res) => {

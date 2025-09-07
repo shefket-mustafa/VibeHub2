@@ -1,6 +1,6 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
-import User from "../models/User";
+import User from "../models/User.js";
 const registerRoute = Router();
 registerRoute.post("/register", async (req, res) => {
     try { //of importing them cuz of the module type 
