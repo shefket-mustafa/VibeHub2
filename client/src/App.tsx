@@ -6,6 +6,7 @@ import Feed from "./pages/Feed";
 import { Routes, Route } from "react-router";
 import ScrollOnTop from "./helpers/ScrollOnTop";
 import NotFound from "./pages/NotFound";
+import Profile from "./pages/Profile";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
     <Routes>
       <Route path="/" element={<GettingStartedPage />} />
       <Route path="/feed" element={<Feed />} />
+      <Route path="/profile" element={<Profile />} />
 
       <Route path="/auth/login" element={<Login />} />
       <Route path="/auth/register" element={<Register />} />
