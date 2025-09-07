@@ -114,9 +114,11 @@ export default function Navbar() {
         <GrLanguage className="cursor-pointer text-lg" />
 
         {/* Burger button */}
-     <IconButton onClick={() => setOpen(true)} sx={{ color: "white" }}>
+        <div className="md:hidden">
+     <IconButton onClick={() => setOpen(true)} sx={{ color: "white" }} className="md:">
         <MenuIcon />
       </IconButton>
+      </div>
 
         {user && (
           <button onClick={logout} className="hidden md:flex cursor-pointer hover:underline">
