@@ -75,7 +75,7 @@ export default function Navbar() {
       </ListItemButton>
     </ListItem>
 
-    <ListItem disablePadding>
+    {user && <ListItem disablePadding>
       <ListItemButton
         component={Link}
         to="/feed"
@@ -84,9 +84,9 @@ export default function Navbar() {
       >
         <ListItemText primary="Feed" primaryTypographyProps={{ fontSize: "1.25rem" }} />
       </ListItemButton>
-    </ListItem>
+    </ListItem>}
 
-    <ListItem disablePadding>
+    {user && <ListItem disablePadding>
       <ListItemButton
         component={Link}
         to="/profile"
@@ -95,7 +95,7 @@ export default function Navbar() {
       >
         <ListItemText primary="Profile" primaryTypographyProps={{ fontSize: "1.25rem" }} />
       </ListItemButton>
-    </ListItem>
+    </ListItem>}
   </List>
 </Drawer>
      
