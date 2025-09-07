@@ -104,7 +104,9 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 ## 📌 Roadmap
 
 - [ ] Migrate global state to Redux
-- [ ] Memories, Groups and Friends logic to be added 
+- [ ] Memories, Groups and Friends logic to be added
+- [ ] Forgot password feature
+- [ ] Language toggle
 
 
 ---
