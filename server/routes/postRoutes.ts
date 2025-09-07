@@ -110,3 +110,21 @@ postRoutes.patch("/:id/like", authMiddleware, async (req: RequestWithUser, res: 
         return res.status(500).json({error: "Failed to like post!"})
     }
 })
+
+postRoutes.get("/user/:id", async (req: express.Request, res: express.Response) => {
+    try {
+      const posts = await Post.find({ authorId: req.params.id })
+        .sort({ createdAt: -1 })
+        .lean();
+  
+      const normalized = posts.map((p) => ({
+        ...p,
+        authorId: p.authorId.toString(),
+      }));
+  
+      return res.json(normalized);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Failed to fetch user posts" });
+    }
+  });

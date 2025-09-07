@@ -1,6 +1,9 @@
 import { Link } from "react-router"
+import { useUser } from "../hooks/user";
 
 export default function GettingStarted() {
+const {user} = useUser();
+
   return (
     <section className=" mx-auto  text-center px-4 z-10">
     <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -10,7 +13,7 @@ export default function GettingStarted() {
     Your space to share vibes, connect with friends, and discover new
         stories. Let’s kick things off and get you started.
       </p>
-    <Link to='/auth/login' className="rounded-xl px-6 py-3 bg-orange-500 text-black font-semibold hover:bg-orange-600 transition">
+    <Link to={user ? '/feed' : '/auth/login'} className="rounded-xl px-6 py-3 bg-orange-500 text-black font-semibold hover:bg-orange-600 transition">
     Get Started </Link>
   </section>
   );
