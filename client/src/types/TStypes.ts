@@ -4,6 +4,8 @@ export type Post = {
     authorId: string,
     content: string,
     createdAt: string,
+    likes: number,
+    liked: boolean
   };
   
   export type User = {

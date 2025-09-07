@@ -71,6 +71,25 @@ export default function Feed() {
     }
   };
 
+  const onLike = async (id: string) => {
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${baseUrl}/posts/${id}/like`, {
+      method: "PATCH",
+      headers: {Authorization: `Bearer ${token}`}
+    })
+
+    const data = await res.json();
+    if(res.ok){
+      setPosts((prev) => 
+        prev.map((p) =>
+          p._id === id ? { ...p, likes: data.likes, liked: data.liked } : p
+        )
+      ) 
+    }else {
+      console.error(data.error)
+    }
+  }
+
   useEffect(() => {
     const fetchPosts = async () => {
       const result = await fetch(`${baseUrl}/posts/allPosts`, {
@@ -184,8 +203,8 @@ export default function Feed() {
               </p>
 
               <div className="mt-3 flex justify-between items-center gap-4">
-                <button className="text-sm text-orange-500 hover:underline">
-                  ♥ {"5"}
+                <button onClick={() => onLike(p._id)} className={`text-sm ${p.liked ? "text-red-500" : "text-orange-500"} cursor-pointer hover:underline`}>
+                  ♥ {p.likes}
                 </button>
 
                 {user?.id === p.authorId.toString() ? (

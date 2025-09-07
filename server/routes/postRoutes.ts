@@ -3,6 +3,7 @@ import express from "express";
 import {  authMiddleware } from "../middlewares/authMiddleware.ts";
 import type {  DecodedUser } from "../middlewares/authMiddleware.ts";
 import Post from "../models/Post.ts";
+import mongoose from "mongoose"
 
 
 export const postRoutes = Router();
@@ -33,14 +34,17 @@ postRoutes.post("/create", authMiddleware, async (req: RequestWithUser,res: expr
 
 })
 
-postRoutes.get("/allPosts", async (req: express.Request, res: express.Response) => {
+postRoutes.get("/allPosts", async (req: RequestWithUser, res: express.Response) => {
 
     try {
         const result = await Post.find({}).sort({createdAt: -1}).lean()
-
+        const userId = req.user?.id;
+        
         const posts = result.map(p => ({
             ...p,
             authorId: p.authorId.toString(),
+            likes: p.likes.length,
+            liked: userId ? p.likes.some((u) => u.toString() === userId) : false
           }));
         return res.status(201).json(posts)
 
@@ -76,3 +80,33 @@ postRoutes.delete("/delete/:id", authMiddleware, async (req: RequestWithUser, re
     }
 
 }) 
+
+postRoutes.patch("/:id/like", authMiddleware, async (req: RequestWithUser, res: express.Response) => {
+    try{
+        if(!req.user){
+            return res.status(401).json({error: "Not authenticated!"})
+        }
+
+        const postId = req.params.id;
+        const userId = req.user.id;
+
+        const post = await Post.findById(postId);
+        if(!post) return res.status(401).json({error: "Post not found!"});
+
+        const alreadyLikedPosts = post.likes.some((u) => u.toString() === userId);
+
+        if(alreadyLikedPosts){
+            //Unlike
+            post.likes = post.likes.filter((u) => u.toString() !== userId);
+        } else {
+            post.likes.push(new mongoose.Types.ObjectId(userId))
+        }
+
+        await post.save();
+        return res.json({ likes: post.likes.length, liked: !alreadyLikedPosts });
+        return
+    }catch(err){
+        console.error(err);
+        return res.status(500).json({error: "Failed to like post!"})
+    }
+})

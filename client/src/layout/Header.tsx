@@ -4,12 +4,12 @@ import { GrLanguage } from "react-icons/gr"
 
 
 export default  function Navbar() {
-  const user = "something"; // global state TODO
+  const user = localStorage.getItem("user"); 
   const navigate = useNavigate();
 
 
   const logout = () => {
-      localStorage.removeItem("User")
+      localStorage.removeItem("user")
       localStorage.removeItem("token")
       navigate("/")      
   }
