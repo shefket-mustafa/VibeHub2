@@ -24,7 +24,7 @@ export default function Navbar() {
           </Link>
         </div>
           {/* Desktop menu */}
-        <div className=" max-w-5xl p-4 flex  items-center gap-6">
+        <div className=" max-w-5xl p-4 hidden md:flex  items-center gap-6">
           {user && (
             <Link to="/feed" className="hover:underline">
               Feed
@@ -39,10 +39,7 @@ export default function Navbar() {
       </div>
 
       
-     {/* Burger button */}
-     <IconButton onClick={() => setOpen(true)} sx={{ color: "white" }}>
-        <MenuIcon />
-      </IconButton>
+     
 
       {/* Top drawer (full width) */}
       <Drawer
@@ -80,7 +77,6 @@ export default function Navbar() {
         component={Link}
         to="/feed"
         onClick={() => setOpen(false)}
-        
       >
         <ListItemText primary="Feed" primaryTypographyProps={{ fontSize: "1.25rem" }} />
       </ListItemButton>
@@ -96,16 +92,34 @@ export default function Navbar() {
         <ListItemText primary="Profile" primaryTypographyProps={{ fontSize: "1.25rem" }} />
       </ListItemButton>
     </ListItem>}
+
+    {user && <ListItem disablePadding>
+      <ListItemButton
+        component={Link}
+        to="/"
+        onClick={() => {
+          setOpen(false) 
+          logout()}}
+      >
+        <ListItemText primary="Logout" primaryTypographyProps={{ fontSize: "1.25rem" }} />
+      </ListItemButton>
+    </ListItem>}
   </List>
 </Drawer>
      
 
 
 
-      <div className="max-w-5xl p-4 flex items-center gap-6">
-        <GrLanguage className="cursor-pointer" />
+      <div className="max-w-5xl p-4 flex items-center gap-4">
+        <GrLanguage className="cursor-pointer text-lg" />
+
+        {/* Burger button */}
+     <IconButton onClick={() => setOpen(true)} sx={{ color: "white" }}>
+        <MenuIcon />
+      </IconButton>
+
         {user && (
-          <button onClick={logout} className="cursor-pointer hover:underline">
+          <button onClick={logout} className="hidden md:flex cursor-pointer hover:underline">
             Logout
           </button>
         )}
