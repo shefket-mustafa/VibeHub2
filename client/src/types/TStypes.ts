@@ -5,7 +5,8 @@ export type Post = {
     content: string,
     createdAt: string,
     likes: number,
-    liked: boolean
+    liked: boolean,
+    comments: Comment[]
   };
   
   export type User = {
@@ -21,6 +22,19 @@ export type Post = {
       logout: () => void;
     }
   | undefined;
+
+ export type Comment = {
+    _id: string;
+    authorName: string;
+    content: string;
+    createdAt: string;
+  };
+  
+  export type CommentModalProps = {
+    postId: string;
+    isOpen: boolean;
+    onClose: () => void;
+  };
 
 
 

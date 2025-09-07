@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { UserContext } from "./createContext";
 import type { User } from "../types/TStypes";
+import { useNavigate } from "react-router";
 
 
 
@@ -8,6 +9,8 @@ import type { User } from "../types/TStypes";
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const stored = localStorage.getItem("user");
@@ -29,6 +32,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     handleSetUser(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    navigate('/auth/login')
   };
 
   return (

@@ -7,10 +7,12 @@ import { postSchema, type FeedPostData } from "../zod/postSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { ApiResponse, Post } from "../types/TStypes";
 import { useUser } from "../hooks/user";
+import CommentModal from "../components/CommentModal";
 
 export default function Feed() {
   const baseUrl = import.meta.env.VITE_API_URL;
   const [posts, setPosts] = useState<Post[]>([]);
+  const [showCommentsFor, setShowCommentsFor] = useState<string | null>(null);
 
   const {
     register,
@@ -60,13 +62,13 @@ export default function Feed() {
     const token = localStorage.getItem("token");
     const res = await fetch(`${baseUrl}/posts/delete/${id}`, {
       method: "DELETE",
-      headers: {Authorization: `Bearer ${token}`,}
-    })
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     const data = await res.json();
-    if(res.ok){
-      setPosts((prev) => prev.filter((p) => p._id !== id))
-    }else {
+    if (res.ok) {
+      setPosts((prev) => prev.filter((p) => p._id !== id));
+    } else {
       console.error(data.error);
     }
   };
@@ -75,20 +77,20 @@ export default function Feed() {
     const token = localStorage.getItem("token");
     const res = await fetch(`${baseUrl}/posts/${id}/like`, {
       method: "PATCH",
-      headers: {Authorization: `Bearer ${token}`}
-    })
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     const data = await res.json();
-    if(res.ok){
-      setPosts((prev) => 
+    if (res.ok) {
+      setPosts((prev) =>
         prev.map((p) =>
           p._id === id ? { ...p, likes: data.likes, liked: data.liked } : p
         )
-      ) 
-    }else {
-      console.error(data.error)
+      );
+    } else {
+      console.error(data.error);
     }
-  }
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -177,7 +179,7 @@ export default function Feed() {
             <button
               type="submit"
               disabled={!contentValue.trim() || isSubmitting}
-              className="rounded-xl px-4 py-2 bg-orange-500 text-black cursor-pointer font-semibold hover:bg-white transition disabled:opacity-60"
+              className="rounded-xl px-4 py-2 bg-orange-400 text-black cursor-pointer font-semibold hover:bg-orange-500 transition"
             >
               {isSubmitting ? "Posting..." : "Post"}
             </button>
@@ -203,17 +205,34 @@ export default function Feed() {
               </p>
 
               <div className="mt-3 flex justify-between items-center gap-4">
-                <button onClick={() => onLike(p._id)} className={`text-sm ${p.liked ? "text-red-500" : "text-orange-500"} cursor-pointer hover:underline`}>
+                <button
+                  onClick={() => onLike(p._id)}
+                  className={`text-sm ${
+                    p.liked ? "text-red-500" : "text-orange-500"
+                  } cursor-pointer hover:underline`}
+                >
                   ♥ {p.likes}
                 </button>
 
-                {user?.id === p.authorId.toString() ? (
-                  <button onClick={() => onDelete(p._id)} className="px-3 py-1 cursor-pointer rounded-lg bg-orange-400">
-                    Delete
+                <div className="flex gap-5">
+                  <button
+                    onClick={() => setShowCommentsFor(p._id)}
+                    className="text-sm text-black bg-orange-400 hover:bg-orange-500 transition px-3 py-1 rounded-lg cursor-pointer "
+                  >
+                    💬 Comments
                   </button>
-                ) : (
-                  ""
-                )}
+
+                  {user?.id === p.authorId.toString() ? (
+                    <button
+                      onClick={() => onDelete(p._id)}
+                      className="px-3 py-1 cursor-pointer hover:bg-orange-600 transition rounded-lg bg-orange-400"
+                    >
+                      Delete
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </li>
           ))}
@@ -261,6 +280,15 @@ export default function Feed() {
           </div>
         </div>
       </div>
+
+      {showCommentsFor && (
+  <CommentModal
+    postId={showCommentsFor}
+    isOpen={true}
+    onClose={() => setShowCommentsFor(null)}
+  />
+)}
     </div>
+    
   );
 }
