@@ -1,17 +1,5 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "client/vite.config.ts",
-        "use": "@vercel/static-build",
-        "config": { "distDir": "client/dist" }
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "client/dist/index.html"
-      }
-    ]
-  }
-  
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
