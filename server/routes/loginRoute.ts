@@ -54,11 +54,42 @@ loginRoute.post("/forgot-password", async (req: express.Request,res: express.Res
     }
 })
 
-// loginRoute.post("/forgot-password/:token", async (req: express.Request, res: express.Response) => {
+loginRoute.post("/forgot-password/:token", async (req: express.Request, res: express.Response) => {
 
-//     try {
-//         const { email }
-//     }
-// })
+    try {
+        const { password } = req.body;
+        const { token } = req.params;
+
+        if(!password) {
+            return res.status(401).json({error: "Password is required!"})
+        }
+
+        let decoded;
+        try{
+            decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {id: string}
+
+        }catch(err){
+            console.error(err);
+            return res.status(500).json({error: "Invalid token"})
+        }
+
+        let user = await User.findById(decoded.id);
+
+        if(!user){
+            return res.status(401).json({error: "User not found"})
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        user.password = hashedPassword
+        await user.save()
+
+
+    }catch(err){
+        console.error(err);
+        return res.status(500).json({error: "Password reset failed"})
+    }
+})
 
 export default loginRoute;
