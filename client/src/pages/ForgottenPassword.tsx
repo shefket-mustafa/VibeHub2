@@ -40,7 +40,7 @@ export default function ForgottenPassword() {
 
     if(!token) return;
 
-    const resetLink = `https://vibe-hub2.vercel.app/reset-password/${token}`;
+    const resetLink = `https://vibe-hub2.vercel.app/auth/reset-password/${token}`;
 
     await emailjs.send(
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -50,7 +50,7 @@ export default function ForgottenPassword() {
     );
 
     alert("Check your inbox for the reset link!");
-    navigate(`/auth/reset-password/${token}`);
+    navigate(`/auth/login`);
   };
 
   return (
