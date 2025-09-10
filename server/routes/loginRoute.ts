@@ -21,7 +21,7 @@ try{
 
         const token = jwt.sign(
             {id: existingUser._id, email: existingUser.email, username: existingUser.username},
-            process.env.JWT_SECRET as string, {expiresIn: "2d"}
+            process.env.JWT_SECRET as string, {expiresIn: "2h"}
         )
 
     return res.json({token, user: {id: existingUser._id, username: existingUser.username, email: existingUser.email}})
