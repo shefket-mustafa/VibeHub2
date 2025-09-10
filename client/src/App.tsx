@@ -8,6 +8,8 @@ import ScrollOnTop from "./helpers/ScrollOnTop";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import { useUser } from "./hooks/user";
+import ForgottenPassword from "./pages/ForgottenPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const { user } = useUser();
@@ -18,6 +20,9 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<GettingStartedPage />} />
+          <Route path="/auth/forgot" element={<ForgottenPassword />} />
+          <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
+
           {user && <Route path="/feed" element={<Feed />} />}
           {user && <Route path="/profile" element={<Profile />} />}
 
