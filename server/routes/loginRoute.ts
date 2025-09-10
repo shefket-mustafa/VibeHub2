@@ -32,4 +32,33 @@ try{
    
 })
 
+loginRoute.post("/forgot-password", async (req: express.Request,res: express.Response) => {
+
+    try {
+        const { email } = req.body;
+
+        const user =await User.findOne({email});
+        if (!user){
+            return res.status(401).json({error: "User not found!"})
+        };
+
+        const resetToken = jwt.sign({id: user._id}, process.env.JWT_SECRET as string, {expiresIn: "15m"});
+
+        console.log("Generated reset token:", resetToken);
+        res.json({token: resetToken})
+
+    }catch(err){
+        console.error(err);
+        return res.status(500).json({error: "Failed to reset password!"})
+        
+    }
+})
+
+// loginRoute.post("/forgot-password/:token", async (req: express.Request, res: express.Response) => {
+
+//     try {
+//         const { email }
+//     }
+// })
+
 export default loginRoute;
