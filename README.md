@@ -10,6 +10,10 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
   - JWT-based login stored in `localStorage`
   - Protected API routes with Express middleware
   - User registration & login flow
+  -  - **Forgot & Reset Password flow via EmailJS**
+    - User requests a reset link
+    - EmailJS sends a secure link with a time-limited JWT
+    - User resets their password via the reset form
 
 - **Posts**
   - Create posts
@@ -25,6 +29,7 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 - **Frontend:** React + TypeScript + TailwindCSS  
 - **Backend:** MongoDB + Express.js 
 - **Authentication:** JWT stored in `localStorage`
+- - **Email Service:** [EmailJS](https://www.emailjs.com/) for password reset flow
 - **Global state:** Context API
 
 ---
@@ -58,6 +63,16 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 3. JWT is sent back and stored in **localStorage**  
 4. API requests include JWT in the `Authorization` header  
 5. Middleware verifies the token before processing requests  
+
+---
+
+## 🔑 Forgot & Reset Password Flow (EmailJS)
+
+1. User enters email on the **Forgot Password** page  
+2. Server verifies the user and generates a short-lived JWT reset token (15 min)  
+3. EmailJS sends a reset email containing a secure link:
+4. User clicks the link → lands on the **Reset Password** page  
+5. User enters new password → backend verifies token and updates password  
 
 ---
 
