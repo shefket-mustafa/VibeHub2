@@ -54,7 +54,7 @@ loginRoute.post("/forgot-password", async (req: express.Request,res: express.Res
     }
 })
 
-loginRoute.post("/forgot-password/:token", async (req: express.Request, res: express.Response) => {
+loginRoute.post("/forgotten-password/:token", async (req: express.Request, res: express.Response) => {
 
     try {
         const { password } = req.body;
@@ -84,6 +84,8 @@ loginRoute.post("/forgot-password/:token", async (req: express.Request, res: exp
 
         user.password = hashedPassword
         await user.save()
+
+        return res.json({message: "Password successfully reset!"})
 
 
     }catch(err){

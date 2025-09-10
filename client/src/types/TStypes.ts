@@ -20,6 +20,7 @@ export type Post = {
       user: User;
       setUser: (us: User) => void;
       logout: () => void;
+
     }
   | undefined;
 

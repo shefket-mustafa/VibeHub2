@@ -29,6 +29,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
   };
 
+
+
   const logout = () => {
     handleSetUser(null);
     localStorage.removeItem("user");
