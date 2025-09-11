@@ -8,6 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { ApiResponse, Post } from "../types/TStypes";
 import { useUser } from "../hooks/user";
 import CommentModal from "../components/CommentModal";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 export default function Feed() {
   const baseUrl = import.meta.env.VITE_API_URL;
@@ -205,7 +208,7 @@ export default function Feed() {
                 <span className="font-medium text-orange-500">
                   @{p.authorName}
                 </span>
-                <span className="text-orange-500">5 mins ago</span>
+                <span className="text-orange-500">{dayjs(p.createdAt).fromNow()}</span>
               </div>
 
               <p className="mt-2 text-neutral-100 whitespace-pre-wrap">
