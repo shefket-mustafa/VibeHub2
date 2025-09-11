@@ -83,6 +83,19 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 
 ---
 
+---
+
+## + Testing - for testing purposes you can use the already registered users:
+
+👉 email: admin@abv.bg
+  password: 123456
+
+  👉 email: test@abv.bg
+  password: 123456
+
+
+---
+
 ## ⚡ Getting Started
 
 1. **Clone the repo**
