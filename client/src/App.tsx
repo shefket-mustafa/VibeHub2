@@ -12,6 +12,8 @@ import ForgottenPassword from "./pages/ForgottenPassword";
 import ResetPassword from "./pages/ResetPassword";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
+
 
 function App() {
   const { user } = useUser();
@@ -26,6 +28,7 @@ function App() {
           <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQ/>} />
 
           {user && <Route path="/feed" element={<Feed />} />}
           {user && <Route path="/profile" element={<Profile />} />}
