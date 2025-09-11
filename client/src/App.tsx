@@ -11,6 +11,7 @@ import { useUser } from "./hooks/user";
 import ForgottenPassword from "./pages/ForgottenPassword";
 import ResetPassword from "./pages/ResetPassword";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 function App() {
   const { user } = useUser();
@@ -24,6 +25,7 @@ function App() {
           <Route path="/auth/forgot" element={<ForgottenPassword />} />
           <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
 
           {user && <Route path="/feed" element={<Feed />} />}
           {user && <Route path="/profile" element={<Profile />} />}
