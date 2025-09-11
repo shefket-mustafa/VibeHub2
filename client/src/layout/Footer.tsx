@@ -35,7 +35,7 @@ export default function Footer() {
               <FaGithub />
             </a>
             <a
-              href="https://twitter.com"
+              href="https://www.linkedin.com/in/shefket-mustafa-81356a360/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:bg-blue-600 transition-colors"
