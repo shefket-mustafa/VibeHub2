@@ -10,6 +10,7 @@ import { useUser } from "../hooks/user";
 import CommentModal from "../components/CommentModal";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useNavigate } from "react-router";
 dayjs.extend(relativeTime);
 // If you don’t extend it, dayjs(...).fromNow() will throw an error because the function doesn’t exist yet.
 
@@ -17,6 +18,7 @@ export default function Feed() {
   const baseUrl = import.meta.env.VITE_API_URL;
   const [posts, setPosts] = useState<Post[]>([]);
   const [showCommentsFor, setShowCommentsFor] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -130,22 +132,25 @@ export default function Feed() {
           </div>
         </div>
         {/* left section tags */}
-        <div className="flex flex-col gap-5 p-4 border-neutral-700 ">
-          {/* Friends tag */}
-          <div className="flex flex-col gap-5 p-4">
-            {[
-              { icon: <PeopleAltIcon />, label: "Friends" },
-              { icon: <BrowseGalleryIcon />, label: "Memories" },
-              { icon: <GroupsIcon />, label: "Groups" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
-              >
-                <span className="text-orange-500">{item.icon}</span>
-                <p className="text-white">{item.label}</p>
-              </div>
-            ))}
+        <div className="flex flex-col items-start gap-5 p-4 border-neutral-700 ">
+          
+          <div className="flex flex-col gap-3 items-start  rounded-lg px-3 py-2 ">
+            <div onClick={() => navigate('/friends')} className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition">
+            <PeopleAltIcon className="text-orange-500"/>
+            <p className="text-white">Friends</p>
+            </div>
+
+            <div onClick={() => navigate('/memories')} className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition">
+            <BrowseGalleryIcon className="text-orange-500"/>
+            <p className="text-white">Memories</p>
+            </div>
+
+            <div onClick={() => navigate('/groups')} className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition">
+            <GroupsIcon className="text-orange-500"/>
+            <p className="text-white">Groups</p>
+            </div>
+           
+
           </div>
         </div>
 
