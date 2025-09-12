@@ -11,6 +11,7 @@ import CommentModal from "../components/CommentModal";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
+// If you don’t extend it, dayjs(...).fromNow() will throw an error because the function doesn’t exist yet.
 
 export default function Feed() {
   const baseUrl = import.meta.env.VITE_API_URL;
