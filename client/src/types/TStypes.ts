@@ -37,6 +37,13 @@ export type Post = {
     onClose: () => void;
   };
 
+  export type FriendsCardType = {
+    name: string,
+    mutualFriends: string[],
+    image: string,
+    id: string
+  }
+
 
 
   export type ApiError = { error: string };
