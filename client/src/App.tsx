@@ -13,7 +13,9 @@ import ResetPassword from "./pages/ResetPassword";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
-import FriendsPage from "./pages/Friends";
+import FriendsPage from "./components/Friends";
+import AllFriends from "./pages/AllFriends";
+import FriendSuggestions from "./pages/FriendSuggestions";
 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
           {user && <Route path="/feed" element={<Feed />} />}
           {user && <Route path="/profile" element={<Profile />} />}
           {user && <Route path="/friends" element={<FriendsPage />} />}
+          {user && <Route path="/friends/all" element={<AllFriends />} />}
+          {user && <Route path="/friends/suggestions" element={<FriendSuggestions />} />}
 
           {!user && <Route path="/auth/login" element={<Login />} />}
           {!user && <Route path="/auth/register" element={<Register />} />}
