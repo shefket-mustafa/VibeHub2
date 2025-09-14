@@ -16,6 +16,7 @@ const mockData = [
   { id: "5", name: "Gohn Moe", mutualFriends: []},
   { id: "6", name: "Dohn Joe", mutualFriends: ["peshko, goshko, toshko"]},
   { id: "6", name: "Dohn Joe", mutualFriends: ["peshko, goshko, toshko"]},
+  { id: "6", name: "Dohn Joe", mutualFriends: ["peshko, goshko, toshko"]},
 ];
 
 export default function FriendSuggestions() {
