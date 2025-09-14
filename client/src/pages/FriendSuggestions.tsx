@@ -1,7 +1,6 @@
 import { BsFillGearFill } from "react-icons/bs";
 import { Link } from "react-router";
 import friendImage from "../assets/friends-item.avif"
-import AllFriendsCard from "../components/AllFriendsCard";
 import FriendSuggestionCards from "../components/FriendsSuggestionCard";
 
 const mockData = [
