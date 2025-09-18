@@ -30,7 +30,7 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 - **Backend:** MongoDB + Express.js 
 - **Authentication:** JWT stored in `localStorage`
 - - **Email Service:** [EmailJS](https://www.emailjs.com/) for password reset flow
-- **Global state:** Context API
+- **Global state:** Redux/Toolkit
 
 ---
 
