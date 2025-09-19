@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { ApiResponse, Post, PostsState } from "../../types/TStypes";
+import type { ApiResponse, Comment, Post, PostsState } from "../../types/TStypes";
 import type { FeedPostData } from "../../zod/postSchema";
 
 
@@ -95,6 +95,46 @@ export const fetchAllPosts = createAsyncThunk("posts/fetchAllPosts", async(_,{re
     }
 })
 
+export const fetchComments = createAsyncThunk("posts/fetchComments", async(postId: string, {rejectWithValue}) => {
+
+    try{
+        const res = await fetch(`${baseUrl}/posts/${postId}/comments`);
+        if(!res.ok){
+            return rejectWithValue("Failed to load comments!")
+        }
+        const comments = await res.json();
+        return comments;
+    }catch(err){
+        return rejectWithValue("Server failed to fetch comments!")
+    }
+})
+
+export const addComent = createAsyncThunk("posts/addComment", 
+async ({postId, newComment}: {postId: string, newComment: string}, {rejectWithValue}) => {
+
+    try{
+
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${baseUrl}/posts/${postId}/comments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ content: newComment }),
+        });
+
+        if(!res.ok){
+            return rejectWithValue("Failed to add a comment!")
+        }
+        const data = res.json();
+        return data;
+
+    }catch(err){
+        return rejectWithValue("Server error!")
+    }
+})
+
 
 
 const initialState: PostsState = {
@@ -124,6 +164,22 @@ extraReducers(builder) {
     }),
     builder.addCase(fetchAllPosts.fulfilled, (state, action) => {
         state.items = action.payload
+    }),
+    builder.addCase(fetchComments.fulfilled, (state, action) => {
+        const postId = action.meta.arg;
+        const post = state.items.find((p) => p._id === postId);
+        if(post){
+            post.comments = action.payload.sort(
+                (a: Comment,b: Comment) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            )
+        }
+    }),
+    builder.addCase(addComent.fulfilled, (state, action) => {
+        const {postId} = action.meta.arg;
+        const post = state.items.find((p) => p._id === postId);
+        if(post){
+            post.comments = [action.payload, ...(post.comments || [])]
+        }
     })
 
 },
