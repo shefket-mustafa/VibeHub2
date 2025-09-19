@@ -16,10 +16,21 @@ import FAQ from "./pages/FAQ";
 import FriendsPage from "./components/Friends";
 import AllFriends from "./pages/AllFriends";
 import FriendSuggestions from "./pages/FriendSuggestions";
+import { useEffect } from "react";
+import { isTokenValid } from "./helpers/tokenValidator";
 
 
 function App() {
-  const { user } = useUser();
+  const { user, logout } = useUser();
+
+  useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if(token && !isTokenValid(token)){
+     logout()
+    }
+  },[]);
 
   return (
     <>

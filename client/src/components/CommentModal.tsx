@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import type { Comment, CommentModalProps } from "../types/TStypes";
+import type { CommentModalProps } from "../types/TStypes";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { addComent, fetchComments } from "../redux/slices/postsSlice";
 
 export default function CommentModal({
   postId,
@@ -7,37 +9,28 @@ export default function CommentModal({
   onClose,
 }: CommentModalProps) {
   const baseUrl = import.meta.env.VITE_API_URL;
-  const [comments, setComments] = useState<Comment[]>([]);
+  const post = useAppSelector((state) => state.posts.items.find((p) => p._id === postId));
+  const comments = post?.comments || [];
+  const dispatch = useAppDispatch();
   const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     if (!isOpen) return;
 
-    const fetchComments = async () => {
-      const res = await fetch(`${baseUrl}/posts/${postId}/comments`);
-      if (res.ok) {
-        const data = await res.json();
-        setComments(data);
-      }
+    const fetchAllComments = async () => {
+     await dispatch(fetchComments(postId))
     };
-    fetchComments();
+    fetchAllComments();
   }, [isOpen, postId, baseUrl]);
 
   const handleAddComment = async () => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`${baseUrl}/posts/${postId}/comments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ content: newComment }),
-    });
+    try {
 
-    if (res.ok) {
-      const data = await res.json();
-      setComments((prev) => [...prev, data]);
-      setNewComment("");
+      await dispatch(addComent({postId, newComment}))
+      setNewComment("")
+
+    }catch(err){
+      console.error(err)
     }
   };
 

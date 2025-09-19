@@ -5,20 +5,23 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import { useForm } from "react-hook-form";
 import { postSchema, type FeedPostData } from "../zod/postSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { ApiResponse, Post } from "../types/TStypes";
 import { useUser } from "../hooks/user";
 import CommentModal from "../components/CommentModal";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router";
+import { createPost, deletePost, fetchAllPosts, likePost } from "../redux/slices/postsSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 dayjs.extend(relativeTime);
 // If you don’t extend it, dayjs(...).fromNow() will throw an error because the function doesn’t exist yet.
 
 export default function Feed() {
   const baseUrl = import.meta.env.VITE_API_URL;
-  const [posts, setPosts] = useState<Post[]>([]);
+  const posts = useAppSelector((state) => state.posts.items)
   const [showCommentsFor, setShowCommentsFor] = useState<string | null>(null);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
 
   const {
     register,
@@ -33,81 +36,48 @@ export default function Feed() {
   const { user } = useUser();
 
   const onSubmit = async (data: FeedPostData) => {
-    const token = localStorage.getItem("token");
-    let result: ApiResponse;
+   
     try {
-      const res = await fetch(`${baseUrl}/posts/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ content: data.content }),
-      });
 
-      result = await res.json();
-
-      if (!res.ok || "error" in result) {
-        setError("root", {
-          type: "server",
-          message:
-            "error" in result
-              ? result.error
-              : "Error creating a post. Try again!",
-        });
-        return;
-      }
-      setPosts((prev) => [result as Post, ...prev]);
+      await dispatch(createPost(data))
+     
       reset();
-    } catch {
-      result = { error: "Invalid server response" };
+    } catch(err) {
+      setError("root", {
+        type: "server",
+        message: String(err)    
     }
-  };
+  )}}
 
   const onDelete = async (id: string) => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`${baseUrl}/posts/delete/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      setPosts((prev) => prev.filter((p) => p._id !== id));
-    } else {
-      console.error(data.error);
+    try{
+      await dispatch(deletePost(id))
+    }catch(err) {
+      setError("root", {
+        type: "server",
+        message: String(err)
+      })
     }
+   
   };
 
   const onLike = async (id: string) => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`${baseUrl}/posts/${id}/like`, {
-      method: "PATCH",
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    try{
 
-    const data = await res.json();
-    if (res.ok) {
-      setPosts((prev) =>
-        prev.map((p) =>
-          p._id === id ? { ...p, likes: data.likes, liked: data.liked } : p
-        )
-      );
-    } else {
-      console.error(data.error);
+      await dispatch(likePost(id));
+
+    }catch(err){
+      setError("root", 
+        {type: "server",
+        message: String(err)}
+      )
+
     }
   };
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const result = await fetch(`${baseUrl}/posts/allPosts`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const postData = await result.json();
-
-      setPosts(postData);
+     await dispatch(fetchAllPosts())
     };
     fetchPosts();
   }, [baseUrl]);

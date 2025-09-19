@@ -44,6 +44,12 @@ export type Post = {
     id: string
   }
 
+  export type PostsState = {
+    items: Post[],
+    state: "idle" | "loading" | "succeeded" | "failed",
+    error: string | null
+  }
+
 
 
   export type ApiError = { error: string };
