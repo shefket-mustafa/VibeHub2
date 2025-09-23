@@ -1,9 +1,21 @@
+import { useRemoveFriendMutation } from "../redux/services/friendsApi";
 import type { FriendsCardType } from "../types/TStypes";
 
 
 
 
 export default function AllFriendsCard({ name, mutualFriends, image, id }: FriendsCardType){
+
+  const [removeFriend] = useRemoveFriendMutation();
+
+  const removeFriendHandler = async (friendId: string) => {
+    try {
+      await removeFriend(friendId).unwrap();
+      alert("Friend removed!");
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
     return(
 
@@ -26,7 +38,8 @@ export default function AllFriendsCard({ name, mutualFriends, image, id }: Frien
     <button className="bg-orange-500 cursor-pointer h-8 rounded-md hover:bg-orange-600 transition">
       Message
     </button>
-    <button className="bg-neutral-700 cursor-pointer h-8 rounded-md hover:bg-neutral-600 transition">
+    <button onClick={() => removeFriendHandler(id)}
+     className="bg-neutral-700 cursor-pointer h-8 rounded-md hover:bg-neutral-600 transition">
       Remove
     </button>
   </div>

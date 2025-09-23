@@ -6,7 +6,7 @@ import type { FriendsCardType } from "../types/TStypes";
 
 export default function FriendSuggestionCards({ name, mutualFriends, image, id }: FriendsCardType){
 
-  const [sendFriendRequest, { isLoading }] = useSendFriendRequestMutation();
+  const [sendFriendRequest, { isLoading, isSuccess }] = useSendFriendRequestMutation();
 
   const handleAddFriend = async (id: string) => {
 
@@ -38,8 +38,12 @@ export default function FriendSuggestionCards({ name, mutualFriends, image, id }
   </p>
 
   <div className="flex flex-col gap-1">
-    <button onClick={() => handleAddFriend(id)} className="bg-orange-500 cursor-pointer h-8 rounded-md hover:bg-orange-600 transition">
-      Add 
+    <button onClick={() => handleAddFriend(id)} 
+    disabled = {isLoading || isSuccess}
+    className={`h-8 rounded-md transition ${
+      isSuccess ? "bg-gray-500 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600 cursor-pointer"
+    }`}>
+      {isSuccess ? "Request Sent" : "Add"}
     </button>
     <button className="bg-neutral-700 cursor-pointer h-8 rounded-md hover:bg-neutral-600 transition">
       Message

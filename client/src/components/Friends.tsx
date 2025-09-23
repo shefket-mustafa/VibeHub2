@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import FriendsCard from "./FriendsCard";
 import friendImage from "../assets/friends-item.avif"
 import { useGetIncomingQuery } from "../redux/services/friendsApi";
+import type { IncomingRequest } from "../types/TStypes";
 
 
 
@@ -51,11 +52,11 @@ export default function FriendsPage() {
         {incoming.length === 0 && <p className="text-white">No requests found!</p>}
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-15 py-10">
-          {incoming.map((data) => {
+          {incoming.map((data: IncomingRequest) => {
           return (
             <FriendsCard 
             key={data._id}
-            id={data._id}
+            id={data.requestId}
             name={data.username} 
             mutualFriends={[]}
             image={friendImage}

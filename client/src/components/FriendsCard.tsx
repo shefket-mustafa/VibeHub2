@@ -1,3 +1,4 @@
+import { useAcceptFriendRequestMutation, useCancelFriendRequestMutation, useDeclineFriendRequestMutation } from "../redux/services/friendsApi";
 import type { FriendsCardType } from "../types/TStypes";
 
 export default function FriendsCard({
@@ -6,6 +7,31 @@ export default function FriendsCard({
   image,
   id,
 }: FriendsCardType) {
+
+  const [acceptFriendRequest, {isLoading, isSuccess}] = useAcceptFriendRequestMutation();
+  const [declineFriendRequest] = useDeclineFriendRequestMutation();
+
+  const acceptRequestHandler = async (id: string) => {
+
+    try{
+      const result = await acceptFriendRequest(id).unwrap();
+      console.log(result.message); 
+      
+    }catch(err){
+      console.error("Failed to accept request!", err)
+    }
+  }
+
+  const cancelRequestHandler = async (id: string) => {
+
+    try{
+       await declineFriendRequest(id).unwrap();
+      alert("Request declined!")
+      
+    }catch(err){
+      console.error("Failed to accept request!", err)
+    }
+  }
   return (
     <div
       key={id}
@@ -28,12 +54,16 @@ export default function FriendsCard({
         </p>
 
         <div className="flex flex-col gap-1">
-          <button
-            className="bg-orange-500 cursor-pointer h-8 rounded-md hover:bg-orange-600 transition"
+          <button onClick={() => acceptRequestHandler(id)}
+          disabled = {isLoading || isSuccess}
+          className={`h-8 rounded-md transition ${
+            isSuccess ? "bg-gray-500 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600 cursor-pointer"
+          }`}
           >
-            Accept
+            {isSuccess ? "Request sent" : "Accept"}
           </button>
-          <button className="bg-neutral-700 cursor-pointer h-8 rounded-md hover:bg-neutral-600 transition">
+          <button onClick={() => cancelRequestHandler(id)}
+          className="bg-neutral-700 cursor-pointer h-8 rounded-md hover:bg-neutral-600 transition">
             Decline
           </button>
         </div>

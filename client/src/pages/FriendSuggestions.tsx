@@ -50,7 +50,8 @@ export default function FriendSuggestions() {
         {isLoading && <p className="text-neutral-400">Loading suggestions...</p>}
         {isError && <p className="text-red-500">Failed to load suggestions</p>}
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-15 py-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-15">
+          {suggestions.length === 0 && <p className="text-white">No suggestions</p>}
           {suggestions.map((data: UserPreview) => {
           return (
             <FriendSuggestionCards 

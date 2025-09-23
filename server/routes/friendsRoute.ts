@@ -71,7 +71,7 @@ friendsRoutes.patch("/accept/:requestId", authMiddleware, async (req: RequestWit
             if(request.recipient.toString() !== requesterId){
                 return res.status(403).json({error: "Not authorized to accept this request!"})
             }
-
+            
             request.status = "accepted";
             await request.save(); 
 
@@ -201,15 +201,15 @@ friendsRoutes.get("/suggestions", authMiddleware, async(req: RequestWithUser, re
             return res.status(401).json({error: "Not authorized!"})
         }
 
-        //All accepted friends
-        const accepted = await FriendRequest.find({
-            status: "accepted",
-            $or: [{requester: userId}, {recipient: userId}]
+          // Finding BOTH accepted and pending relationships involving this user
+        const related = await FriendRequest.find({
+            $or: [{requester: userId}, {recipient: userId}],
+            status: {$in: ["accepted", "pending"]}
         })
 
-        //collecting all of their ID's including mine into an excluded list
+          // Find BOTH accepted and pending relationships involving this user
         const excludedIds = new Set<string>([userId]);
-        for (const request of accepted){
+        for (const request of related){
             excludedIds.add(request.requester.toString())
             excludedIds.add(request.recipient.toString())
         }
@@ -228,5 +228,25 @@ friendsRoutes.get("/suggestions", authMiddleware, async(req: RequestWithUser, re
         return res.status(500).json({error: "Server error!"})
     }
 })
+
+friendsRoutes.delete("/decline/:requestId", authMiddleware, async (req: RequestWithUser, res) => {
+    const userId = req.user?.id;
+    const { requestId } = req.params;
+  
+    if (!userId) return res.status(401).json({ error: "Not authorized!" });
+  
+    const requestDocument = await FriendRequest.findById(requestId);
+  
+    if (!requestDocument || requestDocument.status !== "pending") {
+      return res.status(404).json({ error: "Pending request not found" });
+    }
+  
+    if (requestDocument.recipient.toString() !== userId) {
+      return res.status(401).json({ error: "Not authorized to decline this request" });
+    }
+  
+    await requestDocument.deleteOne();
+    return res.json({ message: "Request declined!" });
+  });
 
 export default friendsRoutes;

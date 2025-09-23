@@ -55,6 +55,7 @@ export default function AllFriends() {
           {allFriends.map((data) => {
           return (
             <AllFriendsCard 
+            key={data._id}
             id={data._id}
             name={data.username} 
             mutualFriends={[]}

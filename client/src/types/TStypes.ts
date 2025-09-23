@@ -55,7 +55,11 @@ export type UserPreview = {
   _id: string,
   username: string,
   email: string
+  
 }
+
+export type IncomingRequest = UserPreview & { requestId: string };
+
 
 export type FriendRequest = {
   _id: string;
