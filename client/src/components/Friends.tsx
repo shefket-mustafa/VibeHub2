@@ -1,18 +1,13 @@
 import { BsFillGearFill } from "react-icons/bs";
-import { Link } from "react-router";
+import { Link, data } from "react-router";
 import FriendsCard from "./FriendsCard";
 import friendImage from "../assets/friends-item.avif"
+import { useGetIncomingQuery } from "../redux/services/friendsApi";
 
-const mockData = [
-  { id: "1", name: "John Doe", mutualFriends: [] },
-  { id: "2", name: "John Goe", mutualFriends: ["peshko, goshko, toshko"]},
-  { id: "3", name: "John Moe", mutualFriends: ["peshko"]},
-  { id: "4", name: "Mohn Doe", mutualFriends: ["peshko, goshko"]},
-  { id: "5", name: "Gohn Moe", mutualFriends: []},
-  { id: "6", name: "Dohn Joe", mutualFriends: ["peshko, goshko, toshko"]},
-];
+
 
 export default function FriendsPage() {
+  const {data: incoming=[], isLoading, error} = useGetIncomingQuery();
   
 
   return (
@@ -48,17 +43,21 @@ export default function FriendsPage() {
       </div>
 
       {/* Right section */}
-      <div className="px-10 py- text-xl ">
+      <div className="px-10 text-xl ">
         <h1 className=" text-orange-500">Friend requests</h1>
 
+        {isLoading && <p className="text-neutral-400">Requests loading...</p>}
+        {error && <p className="text-red-500">Failed to fetch requests!</p>}
+        {incoming.length === 0 && <p className="text-white">No requests found!</p>}
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-15 py-10">
-          {mockData.map((data) => {
+          {incoming.map((data) => {
           return (
             <FriendsCard 
-            key={data.id}
-            id={data.id}
-            name={data.name} 
-            mutualFriends={data.mutualFriends}
+            key={data._id}
+            id={data._id}
+            name={data.username} 
+            mutualFriends={[]}
             image={friendImage}
             
             />
