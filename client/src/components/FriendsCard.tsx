@@ -1,4 +1,4 @@
-import { useAcceptFriendRequestMutation, useCancelFriendRequestMutation, useDeclineFriendRequestMutation } from "../redux/services/friendsApi";
+import { useAcceptFriendRequestMutation, useDeclineFriendRequestMutation } from "../redux/services/friendsApi";
 import type { FriendsCardType } from "../types/TStypes";
 
 export default function FriendsCard({
