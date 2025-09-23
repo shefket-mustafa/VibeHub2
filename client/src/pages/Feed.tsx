@@ -126,17 +126,9 @@ export default function Feed() {
 
         {/* Contacts */}
         <div className="p-4 border-t border-neutral-700">
-          <p className="text-lg font-semibold mb-3 text-orange-500">Contacts</p>
+          <p className="text-lg font-semibold mb-3 text-orange-500">Online</p>
           <ul className="space-y-2 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-700">
-            {["user1", "user2", "user3"].map((u) => (
-              <li
-                key={u}
-                className="flex items-center gap-2 text-white hover:text-orange-400 cursor-pointer transition"
-              >
-                <div className="w-8 h-8 rounded-full bg-neutral-700" />
-                {u}
-              </li>
-            ))}
+            <p className="text-white">Nobody is online at the moment :(</p>
           </ul>
         </div>
       </div>

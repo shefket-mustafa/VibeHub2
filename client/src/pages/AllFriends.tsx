@@ -2,23 +2,12 @@ import { BsFillGearFill } from "react-icons/bs";
 import { Link } from "react-router";
 import friendImage from "../assets/friends-item.avif"
 import AllFriendsCard from "../components/AllFriendsCard";
+import { useGetAllFriendsQuery } from "../redux/services/friendsApi";
 
-const mockData = [
-  { id: "1", name: "John Doe", mutualFriends: [] },
-  { id: "2", name: "John Goe", mutualFriends: ["peshko, goshko, toshko"]},
-  { id: "2", name: "John Goe", mutualFriends: ["peshko, goshko, toshko"]},
-  { id: "2", name: "John Goe", mutualFriends: ["peshko, goshko, toshko"]},
-  { id: "3", name: "John Moe", mutualFriends: ["peshko"]},
-  { id: "3", name: "John Moe", mutualFriends: ["peshko"]},
-  { id: "4", name: "Mohn Doe", mutualFriends: ["peshko, goshko"]},
-  { id: "4", name: "Mohn Doe", mutualFriends: ["peshko, goshko"]},
-  { id: "5", name: "Gohn Moe", mutualFriends: []},
-  { id: "5", name: "Gohn Moe", mutualFriends: []},
-  { id: "6", name: "Dohn Joe", mutualFriends: ["peshko, goshko, toshko"]},
-  { id: "6", name: "Dohn Joe", mutualFriends: ["peshko, goshko, toshko"]},
-];
 
 export default function AllFriends() {
+
+  const {data: allFriends=[], isLoading, error} = useGetAllFriendsQuery();
   
 
   return (
@@ -58,13 +47,18 @@ export default function AllFriends() {
       <div className="px-10 py- text-xl h-screen overflow-y-auto">
         <h1 className=" text-orange-500">All friends</h1>
 
+        {isLoading && <p className="text-neutral-400">Friends loading...</p>}
+        {error && <p className="text-red-500">Failed to fetch friends!</p>}
+        {allFriends.length === 0 && <p className="text-white">No friends added!</p>}
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-15 py-10">
-          {mockData.map((data) => {
+          {allFriends.map((data) => {
           return (
             <AllFriendsCard 
-            id={data.id}
-            name={data.name} 
-            mutualFriends={data.mutualFriends}
+            key={data._id}
+            id={data._id}
+            name={data.username} 
+            mutualFriends={[]}
             image={friendImage}
             
             />

@@ -1,3 +1,4 @@
+import { useSendFriendRequestMutation } from "../redux/services/friendsApi";
 import type { FriendsCardType } from "../types/TStypes";
 
 
@@ -5,17 +6,31 @@ import type { FriendsCardType } from "../types/TStypes";
 
 export default function FriendSuggestionCards({ name, mutualFriends, image, id }: FriendsCardType){
 
+  const [sendFriendRequest, { isLoading, isSuccess }] = useSendFriendRequestMutation();
+
+  const handleAddFriend = async (id: string) => {
+
+    try{
+      const result = await sendFriendRequest(id).unwrap();
+      console.log(result.newFriendRequest);
+      alert("Friend request sent!")
+    }catch(err){
+      alert("Failed to send request");
+      console.error(err);
+    }
+  }
+
     return(
 
-        <div key={id} className="h-72 w-64 rounded-2xl bg-neutral-300 flex flex-col justify-end">
+        <div key={id} className="h-64 w-56 rounded-lg bg-neutral-300 flex flex-col justify-end">
 
             <div className="h-1/2 w-full">
-            <img className="h-full w-full rounded-t-2xl object-cover" src={image} alt="" />
+            <img className="h-full w-full rounded-t-lg object-cover" src={image} alt="" />
             </div>
             
 
 <div className="flex-1 flex flex-col justify-between p-3">
-  <p className="text-">{name}</p>
+  <p className="">{name}</p>
   <p className="h-8">
     {mutualFriends.length === 0
       ? ""
@@ -23,8 +38,12 @@ export default function FriendSuggestionCards({ name, mutualFriends, image, id }
   </p>
 
   <div className="flex flex-col gap-1">
-    <button className="bg-orange-500 cursor-pointer h-8 rounded-md hover:bg-orange-600 transition">
-      Add 
+    <button onClick={() => handleAddFriend(id)} 
+    disabled = {isLoading || isSuccess}
+    className={`h-8 rounded-md transition ${
+      isSuccess ? "bg-gray-500 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600 cursor-pointer"
+    }`}>
+      {isSuccess ? "Request Sent" : "Add"}
     </button>
     <button className="bg-neutral-700 cursor-pointer h-8 rounded-md hover:bg-neutral-600 transition">
       Message

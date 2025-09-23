@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import registerRoute from "./routes/registerRoute.js";
 import loginRoute from "./routes/loginRoute.js";
 import { postRoutes } from "./routes/postRoutes.js";
+import friendsRoutes from "./routes/friendsRoute.js";
 
 
 dotenv.config(); //import .env variables
@@ -30,5 +31,6 @@ app.get("/", (req, res) => res.send("API RUNNING")) // check if the app is runni
 app.use("/auth", registerRoute); //connecting the routes to the server
 app.use("/auth", loginRoute);
 app.use("/posts", postRoutes);
+app.use("/friends", friendsRoutes);
 
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`)); //listen for requests 
