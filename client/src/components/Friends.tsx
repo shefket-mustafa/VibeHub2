@@ -1,5 +1,5 @@
 import { BsFillGearFill } from "react-icons/bs";
-import { Link, data } from "react-router";
+import { Link } from "react-router";
 import FriendsCard from "./FriendsCard";
 import friendImage from "../assets/friends-item.avif"
 import { useGetIncomingQuery } from "../redux/services/friendsApi";

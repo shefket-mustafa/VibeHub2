@@ -25,8 +25,14 @@ export const friendsApi = createApi({
             transformResponse: (response: {incoming: UserPreview[]}) => {
                 return response.incoming
             }
+        }),
+        getAllFriends: builder.query<UserPreview[], void>({
+            query: () => "friends/all",
+            transformResponse: (response: {allFriends: UserPreview[]}) => {
+                return response.allFriends
+            }
         })
     })
 })
 
-export const {useGetSuggestionsQuery, useGetIncomingQuery} = friendsApi;
+export const {useGetSuggestionsQuery, useGetIncomingQuery, useGetAllFriendsQuery} = friendsApi;
