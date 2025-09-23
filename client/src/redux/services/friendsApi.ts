@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
-import type { UserPreview } from "../../types/TStypes";
+import type { FriendRequestResponse, UserPreview } from "../../types/TStypes";
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -22,17 +22,26 @@ export const friendsApi = createApi({
         }),
         getIncoming: builder.query<UserPreview[], void>({
             query: () => "friends/incoming",
-            transformResponse: (response: {incoming: UserPreview[]}) => {
-                return response.incoming
-            }
+            transformResponse: (response: {incomingRequests: {requester: UserPreview}[] }) => 
+                 response.incomingRequests.map(r => r.requester)
+
         }),
         getAllFriends: builder.query<UserPreview[], void>({
             query: () => "friends/all",
             transformResponse: (response: {allFriends: UserPreview[]}) => {
                 return response.allFriends
             }
+        }),
+        sendFriendRequest: builder.mutation<FriendRequestResponse, string>({
+            query: (recipientId) =>({
+                url: `friends/request/${recipientId}`,
+                method: "POST"
+            })
         })
     })
 })
 
-export const {useGetSuggestionsQuery, useGetIncomingQuery, useGetAllFriendsQuery} = friendsApi;
+export const {useGetSuggestionsQuery, 
+    useGetIncomingQuery, 
+    useGetAllFriendsQuery, 
+    useSendFriendRequestMutation} = friendsApi;

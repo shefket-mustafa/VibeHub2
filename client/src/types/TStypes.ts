@@ -57,5 +57,17 @@ export type UserPreview = {
   email: string
 }
 
+export type FriendRequest = {
+  _id: string;
+  requester: UserPreview;
+  recipient: UserPreview;
+  status: "pending" | "accepted";
+};
+
+export type FriendRequestResponse = {
+  message: string;
+  newFriendRequest: FriendRequest;
+};
+
 export type ApiError = { error: string };
 export type ApiResponse = Post | ApiError;

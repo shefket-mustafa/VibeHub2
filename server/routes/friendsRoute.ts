@@ -209,7 +209,7 @@ friendsRoutes.get("/suggestions", authMiddleware, async(req: RequestWithUser, re
 
         //collecting all of their ID's including mine into an excluded list
         const excludedIds = new Set<string>([userId]);
-        for(const request of accepted){
+        for (const request of accepted){
             excludedIds.add(request.requester.toString())
             excludedIds.add(request.recipient.toString())
         }
