@@ -21,7 +21,13 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
   - Like
   - Comment
   - View all posts in the feed
-
+    
+- **Friends**
+  - Send and cancel(in progress) friend requests
+  - Accept or decline incoming requests
+  - View all friends
+  - Friend suggestions based on mutual exclusion logic
+  - Integrated with RTK Query for fetching, sending, and mutating friend data in real-time
 ---
 
 ## 🛠️ Tech Stack
@@ -30,7 +36,7 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 - **Backend:** MongoDB + Express.js 
 - **Authentication:** JWT stored in `localStorage`
 - - **Email Service:** [EmailJS](https://www.emailjs.com/) for password reset flow
-- **Global state:** Redux/Toolkit
+- **Global state:** Global state: User logic - Context API and Redux Toolkit + RTK Query for API calls and cache management
 
 ---
 
@@ -44,6 +50,7 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
         /hooks         -> Hooks
         /layout        -> Main pages - Layout, Header, Footer
         /pages         -> Feed, GettingStartedPage, Login, NotFound, Profile, Register
+        /redux         -> Redux Toolkit slices + RTK Query services
         /types         -> TS types
         /zod           -> Zod Validation Schemas
 
@@ -80,8 +87,6 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 
 👉 [VibeHub Live Demo](https://vibe-hub2.vercel.app/)
 
-
----
 
 ---
 
@@ -131,8 +136,8 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 
 ## 📌 Roadmap
 
-- [ ] Migrate global state to Redux
-- [ ] Memories, Groups and Friends logic to be added
+- [ ] Finalize Friends system (remove/cancel logic, mutual friends)
+- [ ] Memories, Groups logic 
 - [ ] Language toggle
 
 
