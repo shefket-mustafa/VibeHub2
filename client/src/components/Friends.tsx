@@ -55,6 +55,7 @@ export default function FriendsPage() {
           {mockData.map((data) => {
           return (
             <FriendsCard 
+            key={data.id}
             id={data.id}
             name={data.name} 
             mutualFriends={data.mutualFriends}

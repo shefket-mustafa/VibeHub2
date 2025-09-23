@@ -51,5 +51,11 @@ export type PostsState = {
   error: string | null;
 };
 
+export type UserPreview = {
+  _id: string,
+  username: string,
+  email: string
+}
+
 export type ApiError = { error: string };
 export type ApiResponse = Post | ApiError;
