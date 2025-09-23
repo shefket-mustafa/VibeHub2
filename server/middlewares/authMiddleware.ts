@@ -7,7 +7,7 @@ import express from "express"
     email: string;
   };
 
-  type RequestWithUser = express.Request & { user?: DecodedUser };
+  export type RequestWithUser = express.Request & { user?: DecodedUser };
 
 export const authMiddleware = (req: RequestWithUser, res: express.Response, next: express.NextFunction) => {
     const authHeader = req.headers.authorization;
