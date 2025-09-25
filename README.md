@@ -16,7 +16,7 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
     - User resets their password via the reset form
 
 - **Posts**
-  - Create posts
+  - Create posts with optional image upload (stored on **Cloudinary**)
   - Delete posts
   - Like
   - Comment
@@ -35,7 +35,8 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 - **Frontend:** React + TypeScript + TailwindCSS  
 - **Backend:** MongoDB + Express.js 
 - **Authentication:** JWT stored in `localStorage`
-- - **Email Service:** [EmailJS](https://www.emailjs.com/) for password reset flow
+- **Email Service:** [EmailJS](https://www.emailjs.com/) for password reset flow
+- **Image Hosting:** [Cloudinary](https://cloudinary.com/) for post image uploads  
 - **Global state:** Global state: User logic - Context API and Redux Toolkit + RTK Query for API calls and cache management
 
 ---
