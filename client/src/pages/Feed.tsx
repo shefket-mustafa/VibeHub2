@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -10,18 +10,23 @@ import CommentModal from "../components/CommentModal";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router";
-import { createPost, deletePost, fetchAllPosts, likePost } from "../redux/slices/postsSlice";
+import {
+  createPost,
+  deletePost,
+  fetchAllPosts,
+  likePost,
+} from "../redux/slices/postsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import type { UploadStatusType } from "../types/TStypes";
 dayjs.extend(relativeTime);
 // If you don’t extend it, dayjs(...).fromNow() will throw an error because the function doesn’t exist yet.
 
 export default function Feed() {
   const baseUrl = import.meta.env.VITE_API_URL;
-  const posts = useAppSelector((state) => state.posts.items)
+  const posts = useAppSelector((state) => state.posts.items);
   const [showCommentsFor, setShowCommentsFor] = useState<string | null>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
 
   const {
     register,
@@ -34,50 +39,62 @@ export default function Feed() {
 
   const contentValue = watch("content") || "";
   const { user } = useUser();
+  const [file, setFile] = useState<File | null>(null);
+  const [uploadStatus, setUploadStatus] = useState<UploadStatusType | null>(
+    "idle"
+  );
+  console.log(uploadStatus);
 
   const onSubmit = async (data: FeedPostData) => {
-   
     try {
+      const formData = new FormData();
+      formData.append("content", data.content);
+      if (file) {
+        formData.append("file", file);
+      }
 
-      await dispatch(createPost(data))
-     
-      reset();
-    } catch(err) {
+      await dispatch(createPost(formData));
+    
+    reset();
+    setFile(null);
+
+
+      } catch (err) {
       setError("root", {
         type: "server",
-        message: String(err)    
+        message: String(err),
+      });
     }
-  )}}
+  };
+
+  const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
 
   const onDelete = async (id: string) => {
-    try{
-      await dispatch(deletePost(id))
-    }catch(err) {
+    try {
+      await dispatch(deletePost(id));
+    } catch (err) {
       setError("root", {
         type: "server",
-        message: String(err)
-      })
+        message: String(err),
+      });
     }
-   
   };
 
   const onLike = async (id: string) => {
-    try{
-
+    try {
       await dispatch(likePost(id));
-
-    }catch(err){
-      setError("root", 
-        {type: "server",
-        message: String(err)}
-      )
-
+    } catch (err) {
+      setError("root", { type: "server", message: String(err) });
     }
   };
 
   useEffect(() => {
     const fetchPosts = async () => {
-     await dispatch(fetchAllPosts())
+      await dispatch(fetchAllPosts());
     };
     fetchPosts();
   }, [baseUrl]);
@@ -103,24 +120,30 @@ export default function Feed() {
         </div>
         {/* left section tags */}
         <div className="flex flex-col items-start gap-5 p-4 border-neutral-700 ">
-          
           <div className="flex flex-col gap-3 items-start  rounded-lg px-3 py-2 ">
-            <div onClick={() => navigate('/friends')} className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition">
-            <PeopleAltIcon className="text-orange-500"/>
-            <p className="text-white">Friends</p>
+            <div
+              onClick={() => navigate("/friends")}
+              className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
+            >
+              <PeopleAltIcon className="text-orange-500" />
+              <p className="text-white">Friends</p>
             </div>
 
-            <div onClick={() => navigate('/memories')} className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition">
-            <BrowseGalleryIcon className="text-orange-500"/>
-            <p className="text-white">Memories</p>
+            <div
+              onClick={() => navigate("/memories")}
+              className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
+            >
+              <BrowseGalleryIcon className="text-orange-500" />
+              <p className="text-white">Memories</p>
             </div>
 
-            <div onClick={() => navigate('/groups')} className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition">
-            <GroupsIcon className="text-orange-500"/>
-            <p className="text-white">Groups</p>
+            <div
+              onClick={() => navigate("/groups")}
+              className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
+            >
+              <GroupsIcon className="text-orange-500" />
+              <p className="text-white">Groups</p>
             </div>
-           
-
           </div>
         </div>
 
@@ -155,13 +178,35 @@ export default function Feed() {
           )}
           <div className="flex items-center justify-between text-xs text-neutral-500 mt-2">
             <span>{500 - contentValue.length}</span>
-            <button
-              type="submit"
-              disabled={!contentValue.trim() || isSubmitting}
-              className="rounded-xl px-4 py-2 bg-orange-400 text-black cursor-pointer font-semibold hover:bg-orange-500 transition"
-            >
-              {isSubmitting ? "Posting..." : "Post"}
-            </button>
+
+            <div className="flex gap-5">
+              <input
+                type="file"
+                id="post-image"
+                accept="image/*"
+                className="hidden mt-2"
+                onChange={fileChangeHandler}
+              />
+
+              {file && (
+                <div>
+                  <p>File name: {file.name}</p>
+                  <p>File size: {file.size / 1024}KB</p>
+                  <p>File type: {file.type}</p>
+                </div>
+              )}
+              <label htmlFor="post-image" className="cursor-pointer overflow-hidden max-w-lg bg-orange-400 max-h-8 text-black hover:bg-orange-500 py-2 px-4 rounded-xl transition font-semibold">
+                Choose a file
+              </label>
+
+              <button
+                type="submit"
+                disabled={!contentValue.trim() || isSubmitting}
+                className="rounded-xl max-h-8 px-4 py-2 bg-orange-400 text-black cursor-pointer font-semibold hover:bg-orange-500 transition"
+              >
+                {isSubmitting ? "Posting..." : "Post"}
+              </button>
+            </div>
           </div>
         </form>
 
@@ -176,12 +221,23 @@ export default function Feed() {
                 <span className="font-medium text-orange-500">
                   @{p.authorName}
                 </span>
-                <span className="text-orange-500">{dayjs(p.createdAt).fromNow()}</span>
+                <span className="text-orange-500">
+                  {dayjs(p.createdAt).fromNow()}
+                </span>
               </div>
-
+              
               <p className="mt-2 text-neutral-100 whitespace-pre-wrap">
                 {p.content}
               </p>
+
+              {p.image && (
+                <img
+                  src={p.image}
+                  alt="post"
+                  className="mt-2 rounded-lg max-h-60 object-cover"
+                />
+              )}
+
 
               <div className="mt-3 flex justify-between items-center gap-4">
                 <button

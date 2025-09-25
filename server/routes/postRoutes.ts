@@ -4,16 +4,43 @@ import { authMiddleware } from "../middlewares/authMiddleware.js";
 import type { DecodedUser } from "../middlewares/authMiddleware.js";
 import Post from "../models/Post.js";
 import mongoose from "mongoose";
+import multer from "multer"
+import cloudinary from "../cloudinary.js";
+import streamifier from "streamifier";
+import type { UploadApiResponse } from "cloudinary";
+
+const upload = multer({storage: multer.memoryStorage() });
 
 export const postRoutes = Router();
 type RequestWithUser = express.Request & { user?: DecodedUser };
 
+
 postRoutes.post(
   "/create",
   authMiddleware,
+  upload.single("file"),
   async (req: RequestWithUser, res: express.Response) => {
     try {
       const { content } = req.body;
+
+        // Upload to Cloudinary if a file is attached
+      let imageUrl:string | null = null;
+
+
+      if(req.file){
+        const file = req.file;
+        const result: UploadApiResponse = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: "posts" },
+            (error, result) => {
+              if (error) return reject(error);
+              resolve(result as UploadApiResponse);
+            }
+          )
+          streamifier.createReadStream(file.buffer).pipe(stream);
+        }) 
+        imageUrl = result.secure_url;
+      }
 
       if (!req.user) {
         return res.status(401).json({ error: "Not authenticated" });
@@ -21,14 +48,15 @@ postRoutes.post(
 
       const newPost = await Post.create({
         content,
+        image: imageUrl,
         authorId: req.user.id,
         authorName: req.user.username,
       });
 
       return res.status(201).json(newPost);
     } catch (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Failed to create a post" });
+      console.error("❌ Post creation failed:", err);
+      return res.status(500).json({ error: String(err) });
     }
   }
 );
@@ -181,5 +209,15 @@ postRoutes.get(
       console.error(err);
       return res.status(500).json({ error: "Failed fetching comments" });
     }
-  }
+  },
+
 );
+
+postRoutes.post("/upload-image", upload.single("file"), (req: RequestWithUser, res: express.Response) => {
+  //expects one file from a form field named "file".
+  if(!req.file){
+    //Multer attaches the file info to req.
+    return res.status(400).json({error: "No file uploaded"});
+  }
+  res.json({message: "File uploaded", file: req.file})
+})

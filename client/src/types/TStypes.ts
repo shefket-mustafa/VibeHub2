@@ -5,6 +5,7 @@ export type Post = {
   authorName: string;
   authorId: string;
   content: string;
+  image: string;
   createdAt: string;
   likes: number;
   liked: boolean;
@@ -57,6 +58,8 @@ export type UserPreview = {
   email: string
   
 }
+
+export type UploadStatusType = "idle" | "uploading" | "successfull" | "failed";
 
 export type IncomingRequest = UserPreview & { requestId: string };
 
