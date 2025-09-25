@@ -26,33 +26,33 @@ export const deletePost = createAsyncThunk("posts/deletePost", async (id: string
     }
 }) 
 
-export const createPost = createAsyncThunk("posts/createPost", async (data: FeedPostData, {rejectWithValue}) => {
-    const token = localStorage.getItem("token");
-    let result: ApiResponse;
-    try {
+export const createPost = createAsyncThunk(
+    "posts/createPost",
+    async (formData: FormData, { rejectWithValue }) => {
+      const token = localStorage.getItem("token");
+  
+      try {
         const res = await fetch(`${baseUrl}/posts/create`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
+            // ❌ don't set Content-Type manually; browser sets correct boundary
           },
-          body: JSON.stringify({ content: data.content }),
+          body: formData,
         });
   
-        result = await res.json();
-
-        if (!res.ok) {
-            if ("error" in result) {
-              return rejectWithValue(result.error);
-            }
-            return rejectWithValue("Error creating a post");
-          }
-          return result as Post;
+        const result = await res.json();
   
-}catch(err){
-    return rejectWithValue("Invalid server response")
-}
-})
+        if (!res.ok) {
+          return rejectWithValue(result.error || "Error creating a post");
+        }
+        return result as Post;
+      } catch (err) {
+        return rejectWithValue(String(err));
+      }
+    }
+  );
+  
 
 export const likePost = createAsyncThunk("/posts/likePost", async(id: string, {rejectWithValue}) =>{
     try{
