@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { ApiResponse, Comment, Post, PostsState } from "../../types/TStypes";
-import type { FeedPostData } from "../../zod/postSchema";
+import type { Comment, Post, PostsState } from "../../types/TStypes";
 
 
 const baseUrl = import.meta.env.VITE_API_URL;

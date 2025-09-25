@@ -17,7 +17,7 @@ import {
   likePost,
 } from "../redux/slices/postsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import type { UploadStatusType } from "../types/TStypes";
+// import type { UploadStatusType } from "../types/TStypes";
 dayjs.extend(relativeTime);
 // If you don’t extend it, dayjs(...).fromNow() will throw an error because the function doesn’t exist yet.
 
@@ -40,11 +40,7 @@ export default function Feed() {
   const contentValue = watch("content") || "";
   const { user } = useUser();
   const [file, setFile] = useState<File | null>(null);
-  const [uploadStatus, setUploadStatus] = useState<UploadStatusType | null>(
-    "idle"
-  );
-  console.log(uploadStatus);
-
+ 
   const onSubmit = async (data: FeedPostData) => {
     try {
       const formData = new FormData();
