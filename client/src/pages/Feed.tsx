@@ -185,20 +185,20 @@ export default function Feed() {
               />
 
               {file && (
-                <div>
+                <div className="pl-5">
                   <p>File name: {file.name}</p>
                   <p>File size: {file.size / 1024}KB</p>
                   <p>File type: {file.type}</p>
                 </div>
               )}
-              <label htmlFor="post-image" className="cursor-pointer overflow-hidden max-w-lg bg-orange-400 max-h-8 text-black hover:bg-orange-500 py-2 px-4 rounded-xl transition font-semibold">
+              <label htmlFor="post-image" className="cursor-pointer text-center overflow-hidden max-w-lg bg-orange-400 max-h-10 md:max-h-8 text-black hover:bg-orange-500 py-2 px-4 rounded-xl transition font-semibold">
                 Choose a file
               </label>
 
               <button
                 type="submit"
                 disabled={!contentValue.trim() || isSubmitting}
-                className="rounded-xl max-h-8 px-4 py-2 bg-orange-400 text-black cursor-pointer font-semibold hover:bg-orange-500 transition"
+                className="rounded-xl max-h-10 md:max-h-8 px-4 py-2 bg-orange-400 text-black cursor-pointer font-semibold hover:bg-orange-500 transition"
               >
                 {isSubmitting ? "Posting..." : "Post"}
               </button>

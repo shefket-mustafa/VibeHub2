@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "cloudinary": "^2.7.0",
+    "dayjs": "^1.11.18"
+  }
+}
