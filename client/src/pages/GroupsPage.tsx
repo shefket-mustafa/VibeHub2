@@ -1,6 +1,7 @@
 // src/pages/GroupsPage.tsx
 import { useState } from "react";
 import GroupsIcon from "@mui/icons-material/Groups";
+import { Link } from "react-router";
 
 type Group = {
   id: string;
@@ -87,9 +88,9 @@ export default function GroupsPage() {
                   </button>
                 )
               ) : (
-                <button className="text-sm text-orange-400 hover:underline">
+                <Link to={`/groups/details/${g.id}`} className="text-sm text-orange-400 hover:underline">
                   View
-                </button>
+                </Link>
               )}
             </li>
           ))}
