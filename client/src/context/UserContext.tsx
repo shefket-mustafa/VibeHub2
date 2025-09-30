@@ -13,6 +13,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showCommentsFor, setShowCommentsFor] = useState<string>("");
 
 
   useEffect(() => {
@@ -42,8 +43,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
     navigate('/auth/login')
   };
 
+
   return (
-    <UserContext.Provider value={{user: user, setUser: handleSetUser, logout}}>
+    <UserContext.Provider value={{user: user, setUser: handleSetUser, logout, showCommentsFor, setShowCommentsFor }}>
       {children}
     </UserContext.Provider>
   )

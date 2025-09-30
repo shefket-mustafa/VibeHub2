@@ -23,6 +23,8 @@ export type UserContextType =
       user: User;
       setUser: (us: User) => void;
       logout: () => void;
+      showCommentsFor: string,
+      setShowCommentsFor: (id: string) => void
     }
   | undefined;
 

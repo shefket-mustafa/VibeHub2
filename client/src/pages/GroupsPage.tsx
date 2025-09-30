@@ -1,7 +1,9 @@
 // src/pages/GroupsPage.tsx
 import { useState } from "react";
+import { Link, useNavigate } from "react-router";
 import GroupsIcon from "@mui/icons-material/Groups";
-import { Link } from "react-router";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
 
 type Group = {
   id: string;
@@ -20,13 +22,41 @@ const mockGroups: Group[] = [
 export default function GroupsPage() {
   const [activeTab, setActiveTab] = useState<"your" | "discover">("your");
   const [groups] = useState<Group[]>(mockGroups);
+  const navigate = useNavigate();
 
   const yourGroups = groups.filter((g) => g.joined);
   const discoverGroups = groups.filter((g) => !g.joined);
 
   return (
     <div className="w-full flex justify-between z-10">
-      {/* middle section */}
+      {/* Left Sidebar */}
+      <div className="sticky hidden md:flex flex-col top-20 w-[260px] min-h-screen bg-neutral-800/30 border-neutral-800">
+        <div className="flex flex-col gap-3 p-4">
+          <div
+            onClick={() => navigate("/friends")}
+            className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
+          >
+            <PeopleAltIcon className="text-orange-500" />
+            <p className="text-white">Friends</p>
+          </div>
+          <div
+            onClick={() => navigate("/memories")}
+            className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
+          >
+            <BrowseGalleryIcon className="text-orange-500" />
+            <p className="text-white">Memories</p>
+          </div>
+          <div
+            onClick={() => navigate("/groups")}
+            className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
+          >
+            <GroupsIcon className="text-orange-500" />
+            <p className="text-white">Groups</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Middle Section */}
       <div className="w-full flex-1 max-w-xl mx-auto space-y-6 py-20">
         {/* Header + Create button */}
         <div className="flex justify-between items-center mb-4">
@@ -65,7 +95,7 @@ export default function GroupsPage() {
           {(activeTab === "your" ? yourGroups : discoverGroups).map((g) => (
             <li
               key={g.id}
-              className="rounded-xl border border-neutral-800 p-4 bg-neutral-900/50 flex items-center justify-between hover:bg-neutral-800/40 transition cursor-pointer"
+              className="rounded-xl border border-neutral-800 p-4 bg-neutral-900/50 flex items-center justify-between hover:bg-neutral-800/40 transition"
             >
               <div className="flex items-center gap-3">
                 <GroupsIcon className="text-orange-500" />
@@ -88,13 +118,24 @@ export default function GroupsPage() {
                   </button>
                 )
               ) : (
-                <Link to={`/groups/details/${g.id}`} className="text-sm text-orange-400 hover:underline">
+                <Link
+                  to={`/groups/details/${g.id}`}
+                  className="text-sm text-orange-400 hover:underline"
+                >
                   View
                 </Link>
               )}
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* Right Sidebar (optional) */}
+      <div className="hidden md:flex sticky top-20 w-[260px] min-h-screen bg-neutral-800/30 border-neutral-800 p-4">
+        <p className="text-lg font-semibold text-orange-500">Suggested</p>
+        <p className="text-neutral-400 text-sm mt-2">
+          (mock) Show trending groups here
+        </p>
       </div>
     </div>
   );

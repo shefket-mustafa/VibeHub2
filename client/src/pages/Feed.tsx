@@ -1,22 +1,18 @@
 import { useEffect, useState, type ChangeEvent } from "react";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
-import GroupsIcon from "@mui/icons-material/Groups";
 import { useForm } from "react-hook-form";
 import { postSchema, type FeedPostData } from "../zod/postSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUser } from "../hooks/user";
-import CommentModal from "../components/CommentModal";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useNavigate } from "react-router";
 import {
   createPost,
   deletePost,
   fetchAllPosts,
-  likePost,
+  likePost, 
 } from "../redux/slices/postsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import PageContainer from "./PageContainer";
 // import type { UploadStatusType } from "../types/TStypes";
 dayjs.extend(relativeTime);
 // If you don’t extend it, dayjs(...).fromNow() will throw an error because the function doesn’t exist yet.
@@ -24,9 +20,8 @@ dayjs.extend(relativeTime);
 export default function Feed() {
   const baseUrl = import.meta.env.VITE_API_URL;
   const posts = useAppSelector((state) => state.posts.items);
-  const [showCommentsFor, setShowCommentsFor] = useState<string | null>(null);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const {setShowCommentsFor} = useUser();
 
   const {
     register,
@@ -96,66 +91,10 @@ export default function Feed() {
   }, [baseUrl]);
 
   return (
-    //main container
-    <div className="w-full flex justify-between z-10">
-      {/* left section */}
-      <div className="sticky hidden md:flex flex-col top-20 w-[260px] min-h-screen max-w-2xl border-neutral-800 bg-neutral-800/30 space-y-6">
-        {/* User Profile  */}
-        <div className="flex items-center gap-3 p-4 border-b border-neutral-700">
-          <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold">
-            {user?.username?.[0]?.toUpperCase() ?? "?"}
-          </div>
-          <div>
-            <p className="text-white font-medium">
-              {user?.username ?? "Guest"}
-            </p>
-            <p className="text-sm text-neutral-400">
-              {user?.email ?? "anonymous"}
-            </p>
-          </div>
-        </div>
-        {/* left section tags */}
-        <div className="flex flex-col items-start gap-5 p-4 border-neutral-700 ">
-          <div className="flex flex-col gap-3 items-start  rounded-lg px-3 py-2 ">
-            <div
-              onClick={() => navigate("/friends")}
-              className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
-            >
-              <PeopleAltIcon className="text-orange-500" />
-              <p className="text-white">Friends</p>
-            </div>
+    <PageContainer>
 
-            <div
-              onClick={() => navigate("/memories")}
-              className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
-            >
-              <BrowseGalleryIcon className="text-orange-500" />
-              <p className="text-white">Memories</p>
-            </div>
-
-            <div
-              onClick={() => navigate("/groups")}
-              className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
-            >
-              <GroupsIcon className="text-orange-500" />
-              <p className="text-white">Groups</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Contacts */}
-        <div className="p-4 border-t border-neutral-700">
-          <p className="text-lg font-semibold mb-3 text-orange-500">Online</p>
-          <ul className="space-y-2 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-700">
-            <p className="text-white">Nobody is online at the moment :(</p>
-          </ul>
-        </div>
-      </div>
-
-      {/* middle section */}
-      <div className="w-full flex-1 max-w-xl mx-auto space-y-6 py-20">
-        {/* Composer */}
-        <form
+         {/* Composer */}
+         <form
           onSubmit={handleSubmit(onSubmit)}
           className="rounded-2xl border border-neutral-800 p-4 bg-neutral-900/30"
         >
@@ -269,56 +208,6 @@ export default function Feed() {
           ))}
         </ul>
 
-        {/* Load more (mock) */}
-        {/* <div className="flex justify-center">
-              <button
-                type="button"
-                disabled
-                className="rounded-xl px-4 py-2 bg-neutral-800 text-neutral-400 cursor-not-allowed"
-                title="Mock only"
-              >
-                Load more
-              </button>
-            </div> */}
-      </div>
-
-      {/* right section */}
-      <div className="hidden md:flex sticky top-20 w-[260px] min-h-screen max-w-2xl border-neutral-800 bg-neutral-800/30 space-y-6">
-        {/* right section tags */}
-        <div className="flex flex-col gap-5 p-4 border-neutral-700 border-b">
-          {/* Sponsored tag */}
-          <div className="p-4 border-b border-neutral-700">
-            <p className="text-lg font-semibold mb-3 text-orange-500">
-              Sponsored by
-            </p>
-            <div className="space-y-3">
-              {[1, 2, 3].map((n) => (
-                <div
-                  key={n}
-                  className="rounded-lg overflow-hidden bg-neutral-900/50 border border-neutral-800 cursor-pointer hover:scale-[1.02] transition"
-                >
-                  <img
-                    src={`https://picsum.photos/seed/${n}/240/160`}
-                    alt={`Ad ${n}`}
-                    className="w-full h-32 object-cover bg-no-repeat bg-center"
-                  />
-                  <p className="text-sm text-white p-2">
-                    You can place your ads here for 150$/m
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {showCommentsFor && (
-        <CommentModal
-          postId={showCommentsFor}
-          isOpen={true}
-          onClose={() => setShowCommentsFor(null)}
-        />
-      )}
-    </div>
+    </PageContainer>
   );
 }
