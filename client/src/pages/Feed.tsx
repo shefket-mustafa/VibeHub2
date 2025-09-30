@@ -136,7 +136,7 @@ export default function Feed() {
 
               <button
                 type="submit"
-                disabled={!contentValue.trim() || isSubmitting}
+                disabled={isSubmitting}
                 className="rounded-xl max-h-10 md:max-h-8 px-4 py-2 bg-orange-400 text-black cursor-pointer font-semibold hover:bg-orange-500 transition"
               >
                 {isSubmitting ? "Posting..." : "Post"}

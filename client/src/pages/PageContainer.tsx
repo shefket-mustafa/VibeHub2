@@ -44,6 +44,14 @@ export default function PageContainer({children}: PropsWithChildren){
               <PeopleAltIcon className="text-orange-500" />
               <p className="text-white">Friends</p>
             </div>
+            
+            <div
+              onClick={() => navigate("/groups")}
+              className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
+            >
+              <GroupsIcon className="text-orange-500" />
+              <p className="text-white">Groups</p>
+            </div>
 
             <div
               onClick={() => navigate("/memories")}
@@ -53,13 +61,6 @@ export default function PageContainer({children}: PropsWithChildren){
               <p className="text-white">Memories</p>
             </div>
 
-            <div
-              onClick={() => navigate("/groups")}
-              className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
-            >
-              <GroupsIcon className="text-orange-500" />
-              <p className="text-white">Groups</p>
-            </div>
           </div>
         </div>
 
