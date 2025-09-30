@@ -31,9 +31,9 @@ export default function GroupsPage() {
         {/* Header + Create button */}
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-white">Groups</h1>
-          <button className="rounded-xl px-4 py-2 bg-orange-400 text-black cursor-pointer font-semibold hover:bg-orange-500 transition">
+          <Link to='/groups/create' className="rounded-xl px-4 py-2 bg-orange-400 text-black cursor-pointer font-semibold hover:bg-orange-500 transition">
             + Create Group
-          </button>
+          </Link>
         </div>
 
         {/* Tabs */}

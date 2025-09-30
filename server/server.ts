@@ -8,6 +8,7 @@ import registerRoute from "./routes/registerRoute.js";
 import loginRoute from "./routes/loginRoute.js";
 import { postRoutes } from "./routes/postRoutes.js";
 import friendsRoutes from "./routes/friendsRoute.js";
+import { groupsRoutes } from "./routes/groupsRoute.js";
 
 dotenv.config(); //import .env variables
 
@@ -31,6 +32,7 @@ app.use("/auth", registerRoute); //connecting the routes to the server
 app.use("/auth", loginRoute);
 app.use("/posts", postRoutes);
 app.use("/friends", friendsRoutes);
+app.use("/groups", groupsRoutes);
 
 
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`)); //listen for requests 
