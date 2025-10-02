@@ -23,6 +23,8 @@ export type UserContextType =
       user: User;
       setUser: (us: User) => void;
       logout: () => void;
+      showCommentsFor: string,
+      setShowCommentsFor: (id: string) => void
     }
   | undefined;
 
@@ -57,6 +59,43 @@ export type UserPreview = {
   username: string,
   email: string
   
+}
+
+export type GroupCreateRequest = {
+  _id: string,
+  name: string,
+  description: string,
+  owner: string,
+  members: string[] | null
+}
+
+export type GroupsCreateResponse = {
+  message: string,
+  group: GroupCreateRequest
+
+}
+export type Group = {
+  _id: string,
+  name: string,
+  description: string,
+  owner: string,
+  members: string[]
+}
+
+export type GroupMessages = {
+  _id: string,
+  group: string,
+  sender: {
+    _id: string,
+    username: string,
+    email: string
+  },
+  text: string,
+  createdAt: string
+}
+
+export type ErrorType = {
+  err: string | null
 }
 
 export type UploadStatusType = "idle" | "uploading" | "successfull" | "failed";

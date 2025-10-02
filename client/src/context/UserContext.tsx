@@ -4,6 +4,7 @@ import type { User } from "../types/TStypes";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { friendsApi } from "../redux/services/friendsApi";
+import { groupsApi } from "../redux/services/groupsApi";
 
 
 
@@ -13,6 +14,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showCommentsFor, setShowCommentsFor] = useState<string>("");
 
 
   useEffect(() => {
@@ -37,13 +39,15 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     handleSetUser(null);
     dispatch(friendsApi.util.resetApiState()) //clearing the RTK query
+    dispatch(groupsApi.util.resetApiState());
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     navigate('/auth/login')
   };
 
+
   return (
-    <UserContext.Provider value={{user: user, setUser: handleSetUser, logout}}>
+    <UserContext.Provider value={{user: user, setUser: handleSetUser, logout, showCommentsFor, setShowCommentsFor }}>
       {children}
     </UserContext.Provider>
   )
