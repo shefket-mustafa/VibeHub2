@@ -61,6 +61,24 @@ export type UserPreview = {
   
 }
 
+export type GroupCreateRequest = {
+  _id: string,
+  name: string,
+  description: string,
+  owner: string,
+  members: string[] | null
+}
+
+export type GroupsCreateResponse = {
+  message: string,
+  group: GroupCreateRequest
+
+}
+
+export type ErrorType = {
+  err: string | null
+}
+
 export type UploadStatusType = "idle" | "uploading" | "successfull" | "failed";
 
 export type IncomingRequest = UserPreview & { requestId: string };

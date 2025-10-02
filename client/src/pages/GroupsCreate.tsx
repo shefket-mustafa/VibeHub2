@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PageContainer from "./PageContainer";
 import { createGroupSchema, type CreateGroupData } from "../zod/createGroupSchema";
-
+import { useCreateGroupMutation } from "../redux/services/groupsApi";
+import { useNavigate } from "react-router";
 
 
 
@@ -11,14 +12,29 @@ export default function CreateGroupPage() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<CreateGroupData>({
     resolver: zodResolver(createGroupSchema),
   });
+const [createGroup] = useCreateGroupMutation();
+const navigate = useNavigate();
+
 
   const onSubmit = async (data: CreateGroupData) => {
-    console.log("create group data", data);
-    // later → dispatch redux action / call API
+    
+    try{
+      const result = await createGroup(data)
+      console.log(result);
+      navigate("/groups")
+
+    }catch(err){
+      setError("root", {
+        type: "server",
+        message: String(err)
+      })
+    }
+
   };
 
   return (
@@ -27,6 +43,9 @@ export default function CreateGroupPage() {
         <h1 className="text-2xl font-bold text-white mb-6">Create a Group</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {errors.root && (
+            <p className="text-sm text-red-400">{errors.root.message}</p>
+          )}{" "}
           <div>
             <label className="block text-sm text-white mb-1">Group Name</label>
             <input

@@ -3,21 +3,21 @@ import { useState } from "react";
 import { Link } from "react-router";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PageContainer from "./PageContainer";
-
-type Group = {
-  id: string;
-  name: string;
-  members: number;
-  type: "public" | "private";
-  joined: boolean;
-};
+import { useGetAllGroupsQuery, useGetYourGroupsQuery } from "../redux/services/groupsApi";
+import { useUser } from "../hooks/user";
 
 
 
 export default function GroupsPage() {
   const [activeTab, setActiveTab] = useState<"your" | "discover">("your");
-  const [yourGroups] = useState<Group[]>([]);
-  const [discoverGroups] = useState<Group[]>([]);
+  const {user} = useUser()
+  
+  const [error, setError] = useState<string | null>(null)
+  const {data: discoverGroups=[], error: errorDiscoverGroups, isLoading: isLoadingDiscoverGroups} = useGetAllGroupsQuery();
+  const {data: yourGroups=[], error: errorMyGroups, isLoading: isLoadingYourGroups} = useGetYourGroupsQuery();
+ 
+  
+  
 
 
   return (
@@ -60,6 +60,8 @@ export default function GroupsPage() {
           </button>
         </div>
 
+        {error && <p className="text-sm text-red-500">{error}</p>}
+
         {/* Group List */}
         <ul className="space-y-4">
   {activeTab === "your" ? (
@@ -68,7 +70,7 @@ export default function GroupsPage() {
     ) : (
       yourGroups.map((g) => (
         <li
-          key={g.id}
+          key={g._id}
           className="rounded-xl border border-neutral-800 p-4 bg-neutral-900/50 flex items-center justify-between hover:bg-neutral-800/40 transition"
         >
           <div className="flex items-center gap-3">
@@ -76,25 +78,32 @@ export default function GroupsPage() {
             <div>
               <p className="text-white font-medium">{g.name}</p>
               <p className="text-sm text-neutral-400">
-                {g.members} members · {g.type}
+                {g.members?.length} members ·
               </p>
             </div>
           </div>
+
+
+          <div className="flex gap-3"> 
+          <button className="text-sm cursor-pointer text-orange-400 hover:underline">
+            Delete
+          </button>
           <Link
-            to={`/groups/details/${g.id}`}
+            to={`/groups/details/${g._id}`}
             className="text-sm text-orange-400 hover:underline"
-          >
+            >
             View
           </Link>
+            </div>
         </li>
       ))
     )
-  ) : discoverGroups.length === 0 ? (
+  ) : discoverGroups?.length === 0 ? (
     <p className="text-sm text-neutral-400">No groups left to discover!</p>
   ) : (
-    discoverGroups.map((g) => (
+    discoverGroups?.map((g) => (
       <li
-        key={g.id}
+        key={g._id}
         className="rounded-xl border border-neutral-800 p-4 bg-neutral-900/50 flex items-center justify-between hover:bg-neutral-800/40 transition"
       >
         <div className="flex items-center gap-3">
@@ -102,11 +111,11 @@ export default function GroupsPage() {
           <div>
             <p className="text-white font-medium">{g.name}</p>
             <p className="text-sm text-neutral-400">
-              {g.members} members · {g.type}
+              {g.members?.length} members ·
             </p>
           </div>
         </div>
-        {g.type === "public" ? (
+        {g.members?.[0] === user?.id ? (
           <button className="text-sm text-black bg-orange-400 hover:bg-orange-500 px-3 py-1 rounded-lg transition">
             Join
           </button>

@@ -14,7 +14,6 @@ groupsRoutes.post("/create", authMiddleware, async (req: RequestWithUser,res: ex
         const group = new Group({
          name,
          description,
-         type,
          owner: req.user?.id,
          members: [req.user?.id]
         })
@@ -42,8 +41,9 @@ groupsRoutes.get("/discover", authMiddleware, async(req: RequestWithUser, res: e
 
 
     try{
-        const groups = await Group.find({members: {$ne: req.user?.id}})
-
+        const groups = await Group.find({members: {$nin: [req.user?.id]}})
+        // Give me all groups where the members array does not include this user id.
+        
         res.json(groups)
     }catch(err){
         return res.status(500).json({error: "Server error!"})
