@@ -13,7 +13,6 @@ export default function GroupsPage() {
   const {user} = useUser()
   
   
-  const [error, setError] = useState<string | null>(null)
   const {data: discoverGroups=[], error: errorDiscoverGroups, isLoading: isLoadingDiscoverGroups} = useGetAllGroupsQuery();
   const {data: yourGroups=[], error: errorMyGroups, isLoading: isLoadingYourGroups} = useGetYourGroupsQuery();
   const [deleteGroup, {isLoading: isDeleting}] = useDeleteGroupMutation();
@@ -41,6 +40,16 @@ export default function GroupsPage() {
       console.error(err)
     }
   }
+
+  // Combine error states
+  const error =
+  (errorDiscoverGroups as { error?: string })?.error ||
+  (errorMyGroups as { error?: string })?.error ||
+  null;
+
+    // Combine loading state for skeleton/spinner
+    const isLoading =
+    isLoadingDiscoverGroups || isLoadingYourGroups || isDeleting || isJoining;
   
 
 
@@ -84,7 +93,11 @@ export default function GroupsPage() {
           </button>
         </div>
 
-        {error && <p className="text-sm text-red-500">{error}</p>}
+         {/* Error */}
+         {error && <p className="text-sm text-red-500">{error}</p>}
+
+{/* Loading */}
+{isLoading && <p className="text-sm text-neutral-400">Loading...</p>}
 
         {/* Group List */}
         <ul className="space-y-4">
