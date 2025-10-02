@@ -28,6 +28,19 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
   - View all friends
   - Friend suggestions based on mutual exclusion logic
   - Integrated with RTK Query for fetching, sending, and mutating friend data in real-time
+
+- **Groups**
+  - Create and delete(if owner) groups
+  - Join groups
+  - View all groups you belong to ("Your Groups")
+  - Discover groups you are not part of ("Discover")
+  - Group chat system:
+    - View messages in real-time feed
+    - Send messages to other group members
+    - Messages display sender information (username + email)
+  - Fully integrated with RTK Query for fetching, joining, deleting, and messaging
+ 
+  
 ---
 
 ## 🛠️ Tech Stack
