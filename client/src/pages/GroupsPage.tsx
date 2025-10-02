@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PageContainer from "./PageContainer";
-import { useDeleteGroupMutation, useGetAllGroupsQuery, useGetYourGroupsQuery } from "../redux/services/groupsApi";
+import { useDeleteGroupMutation, useGetAllGroupsQuery, useGetYourGroupsQuery, useJoinGroupMutation } from "../redux/services/groupsApi";
 import { useUser } from "../hooks/user";
 
 
@@ -12,10 +12,25 @@ export default function GroupsPage() {
   const [activeTab, setActiveTab] = useState<"your" | "discover">("your");
   const {user} = useUser()
   
+  
   const [error, setError] = useState<string | null>(null)
   const {data: discoverGroups=[], error: errorDiscoverGroups, isLoading: isLoadingDiscoverGroups} = useGetAllGroupsQuery();
   const {data: yourGroups=[], error: errorMyGroups, isLoading: isLoadingYourGroups} = useGetYourGroupsQuery();
   const [deleteGroup, {isLoading: isDeleting}] = useDeleteGroupMutation();
+  const [joinGroup, {isLoading: isJoining}] = useJoinGroupMutation();
+
+  const handleJoinGroup = async(id: string) => {
+
+    try{
+      const result = await joinGroup(id)
+      console.log(result);
+      
+
+    }catch(err){
+      console.log(err);
+      
+    }
+  }
  
   const handleDeleteGroup = async (id: string) => {
 
@@ -32,11 +47,11 @@ export default function GroupsPage() {
   return (
 <PageContainer>
 
-    <div className="w-full flex justify-between z-10">
+    <div className="w-full min-h-screen  flex justify-between z-10">
      
 
       {/* Middle Section */}
-      <div className="w-full flex-1 max-w-xl mx-auto space-y-6 py-20">
+      <div className="w-full flex-1 max-w-5xl mx-auto space-y-6 py-20">
         {/* Header + Create button */}
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-white">Groups</h1>
@@ -93,13 +108,14 @@ export default function GroupsPage() {
           </div>
 
 
-          <div className="flex gap-3"> 
-          <button onClick={() => handleDeleteGroup(g._id)}
+          <div className="flex gap-3">
+            {g.owner === user?.id && (<button onClick={() => handleDeleteGroup(g._id)}
            className="text-sm cursor-pointer text-orange-400 hover:underline">
             Delete
-          </button>
+          </button>)} 
+          
           <Link
-            to={`/groups/details/${g._id}`}
+            to={`/groups/details/${g._id}/`}
             className="text-sm text-orange-400 hover:underline"
             >
             View
@@ -125,15 +141,12 @@ export default function GroupsPage() {
             </p>
           </div>
         </div>
-        {g.members?.[0] === user?.id ? (
-          <button className="text-sm text-black bg-orange-400 hover:bg-orange-500 px-3 py-1 rounded-lg transition">
+        
+          <button onClick={() => handleJoinGroup(g._id)} className="text-sm text-black bg-orange-400 hover:bg-orange-500 px-3 py-1 rounded-lg transition">
             Join
           </button>
-        ) : (
-          <button className="text-sm text-black bg-orange-400 hover:bg-orange-500 px-3 py-1 rounded-lg transition">
-            Request to Join
-          </button>
-        )}
+        
+        
       </li>
     ))
   )}

@@ -69,7 +69,7 @@ const navigate = useNavigate();
             )}
           </div>
 
-          <div>
+          {/* <div>
             <label className="block text-sm text-white mb-1">Group Type</label>
             <select
               {...register("type")}
@@ -78,12 +78,12 @@ const navigate = useNavigate();
               <option value="public">Public</option>
               <option value="private">Private</option>
             </select>
-          </div>
+          </div> */}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-xl px-4 py-2 bg-orange-400 text-black font-semibold hover:bg-orange-500 transition"
+            className="w-full rounded-xl cursor-pointer px-4 py-2 bg-orange-400 text-black font-semibold hover:bg-orange-500 transition"
           >
             {isSubmitting ? "Creating..." : "Create Group"}
           </button>

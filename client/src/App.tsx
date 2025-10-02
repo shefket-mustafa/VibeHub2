@@ -19,8 +19,8 @@ import FriendSuggestions from "./pages/FriendSuggestions";
 import { useEffect } from "react";
 import { isTokenValid } from "./helpers/tokenValidator";
 import GroupsPage from "./pages/GroupsPage";
-import GroupDetails from "./pages/GroupDetails";
 import CreateGroupPage from "./pages/GroupsCreate";
+import GroupChatPage from "./pages/GroupChatPage";
 
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ/>} />
           <Route path="/groups" element={<GroupsPage/>} />
-          <Route path="/groups/details/:id" element={<GroupDetails/>} />
+          <Route path="/groups/details/:id" element={<GroupChatPage/>} />
           <Route path="/groups/create" element={<CreateGroupPage/>} />
 
           {user && <Route path="/feed" element={<Feed />} />}

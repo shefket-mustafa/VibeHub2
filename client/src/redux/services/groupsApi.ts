@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { GroupCreateRequest, GroupsCreateResponse } from "../../types/TStypes";
+import type { Group, GroupCreateRequest, GroupMessages, GroupsCreateResponse } from "../../types/TStypes";
 import type { CreateGroupData } from "../../zod/createGroupSchema";
 
 
@@ -45,6 +45,35 @@ export const groupsApi = createApi({
                 method: "DELETE"
             }),
             invalidatesTags: ["Groups"] 
+        }),
+        joinGroup: builder.mutation<{message: string}, string>({
+            query: (id) => ({
+                url: `groups/join/${id}`,
+                method: "POST"
+            }),
+            invalidatesTags: ["Groups"]
+        }),
+        getGroup: builder.query<Group, string>({
+            query: (id) => ({
+                url: `groups/${id}`, 
+                method: "GET"
+            }),
+            providesTags: ["Groups"]
+        }),
+        getGroupMessages: builder.query<GroupMessages[], string>({
+            query: (id) => ({
+                url: `groups/${id}/messages`,
+                method: "GET"
+            }),
+            providesTags: ["Groups"]
+        }),
+        sendGroupMessage: builder.mutation<GroupMessages,  {id: string, text: string}>({
+            query: ({id, text}) => ({
+                url: `groups/${id}/messages`,
+                method: "POST",
+                body: {text}
+            }),
+            invalidatesTags: ["Groups"]
         })
     }),
 
@@ -57,4 +86,9 @@ export const {
     useGetAllGroupsQuery,
     useGetYourGroupsQuery,
     useDeleteGroupMutation,
+    useJoinGroupMutation,
+    useGetGroupQuery,
+    useGetGroupMessagesQuery,
+    useSendGroupMessageMutation
+
 } = groupsApi;

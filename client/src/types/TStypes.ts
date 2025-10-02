@@ -74,6 +74,25 @@ export type GroupsCreateResponse = {
   group: GroupCreateRequest
 
 }
+export type Group = {
+  _id: string,
+  name: string,
+  description: string,
+  owner: string,
+  members: string[]
+}
+
+export type GroupMessages = {
+  _id: string,
+  group: string,
+  sender: {
+    _id: string,
+    username: string,
+    email: string
+  },
+  text: string,
+  createdAt: string
+}
 
 export type ErrorType = {
   err: string | null
