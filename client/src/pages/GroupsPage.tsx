@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PageContainer from "./PageContainer";
-import { useGetAllGroupsQuery, useGetYourGroupsQuery } from "../redux/services/groupsApi";
+import { useDeleteGroupMutation, useGetAllGroupsQuery, useGetYourGroupsQuery } from "../redux/services/groupsApi";
 import { useUser } from "../hooks/user";
 
 
@@ -15,8 +15,17 @@ export default function GroupsPage() {
   const [error, setError] = useState<string | null>(null)
   const {data: discoverGroups=[], error: errorDiscoverGroups, isLoading: isLoadingDiscoverGroups} = useGetAllGroupsQuery();
   const {data: yourGroups=[], error: errorMyGroups, isLoading: isLoadingYourGroups} = useGetYourGroupsQuery();
+  const [deleteGroup, {isLoading: isDeleting}] = useDeleteGroupMutation();
  
-  
+  const handleDeleteGroup = async (id: string) => {
+
+    try{
+      const result = await deleteGroup(id).unwrap();
+      console.log(result.message)
+    }catch(err){
+      console.error(err)
+    }
+  }
   
 
 
@@ -78,14 +87,15 @@ export default function GroupsPage() {
             <div>
               <p className="text-white font-medium">{g.name}</p>
               <p className="text-sm text-neutral-400">
-                {g.members?.length} members ·
+                {g.members?.length} {g.members?.length === 1 ? "member" : "members"} 
               </p>
             </div>
           </div>
 
 
           <div className="flex gap-3"> 
-          <button className="text-sm cursor-pointer text-orange-400 hover:underline">
+          <button onClick={() => handleDeleteGroup(g._id)}
+           className="text-sm cursor-pointer text-orange-400 hover:underline">
             Delete
           </button>
           <Link
@@ -111,7 +121,7 @@ export default function GroupsPage() {
           <div>
             <p className="text-white font-medium">{g.name}</p>
             <p className="text-sm text-neutral-400">
-              {g.members?.length} members ·
+              {g.members?.length} {g.members?.length === 1 ? "member" : "members"} 
             </p>
           </div>
         </div>

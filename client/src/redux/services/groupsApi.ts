@@ -39,6 +39,13 @@ export const groupsApi = createApi({
             }),
             providesTags: ["Groups"]
         }),
+        deleteGroup: builder.mutation<{message: string}, string>({
+            query: (id) => ({
+                url: `groups/delete/${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["Groups"] 
+        })
     }),
 
     
@@ -49,4 +56,5 @@ export const {
     useCreateGroupMutation,
     useGetAllGroupsQuery,
     useGetYourGroupsQuery,
+    useDeleteGroupMutation,
 } = groupsApi;

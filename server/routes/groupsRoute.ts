@@ -60,3 +60,25 @@ groupsRoutes.get("/:id", authMiddleware, async(req: RequestWithUser, res: expres
         return res.status(500).json({error: "Server error!"})
     }
 })
+
+groupsRoutes.delete("/delete/:id", authMiddleware, async(req: RequestWithUser, res: express.Response) => {
+
+    try {
+        const {id} = req.params;
+        const userId = req.user?.id;
+        
+        const group = await Group.findById(id);
+        if(!group){
+            return res.status(400).json({error: "Group not found!"})
+        }
+        if(group.owner.toString() !== userId){
+            return res.status(401).json({error: "You are not the owner!"})
+        }
+
+            await Group.findByIdAndDelete(id);
+
+        return res.json({message: "Group successfully deleted!"})
+    }catch(err){
+        return res.status(500).json({error: "Server error!"})
+    }
+})
