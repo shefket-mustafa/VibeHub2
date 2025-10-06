@@ -2,13 +2,15 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors"
 import mongoose from "mongoose";
-
+import http from "http"
+import { Server } from "socket.io"
 
 import registerRoute from "./routes/registerRoute.js";
 import loginRoute from "./routes/loginRoute.js";
 import { postRoutes } from "./routes/postRoutes.js";
 import friendsRoutes from "./routes/friendsRoute.js";
 import { groupsRoutes } from "./routes/groupsRoute.js";
+import {addUser, removeUser, getAllOnlineUsers} from "./socketStore.js"
 
 dotenv.config(); //import .env variables
 
@@ -34,5 +36,44 @@ app.use("/posts", postRoutes);
 app.use("/friends", friendsRoutes);
 app.use("/groups", groupsRoutes);
 
+// --- SOCKET.IO SETUP ---  
+const server = http.createServer(app); //This creates the real HTTP server from our Express app.
+//Express app is just a request handler. http.createServer(app) makes a full server object so Socket.IO can attach to it.
 
-app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`)); //listen for requests 
+const io = new Server(server, {
+  //This creates a Socket.IO server attached to the same HTTP server.
+  cors: {origin: "*"} 
+  //means “accept WebSocket connections from any origin”
+  //Without this browser would block it.
+})
+
+
+io.on("connection", (socket) => {
+  console.log("User connected", socket.id);
+  //This runs every time a client connects via Socket.IO.
+  // socket.id is the unique ID Socket.IO gives each client connection.
+
+  socket.on("userOnline", (userId) => {
+    addUser(userId, socket.id)
+    console.log("Online users: ", getAllOnlineUsers())
+
+    io.emit("onlineUsers", getAllOnlineUsers())
+    //The client sends an event called "userOnline" with its userId.
+    //Server saves that in onlineUsers[userId] = socket.id.
+    //Then broadcasts an "onlineUsers" event with all online user IDs to everyone.
+  })
+
+  socket.on("disconnect", () => {
+    removeUser(socket.id)
+
+    io.emit("onlineUsers", getAllOnlineUsers())
+    console.log("User disconnected: ",socket.id)
+    //Socket.IO fires this automatically when the client closes the page or loses connection.
+    //We loop over onlineUsers to find which userId had this socket.id and remove them.
+    //Then broadcast the updated list of online users again.
+  })
+})
+
+server.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`)); //listen for requests 
+
+export { io };
