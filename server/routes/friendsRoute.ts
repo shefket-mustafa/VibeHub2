@@ -6,7 +6,8 @@ import {
 } from "../middlewares/authMiddleware.js";
 import { FriendRequest } from "../models/FriendRequests.js";
 import User from "../models/User.js";
-
+import { getUserSocketId } from "../socketStore.js";
+import { io } from "../server.js";
 const friendsRoutes = Router();
 
 friendsRoutes.post( "/request/:recipientId", authMiddleware,
@@ -14,6 +15,9 @@ friendsRoutes.post( "/request/:recipientId", authMiddleware,
     try {
       const requesterId = req.user?.id;
       const { recipientId } = req.params;
+      const recipientSocketId = getUserSocketId(recipientId);
+
+      
 
       if (!requesterId) {
         return res.status(401).json({ error: "Unauthorized!" });
@@ -44,6 +48,13 @@ friendsRoutes.post( "/request/:recipientId", authMiddleware,
       });
 
       await newFriendRequest.save();
+
+      if (recipientSocketId) {
+        io.to(recipientSocketId).emit("newFriendRequest", {
+          from: requesterId,
+        });
+      }
+      
       return res.json({message: "Friend request sent!", newFriendRequest})
     } catch (err) {
       console.error(err);

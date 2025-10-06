@@ -82,6 +82,11 @@ export type Group = {
   members: string[]
 }
 
+export type Record = {
+  userId: string,
+  sockedId: string
+}
+
 export type GroupMessages = {
   _id: string,
   group: string,

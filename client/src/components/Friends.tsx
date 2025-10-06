@@ -4,11 +4,29 @@ import FriendsCard from "./FriendsCard";
 import friendImage from "../assets/friends-item.avif"
 import { useGetIncomingQuery } from "../redux/services/friendsApi";
 import type { IncomingRequest } from "../types/TStypes";
+import { useSocket } from "../hooks/useSocket";
+import { useEffect } from "react";
 
 
 
 export default function FriendsPage() {
-  const {data: incoming=[], isLoading, error} = useGetIncomingQuery();
+  const {data: incoming=[], isLoading, error, refetch} = useGetIncomingQuery();
+  const {socket} = useSocket();
+
+  useEffect(() => {
+    if(!socket) return;
+
+    //Listen for new friend request events
+    socket.on("newFriendRequest", () => {
+      console.log("📩 New request arrived, refreshing list...");
+      refetch(); // refresh the RTK Query data
+    });
+
+     // cleanup on unmount to prevent duplicates
+     return () => {
+      socket.off("newFriendRequest");
+    };
+  },[socket,refetch])
   
 
   return (
