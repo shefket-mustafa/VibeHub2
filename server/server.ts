@@ -60,32 +60,27 @@ io.on("connection", (socket) => {
     //saving on db
     try{
       const message = await DirectMessages.create({
-        sender: senderId,
-        recipient: recipientId,
+        senderId,
+        recipientId,
         content
       })
 
+      const safeMessage = {
+        _id: message._id.toString(),
+        senderId: message.senderId.toString(),
+        recipientId: message.recipientId.toString(),
+        content: message.content,
+        createdAt: message.createdAt,
+      };
+
       //emit to recipient if online
       const recipientSocketId = getUserSocketId(recipientId);
-      if(recipientSocketId){
-        io.to(recipientSocketId).emit("privateMessage", {
-          _id: message._id,
-          senderId,
-          recipientId,
-          content,
-          createdAt: message.createdAt
-        });
+      if (recipientSocketId) {
+        io.to(recipientSocketId).emit("privateMessage", safeMessage);
       }
+    //  ADD THIS so sender also gets the saved message instantly
+      socket.emit("privateMessage", safeMessage);
 
-       // Emit back to sender (for instant local display)
-    socket.emit("privateMessage", {
-      _id: message._id,
-      senderId,
-      recipientId,
-      content,
-      createdAt: message.createdAt,
-
-    })
 
     }catch(err){
       console.error("Error sending private message:", err);

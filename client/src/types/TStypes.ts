@@ -89,9 +89,10 @@ export type Record = {
 
 export type DirectMessages = {
   _id: string,
-  sender: string,
-  recipient: string,
-  content: string
+  senderId: string,
+  recipientId: string,
+  content: string,
+  createdAt: string
 }
 
 export type GroupMessages = {
