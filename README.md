@@ -39,7 +39,15 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
     - Send messages to other group members
     - Messages display sender information (username + email)
   - Fully integrated with RTK Query for fetching, joining, deleting, and messaging
- 
+
+ - **💬 Direct Messaging (NEW)**
+     - One-to-one real-time chat using Socket.IO
+     - Chat history stored in MongoDB
+     - Messages instantly synced between sender and recipient
+     - Pop-up chat windows for quick conversations
+     - Automatically opens a chat when a message is received
+     - Open chats persist after a page refresh
+     - Smooth scroll, Enter-to-send, and instant feedback on new messages
   
 ---
 
@@ -51,6 +59,7 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 - **Email Service:** [EmailJS](https://www.emailjs.com/) for password reset flow
 - **Image Hosting:** [Cloudinary](https://cloudinary.com/) for post image uploads  
 - **Global state:** Global state: User logic - Context API and Redux Toolkit + RTK Query for API calls and cache management
+- **Direct messages:** Socket.IO for real-time bidirectional communication
 
 ---
 
