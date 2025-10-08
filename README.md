@@ -49,6 +49,15 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
      - Open chats persist after a page refresh
      - Smooth scroll, Enter-to-send, and instant feedback on new messages
   
+     - How to Use:
+         - You can open a direct chat in two ways:
+         - From the Online Users list (left sidebar) → click a user who’s online to start chatting instantly
+         - From the Friends page → click the 💬 Message button next to a friend to open a chat window
+         - Once open:
+         - The chat pops up in the bottom-right corner of the screen
+         - You can minimize or close it anytime
+         - If someone messages you, the chat window will automatically appear
+  
 ---
 
 ## 🛠️ Tech Stack
