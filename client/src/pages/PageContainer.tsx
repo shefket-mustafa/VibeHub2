@@ -7,6 +7,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import CommentModal from "../components/CommentModal";
 import { useGetAllFriendsQuery } from "../redux/services/friendsApi";
 import { useSocket } from "../hooks/useSocket";
+import { useChat } from "../context/ChatContext";
 
 
 export default function PageContainer({children}: PropsWithChildren){
@@ -16,6 +17,7 @@ export default function PageContainer({children}: PropsWithChildren){
     const {onlineUsers} = useSocket();
     const {user} = useUser();
     const navigate = useNavigate();
+    const {openChat} = useChat();
 
 
     
@@ -84,7 +86,7 @@ export default function PageContainer({children}: PropsWithChildren){
                   : "bg-gray-500"
               }`}
             />
-            <span>{friend.username}</span>
+            <span className="text-white px-4 py-2 rounded-2xl text-sm cursor-pointer hover:bg-gray-700 transition"  onClick={() => openChat(friend._id)}>{friend.username}</span>
           </li>
         ))}
       </ul>

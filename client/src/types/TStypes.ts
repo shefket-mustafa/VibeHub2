@@ -87,6 +87,14 @@ export type Record = {
   sockedId: string
 }
 
+export type DirectMessages = {
+  _id: string,
+  senderId: string,
+  recipientId: string,
+  content: string,
+  createdAt: string
+}
+
 export type GroupMessages = {
   _id: string,
   group: string,

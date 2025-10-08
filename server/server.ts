@@ -10,7 +10,9 @@ import loginRoute from "./routes/loginRoute.js";
 import { postRoutes } from "./routes/postRoutes.js";
 import friendsRoutes from "./routes/friendsRoute.js";
 import { groupsRoutes } from "./routes/groupsRoute.js";
-import {addUser, removeUser, getAllOnlineUsers} from "./socketStore.js"
+import {addUser, removeUser, getAllOnlineUsers, getUserSocketId} from "./socketStore.js"
+import { DirectMessages } from "./models/directMessages.js";
+import messagesRoutes from "./routes/messagesRoute.js";
 
 dotenv.config(); //import .env variables
 
@@ -35,6 +37,7 @@ app.use("/auth", loginRoute);
 app.use("/posts", postRoutes);
 app.use("/friends", friendsRoutes);
 app.use("/groups", groupsRoutes);
+app.use("/messages", messagesRoutes);
 
 // --- SOCKET.IO SETUP ---  
 const server = http.createServer(app); //This creates the real HTTP server from our Express app.
@@ -52,6 +55,37 @@ io.on("connection", (socket) => {
   console.log("User connected", socket.id);
   //This runs every time a client connects via Socket.IO.
   // socket.id is the unique ID Socket.IO gives each client connection.
+
+  socket.on("privateMessage", async({senderId, recipientId, content}) => {
+    //saving on db
+    try{
+      const message = await DirectMessages.create({
+        senderId,
+        recipientId,
+        content
+      })
+
+      const safeMessage = {
+        _id: message._id.toString(),
+        senderId: message.senderId.toString(),
+        recipientId: message.recipientId.toString(),
+        content: message.content,
+        createdAt: message.createdAt,
+      };
+
+      //emit to recipient if online
+      const recipientSocketId = getUserSocketId(recipientId);
+      if (recipientSocketId) {
+        io.to(recipientSocketId).emit("privateMessage", safeMessage);
+      }
+    //  ADD THIS so sender also gets the saved message instantly
+      socket.emit("privateMessage", safeMessage);
+
+
+    }catch(err){
+      console.error("Error sending private message:", err);
+    }
+  })
 
   socket.on("userOnline", (userId) => {
     addUser(userId, socket.id)
@@ -76,4 +110,4 @@ io.on("connection", (socket) => {
 
 server.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`)); //listen for requests 
 
-export { io };
+export { io }

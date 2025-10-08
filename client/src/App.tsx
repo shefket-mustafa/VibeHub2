@@ -21,6 +21,7 @@ import { isTokenValid } from "./helpers/tokenValidator";
 import GroupsPage from "./pages/GroupsPage";
 import CreateGroupPage from "./pages/GroupsCreate";
 import GroupChatPage from "./pages/GroupChatPage";
+import { DirectChat } from "./components/DirectChat";
 
 
 function App() {
