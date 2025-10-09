@@ -36,36 +36,42 @@ export default function FriendsCard({
   return (
     <div
       key={id}
-      
-      className="h-64 w-56 rounded-lg bg-neutral-300 flex flex-col justify-end"
+      className="flex flex-col bg-neutral-800 border border-neutral-700 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition w-full sm:w-56"
     >
-      <div className="h-1/2 w-full">
-        <img
-          className="h-full w-full rounded-t-lg object-cover"
-          src={image}
-          alt=""
-        />
-      </div>
+      <img
+        src={image}
+        alt={name}
+        className="h-40 w-full object-cover"
+      />
 
-      <div className="flex-1 flex flex-col justify-between p-3">
-        <p className="">{name}</p>
-        <p className="h-8">
-          {mutualFriends.length === 0
-            ? ""
-            : `${mutualFriends.length} mutual friends`}
-        </p>
+      <div className="flex flex-col justify-between flex-1 p-3 text-white">
+        <div>
+          <p className="font-medium text-base sm:text-lg truncate">{name}</p>
+          {mutualFriends.length > 0 && (
+            <p className="text-sm text-neutral-400">
+              {mutualFriends.length} mutual friend
+              {mutualFriends.length > 1 && "s"}
+            </p>
+          )}
+        </div>
 
-        <div className="flex flex-col gap-1">
-          <button onClick={() => acceptRequestHandler(id)}
-          disabled = {isLoading || isSuccess}
-          className={`h-8 rounded-md transition ${
-            isSuccess ? "bg-gray-500 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600 cursor-pointer"
-          }`}
+        <div className="flex flex-col sm:flex-row gap-2 mt-3">
+          <button
+            onClick={() => acceptRequestHandler(id)}
+            disabled={isLoading || isSuccess}
+            className={`flex-1 py-2 rounded-md text-sm font-semibold transition ${
+              isSuccess
+                ? "bg-gray-600 cursor-not-allowed"
+                : "bg-orange-500 hover:bg-orange-600"
+            }`}
           >
-            {isSuccess ? "Request sent" : "Accept"}
+            {isSuccess ? "Accepted" : isLoading ? "Accepting..." : "Accept"}
           </button>
-          <button onClick={() => cancelRequestHandler(id)}
-          className="bg-neutral-700 cursor-pointer h-8 rounded-md hover:bg-neutral-600 transition">
+
+          <button
+            onClick={() => cancelRequestHandler(id)}
+            className="flex-1 py-2 rounded-md text-sm font-semibold bg-neutral-700 hover:bg-neutral-600 transition"
+          >
             Decline
           </button>
         </div>

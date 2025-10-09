@@ -35,7 +35,7 @@ export default function AllFriendsCard({ name, mutualFriends, image, id }: Frien
       : `${mutualFriends.length} mutual friends`}
   </p>
 
-  <div className="flex flex-col gap-1">
+  <div className="flex flex-col gap-1 z-10">
     <button
     
     onClick={() => openChat(id)}

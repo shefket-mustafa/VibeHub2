@@ -85,6 +85,26 @@ export default function Navbar() {
     {user && <ListItem disablePadding>
       <ListItemButton
         component={Link}
+        to="/friends"
+        onClick={() => setOpen(false)}
+      >
+        <ListItemText primary="Friends" primaryTypographyProps={{ fontSize: "1.25rem" }} />
+      </ListItemButton>
+    </ListItem>}
+
+    {user && <ListItem disablePadding>
+      <ListItemButton
+        component={Link}
+        to="/groups"
+        onClick={() => setOpen(false)}
+      >
+        <ListItemText primary="Groups" primaryTypographyProps={{ fontSize: "1.25rem" }} />
+      </ListItemButton>
+    </ListItem>}
+
+    {user && <ListItem disablePadding>
+      <ListItemButton
+        component={Link}
         to="/profile"
         onClick={() => setOpen(false)}
         
