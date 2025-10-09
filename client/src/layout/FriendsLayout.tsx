@@ -12,7 +12,7 @@ export default function FriendsLayout({ children }: { children: React.ReactNode 
   return (
     <section className="w-full flex flex-col md:flex-row mt-20 px-4 md:px-10 z-10">
       {/* Sidebar */}
-      <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-neutral-700 p-4 mb-4 md:mb-0">
+      <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-neutral-700 p-4 mb-4 md:mb-0 z-10">
         <div className="flex justify-between items-center border-b border-neutral-700 pb-2 mb-4">
           <p className="text-2xl font-bold text-orange-500">Friends</p>
           <BsFillGearFill className="text-white cursor-pointer hover:text-orange-500" />
