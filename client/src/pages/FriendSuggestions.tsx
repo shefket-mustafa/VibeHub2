@@ -17,7 +17,7 @@ export default function FriendSuggestions() {
     {isError && <p className="text-red-500">Failed to load suggestions</p>}
     {suggestions.length === 0 && <p className="text-white">No suggestions</p>}
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 py-6 justify-items-center">
       {suggestions.map((data: UserPreview) => (
         <FriendSuggestionCards
           key={data._id}

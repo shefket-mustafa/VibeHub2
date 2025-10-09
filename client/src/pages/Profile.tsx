@@ -25,7 +25,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto py-10 space-y-8">
+    <div className="max-w-3xl mx-auto py-10 px-5 space-y-8">
       {/* Header */}
       <div className="flex items-center gap-6 border-b border-neutral-800 pb-6">
        

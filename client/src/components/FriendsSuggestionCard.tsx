@@ -30,8 +30,8 @@ export default function FriendSuggestionCards({ name, mutualFriends, image, id }
             </div>
             
 
-<div className="flex-1 flex flex-col justify-between p-3 z-10">
-  <p className="">{name}</p>
+<div className="flex-1 flex flex-col justify-between p-3 z-10 ">
+  <p className="text-sm ">{name}</p>
   <p className="h-8">
     {mutualFriends.length === 0
       ? ""

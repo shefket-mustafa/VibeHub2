@@ -60,7 +60,7 @@ export default function GroupsPage() {
      
 
       {/* Middle Section */}
-      <div className="w-full flex-1 max-w-5xl mx-auto space-y-6 py-20">
+      <div className="w-full flex-1 max-w-5xl mx-auto space-y-6 py-20 px-5">
         {/* Header + Create button */}
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-white">Groups</h1>

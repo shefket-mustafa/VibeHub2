@@ -17,7 +17,7 @@ export default function AllFriends() {
       {error && <p className="text-red-500">Failed to fetch friends!</p>}
       {allFriends.length === 0 && <p className="text-white">No friends added!</p>}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 py-6">
         {allFriends.map((data) => (
           <AllFriendsCard
             key={data._id}

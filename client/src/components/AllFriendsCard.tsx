@@ -20,7 +20,7 @@ export default function AllFriendsCard({ name, mutualFriends, image, id }: Frien
 
     return(
 
-        <div key={id} className="h-72 w-64 rounded-2xl bg-neutral-300 flex flex-col justify-end">
+        <div key={id} className="h-64 w-56 rounded-2xl bg-neutral-300 flex flex-col justify-end z-10">
 
             <div className="h-1/2 w-full">
             <img className="h-full w-full rounded-t-2xl object-cover" src={image} alt="" />
@@ -28,7 +28,7 @@ export default function AllFriendsCard({ name, mutualFriends, image, id }: Frien
             
 
 <div className="flex-1 flex flex-col justify-between p-3">
-  <p className="text-">{name}</p>
+  <p className="text-sm">{name}</p>
   <p className="h-8">
     {mutualFriends.length === 0
       ? ""
