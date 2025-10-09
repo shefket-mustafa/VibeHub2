@@ -48,7 +48,8 @@ export default function Navbar() {
         onClose={() => setOpen(false)}
         PaperProps={{
           sx: {
-            height: "40vh",             
+            height: "auto",
+            maxHeight: "45vh",             
             backgroundColor: "#f97316",   
             color: "white",
           },
