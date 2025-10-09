@@ -1,3 +1,4 @@
+import { useChat } from "../context/ChatContext";
 import { useRemoveFriendMutation } from "../redux/services/friendsApi";
 import type { FriendsCardType } from "../types/TStypes";
 
@@ -7,7 +8,7 @@ import type { FriendsCardType } from "../types/TStypes";
 export default function AllFriendsCard({ name, mutualFriends, image, id }: FriendsCardType){
 
   const [removeFriend] = useRemoveFriendMutation();
-
+  const {openChat} = useChat();
   const removeFriendHandler = async (friendId: string) => {
     try {
       await removeFriend(friendId).unwrap();
@@ -35,7 +36,10 @@ export default function AllFriendsCard({ name, mutualFriends, image, id }: Frien
   </p>
 
   <div className="flex flex-col gap-1">
-    <button className="bg-orange-500 cursor-pointer h-8 rounded-md hover:bg-orange-600 transition">
+    <button
+    
+    onClick={() => openChat(id)}
+    className="bg-orange-500 cursor-pointer h-8 rounded-md hover:bg-orange-600 transition">
       Message
     </button>
     <button onClick={() => removeFriendHandler(id)}

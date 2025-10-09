@@ -1,3 +1,4 @@
+
 import { useAcceptFriendRequestMutation, useDeclineFriendRequestMutation } from "../redux/services/friendsApi";
 import type { FriendsCardType } from "../types/TStypes";
 
@@ -35,6 +36,7 @@ export default function FriendsCard({
   return (
     <div
       key={id}
+      
       className="h-64 w-56 rounded-lg bg-neutral-300 flex flex-col justify-end"
     >
       <div className="h-1/2 w-full">

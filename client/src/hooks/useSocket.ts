@@ -16,8 +16,13 @@ export function useSocket() {
   const { openChat } = useChat(); 
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      socket.disconnect(); // stop listening when user logs out
+      setMessages([]); // clear all messages
+      return;
+    }
 
+    socket.connect() //reconnecting when the user logs is
     socket.emit("userOnline", user.id);
 
     socket.on("onlineUsers", (users: string[]) => {
