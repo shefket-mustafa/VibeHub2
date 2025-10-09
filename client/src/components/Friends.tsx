@@ -30,62 +30,54 @@ export default function FriendsPage() {
   
 
   return (
-    <section className="w-full flex self-start mt-20 px-10 z-10">
-      {/* Left section */}
-      <div className="h-screen w-64 border-r border-neutral-700 p-4">
-        <div className="flex justify-between items-center border-b max-w-xs border-neutral-700 pb-2 mb-4">
-          <p className="text-2xl font-bold text-orange-500">Friends</p>
-          <BsFillGearFill className="text-white cursor-pointer hover:text-orange-500" />
-        </div>
+    <section className="w-full flex flex-col md:flex-row mt-20 px-4 md:px-10 z-10">
+  {/* Sidebar */}
+  <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-neutral-700 p-4 mb-4 md:mb-0">
+    <div className="flex justify-between items-center border-b border-neutral-700 pb-2 mb-4">
+      <p className="text-2xl font-bold text-orange-500">Friends</p>
+      <BsFillGearFill className="text-white cursor-pointer hover:text-orange-500" />
+    </div>
 
-        <nav className="flex flex-col gap-2">
-        <button
-            className="px-3 py-2 rounded-lg text-left cursor-pointer block text-orange-500 bg-neutral-700/40"
-            
-          >
-            Requests
-          </button>
-          <Link
-            className="px-3 py-2 rounded-lg text-white hover:text-orange-500 hover:bg-neutral-700/40"
-            to="/friends/all"
-          >
-            All friends
-          </Link>
-          <Link
-            className="px-3 py-2 rounded-lg text-white hover:text-orange-500 hover:bg-neutral-700/40"
-            to="/friends/suggestions"
-          >
-            Suggestions
-          </Link>
-         
-        </nav>
-      </div>
+    <nav className="flex md:flex-col gap-2 justify-center md:justify-start">
+      <button className="px-3 py-2 rounded-lg text-orange-500 bg-neutral-700/40">
+        Requests
+      </button>
+      <Link
+        to="/friends/all"
+        className="px-3 py-2 rounded-lg text-white hover:text-orange-500 hover:bg-neutral-700/40"
+      >
+        All friends
+      </Link>
+      <Link
+        to="/friends/suggestions"
+        className="px-3 py-2 rounded-lg text-white hover:text-orange-500 hover:bg-neutral-700/40"
+      >
+        Suggestions
+      </Link>
+    </nav>
+  </div>
 
-      {/* Right section */}
-      <div className="px-10 text-xl ">
-        <h1 className=" text-orange-500">Friend requests</h1>
+  {/* Main section */}
+  <div className="flex-1 px-4 md:px-10 text-lg">
+    <h1 className="text-orange-500 mb-4">Friend requests</h1>
 
-        {isLoading && <p className="text-neutral-400">Requests loading...</p>}
-        {error && <p className="text-red-500">Failed to fetch requests!</p>}
-        {incoming.length === 0 && <p className="text-white">No requests found!</p>}
+    {isLoading && <p className="text-neutral-400">Requests loading...</p>}
+    {error && <p className="text-red-500">Failed to fetch requests!</p>}
+    {incoming.length === 0 && <p className="text-white">No requests found!</p>}
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-15 py-10">
-          {incoming.map((data: IncomingRequest) => {
-          return (
-            <FriendsCard 
-            key={data._id}
-            id={data.requestId}
-            name={data.username} 
-            mutualFriends={[]}
-            image={friendImage}
-            
-            />
-          )})}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-6">
+      {incoming.map((data: IncomingRequest) => (
+        <FriendsCard
+          key={data._id}
+          id={data.requestId}
+          name={data.username}
+          mutualFriends={[]}
+          image={friendImage}
+        />
+      ))}
+    </div>
+  </div>
+</section>
 
-        </div>
-      </div>
-
-      
-    </section>
   );
 }
