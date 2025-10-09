@@ -5,10 +5,6 @@ import { DirectChat } from "./DirectChat";
 export function ChatPopups() {
   const [openChats, setOpenChats] = useState<string[]>([]);
 
-  const openChat = (userId: string) => {
-    setOpenChats((prev) => [...new Set([...prev, userId])]);
-  };
-
   const closeChat = (userId: string) => {
     setOpenChats((prev) => prev.filter((id) => id !== userId));
   };
