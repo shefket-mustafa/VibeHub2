@@ -55,11 +55,11 @@ export default function FriendsCard({
           )}
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-2 mt-3">
+        <div className="flex flex-col sm:flex-row gap-2 mt-3 z-10">
           <button
             onClick={() => acceptRequestHandler(id)}
             disabled={isLoading || isSuccess}
-            className={`flex-1 py-2 rounded-md text-sm font-semibold transition ${
+            className={`flex-1 py-2 rounded-md cursor-pointer text-sm font-semibold transition ${
               isSuccess
                 ? "bg-gray-600 cursor-not-allowed"
                 : "bg-orange-500 hover:bg-orange-600"
@@ -70,7 +70,7 @@ export default function FriendsCard({
 
           <button
             onClick={() => cancelRequestHandler(id)}
-            className="flex-1 py-2 rounded-md text-sm font-semibold bg-neutral-700 hover:bg-neutral-600 transition"
+            className="flex-1 cursor-pointer py-2 rounded-md text-sm font-semibold bg-neutral-700 hover:bg-neutral-600 transition"
           >
             Decline
           </button>

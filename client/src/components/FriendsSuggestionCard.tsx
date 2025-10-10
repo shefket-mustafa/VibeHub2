@@ -21,37 +21,44 @@ export default function FriendSuggestionCards({ name, mutualFriends, image, id }
     }
   }
 
-    return(
+  return (
+    <div
+      key={id}
+      className="flex flex-col bg-neutral-800 border border-neutral-700 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition w-full sm:w-56"
+    >
+      <img src={image} alt={name} className="h-40 w-full object-cover" />
 
-        <div key={id} className="h-64 w-56 rounded-lg bg-neutral-300 flex flex-col justify-end z-10">
+      <div className="flex flex-col justify-between flex-1 p-3 text-white">
+        <div>
+          <p className="font-medium text-base sm:text-lg truncate">{name}</p>
+          {mutualFriends.length > 0 && (
+            <p className="text-sm text-neutral-400">
+              {mutualFriends.length} mutual friend
+              {mutualFriends.length > 1 && "s"}
+            </p>
+          )}
+        </div>
 
-            <div className="h-1/2 w-full">
-            <img className="h-full w-full rounded-t-lg object-cover" src={image} alt="" />
-            </div>
-            
+        <div className="flex flex-col sm:flex-row gap-2 mt-3 z-10">
+          <button
+            onClick={() => handleAddFriend(id)}
+            disabled={isLoading || isSuccess}
+            className={`flex-1 py-2 rounded-md cursor-pointer text-sm font-semibold transition ${
+              isSuccess
+                ? "bg-gray-600 cursor-not-allowed"
+                : "bg-orange-500 hover:bg-orange-600"
+            }`}
+          >
+            {isSuccess ? "Request Sent" : isLoading ? "Adding..." : "Add"}
+          </button>
 
-<div className="flex-1 flex flex-col justify-between p-3 z-10 ">
-  <p className="text-sm ">{name}</p>
-  <p className="h-8">
-    {mutualFriends.length === 0
-      ? ""
-      : `${mutualFriends.length} mutual friends`}
-  </p>
-
-  <div className="flex flex-col gap-1 z-10">
-    <button onClick={() => handleAddFriend(id)} 
-    disabled = {isLoading || isSuccess}
-    className={`h-8 rounded-md transition cursor-pointer ${
-      isSuccess ? "bg-gray-500 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600 cursor-pointer"
-    }`}>
-      {isSuccess ? "Request Sent" : "Add"}
-    </button>
-    <button
-    onClick={() => openChat(id)}
-    className="bg-neutral-700 cursor-pointer h-8 rounded-md hover:bg-neutral-600 transition">
-      Message
-    </button>
-  </div>
-</div>
-</div>
-)}
+          <button
+            onClick={() => openChat(id)}
+            className="flex-1 cursor-pointer py-2 rounded-md text-sm font-semibold bg-neutral-700 hover:bg-neutral-600 transition"
+          >
+            Message
+          </button>
+        </div>
+      </div>
+    </div>
+  );}
