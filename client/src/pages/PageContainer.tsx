@@ -24,9 +24,9 @@ export default function PageContainer({children}: PropsWithChildren){
     return (
 
     //main container
-    <div className="w-full flex justify-between z-10">
+    <div className="w-full flex justify-between relative">
       {/* left section */}
-      <div className="sticky hidden md:flex flex-col top-20 w-[260px] min-h-screen max-w-2xl border-neutral-800 bg-neutral-800/30 space-y-6">
+      <div className="sticky hidden md:flex flex-col top-20 w-[260px] min-h-screen max-w-2xl border-neutral-800 bg-neutral-800/30 space-y-6 z-10">
         {/* User Profile  */}
         <div className="flex items-center gap-3 p-4 border-b border-neutral-700">
           <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold">
@@ -95,12 +95,12 @@ export default function PageContainer({children}: PropsWithChildren){
       </div>
 
       {/* middle section */}
-      <div className="w-full flex-1 max-w-xl mx-auto space-y-6 py-20">
+      <div className="w-full flex-1 max-w-xl mx-auto space-y-6 py-20 z-50">
      {children}
       </div>
 
       {/* right section */}
-      <div className="hidden md:flex sticky top-20 w-[260px] min-h-screen max-w-2xl border-neutral-800 bg-neutral-800/30 space-y-6">
+      <div className="hidden md:flex sticky top-20 w-[260px] min-h-screen max-w-2xl border-neutral-800 bg-neutral-800/30 space-y-6 z-10">
         {/* right section tags */}
         <div className="flex flex-col gap-5 p-4 border-neutral-700 border-b">
           {/* Sponsored tag */}

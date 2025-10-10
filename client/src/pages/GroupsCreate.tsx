@@ -22,13 +22,15 @@ const navigate = useNavigate();
 
 
   const onSubmit = async (data: CreateGroupData) => {
-    
+    console.log("✅ Form submitted with:", data);
     try{
-      const result = await createGroup(data)
+      const result = await createGroup(data).unwrap()
+      console.log("✅ Group created:", result);
       console.log(result);
       navigate("/groups")
 
     }catch(err){
+      console.error("❌ Error while creating group:", err);
       setError("root", {
         type: "server",
         message: String(err)
@@ -36,10 +38,11 @@ const navigate = useNavigate();
     }
 
   };
-
+  
   return (
+    
     <PageContainer>
-      <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6">
+      <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6 z-20">
         <h1 className="text-2xl font-bold text-white mb-6">Create a Group</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -83,6 +86,7 @@ const navigate = useNavigate();
           <button
             type="submit"
             disabled={isSubmitting}
+            onClick={() => console.log("🟠 Button clicked")}
             className="w-full rounded-xl cursor-pointer px-4 py-2 bg-orange-400 text-black font-semibold hover:bg-orange-500 transition"
           >
             {isSubmitting ? "Creating..." : "Create Group"}
