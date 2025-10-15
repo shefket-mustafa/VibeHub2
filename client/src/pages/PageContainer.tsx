@@ -81,7 +81,7 @@ export default function PageContainer({children}: PropsWithChildren){
             {/* green or gray circle */}
             <div
               className={`w-3 h-3 rounded-full ${
-                onlineUsers?.includes(friend._id)
+                onlineUsers?.some((u) => u.id === friend._id)
                   ? "bg-green-400"
                   : "bg-gray-500"
               }`}

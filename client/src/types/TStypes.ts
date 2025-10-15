@@ -12,6 +12,11 @@ export type Post = {
   comments: Comment[];
 };
 
+export type OnlineUsers = {
+  id: string;
+  username: string;
+};
+
 export type User = {
   id: string;
   username: string;
