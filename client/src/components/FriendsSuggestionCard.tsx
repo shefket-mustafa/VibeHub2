@@ -53,7 +53,7 @@ export default function FriendSuggestionCards({ name, mutualFriends, image, id }
           </button>
 
           <button
-            onClick={() => openChat(id)}
+            onClick={() => openChat(id, name)}
             className="flex-1 cursor-pointer py-2 rounded-md text-sm font-semibold bg-neutral-700 hover:bg-neutral-600 transition"
           >
             Message
