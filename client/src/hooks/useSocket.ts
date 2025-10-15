@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { useUser } from "./user";
-import type { DirectMessages, OnlineUsers } from "../types/TStypes";
+import type { DirectMessages } from "../types/TStypes";
 import { useChat } from "../context/ChatContext";
 
 const socket: Socket = io(import.meta.env.VITE_API_URL, {
@@ -11,7 +11,7 @@ const socket: Socket = io(import.meta.env.VITE_API_URL, {
 
 export function useSocket() {
   const { user } = useUser();
-  const [onlineUsers, setOnlineUsers] = useState<OnlineUsers[]>([]);
+  const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
   const [messages, setMessages] = useState<DirectMessages[]>([]);
   const { openChat } = useChat(); 
 
@@ -23,9 +23,9 @@ export function useSocket() {
     }
 
     socket.connect() //reconnecting when the user logs is
-    socket.emit("userOnline", {id: user.id, username: user.username});
+    socket.emit("userOnline", user.id);
 
-    socket.on("onlineUsers", (users: OnlineUsers[]) => {
+    socket.on("onlineUsers", (users: string[]) => {
       setOnlineUsers(users);
     });
 

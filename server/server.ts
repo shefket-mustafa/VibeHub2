@@ -87,8 +87,8 @@ io.on("connection", (socket) => {
     }
   })
 
-  socket.on("userOnline", ({id, username}) => {
-    addUser(id, socket.id, username)
+  socket.on("userOnline", (userId) => {
+    addUser(userId, socket.id)
     console.log("Online users: ", getAllOnlineUsers())
 
     io.emit("onlineUsers", getAllOnlineUsers())
