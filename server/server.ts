@@ -97,6 +97,12 @@ io.on("connection", (socket) => {
     //Then broadcasts an "onlineUsers" event with all online user IDs to everyone.
   })
 
+  socket.on("userOffline", () => {
+    removeUser(socket.id);
+    io.emit("onlineUsers", getAllOnlineUsers());
+    console.log("User manually logged out:", socket.id);
+  });
+
   socket.on("disconnect", () => {
     removeUser(socket.id)
 

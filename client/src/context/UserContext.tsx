@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { friendsApi } from "../redux/services/friendsApi";
 import { groupsApi } from "../redux/services/groupsApi";
+import { socket } from "../hooks/useSocket";
 
 
 
@@ -41,6 +42,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
 
   const logout = () => {
+    if (socket.connected) {
+      socket.emit("userOffline");
+      socket.disconnect();
+      console.log("🔌 Logged out — socket disconnected");
+    }
+
     handleSetUser(null);
     dispatch(friendsApi.util.resetApiState()) //clearing the RTK query
     dispatch(groupsApi.util.resetApiState());
