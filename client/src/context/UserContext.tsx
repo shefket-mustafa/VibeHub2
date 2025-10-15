@@ -20,8 +20,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const stored = localStorage.getItem("user");
     if (stored) {
+      console.log(JSON.parse(stored));
+      
       setUser(JSON.parse(stored));
     }
+    
+    
   }, []);
 
   const handleSetUser = (us: User) => {

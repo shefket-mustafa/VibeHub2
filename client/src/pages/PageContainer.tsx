@@ -86,7 +86,7 @@ export default function PageContainer({children}: PropsWithChildren){
                   : "bg-gray-500"
               }`}
             />
-            <span className="text-white px-4 py-2 rounded-2xl text-sm cursor-pointer hover:bg-gray-700 transition"  onClick={() => openChat(friend._id)}>{friend.username}</span>
+            <span className="text-white px-4 py-2 rounded-2xl text-sm cursor-pointer hover:bg-gray-700 transition"  onClick={() => openChat(friend._id, friend.username)}>{friend.username}</span>
           </li>
         ))}
       </ul>

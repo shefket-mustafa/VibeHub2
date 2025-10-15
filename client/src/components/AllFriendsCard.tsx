@@ -38,7 +38,7 @@ export default function AllFriendsCard({ name, mutualFriends, image, id }: Frien
 
         <div className="flex flex-col sm:flex-row gap-2 mt-3 z-10">
           <button
-            onClick={() => openChat(id)}
+            onClick={() => openChat(id, name)}
             className="flex-1 cursor-pointer py-2 rounded-md text-sm font-semibold bg-orange-500 hover:bg-orange-600 transition"
           >
             Message

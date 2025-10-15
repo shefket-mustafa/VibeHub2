@@ -6,10 +6,11 @@ import type { DirectMessages } from "../types/TStypes";
 
 interface DirectChatProps {
   recipientId: string;
+  recipientName: string;
   onClose: () => void;
 }
 
-export function DirectChat({ recipientId, onClose }: DirectChatProps) {
+export function DirectChat({ recipientId, recipientName, onClose }: DirectChatProps) {
     const {user} = useUser();
   const { messages, sendPrivateMessage } = useSocket();
   const [content, setContent] = useState("");
@@ -63,7 +64,7 @@ export function DirectChat({ recipientId, onClose }: DirectChatProps) {
   return (
     <div className="w-80 h-96 bg-neutral-900 border border-neutral-700 rounded-xl shadow-2xl flex flex-col relative">
       <div className="flex items-center justify-between px-3 py-2 border-b border-neutral-700 bg-neutral-800/80 rounded-t-xl ">
-        <p className="text-white text-sm font-medium">Chat</p>
+        <p className="text-white text-sm font-medium">{recipientName}</p>
         <button
           onClick={onClose}
           className="text-neutral-400 hover:text-white text-lg cursor-pointer"

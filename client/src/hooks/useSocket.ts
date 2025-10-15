@@ -38,7 +38,7 @@ export function useSocket() {
 
       //Open chat popup automatically if recipient gets a new message
       if (message.recipientId === user.id) {
-        openChat(message.senderId);
+        openChat(message.senderId, message.recipientId);
       }
     
     })
