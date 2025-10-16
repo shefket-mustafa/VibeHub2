@@ -5,6 +5,8 @@ import { useGetGroupQuery, useGetGroupMessagesQuery, useSendGroupMessageMutation
 import dayjs from "dayjs";
 import { useSocket } from "../hooks/useSocket";
 import type { GroupMessages } from "../types/TStypes";
+import { FaCircleInfo } from "react-icons/fa6";
+import GroupInfoModal from "../components/GroupInfoModal";
 
 export default function GroupChatPage() {
   const { id } = useParams<{ id: string }>();
@@ -16,8 +18,14 @@ export default function GroupChatPage() {
   const { data: group, isLoading: loadingGroup } = useGetGroupQuery(id!);
   const { data: baseMessages = [], isLoading: loadingMessages } = useGetGroupMessagesQuery(id!);
   const [sendMessage, { isLoading: sending }] = useSendGroupMessageMutation();
-  console.log(sendMessage);
-  
+  const [groupInfoModalOpen, setGroupInfoModalOpen] = useState(false);
+
+  console.log(sendMessage)
+
+  const groupInfoModalHandler = () => {
+    setGroupInfoModalOpen(prev => !prev)
+  }
+
   const bottomRef = useRef<HTMLDivElement | null>(null);
   
   const [liveMessages, setLiveMessages] = useState<GroupMessages[]>([]);
@@ -89,7 +97,10 @@ export default function GroupChatPage() {
     <div className="h-[600px] w-3/4 flex flex-col justify-center m-10 rounded-lg bg-neutral-900 text-white z-10">
       {/* Header */}
       <div className="p-4 border-b border-neutral-800 flex  justify-between">
+      <div className="flex gap-3 justify-center items-center">
         <h1 className="text-xl font-bold">{group?.name}</h1>
+        <FaCircleInfo onClick={groupInfoModalHandler} className="text-orange-500 hover:text-orange-600 cursor-pointer"/>
+      </div>
         <button className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg text-black font-semibold transition cursor-pointer"
          onClick={() => navigate(-1)}>Back</button>
       </div>
@@ -125,6 +136,15 @@ export default function GroupChatPage() {
           {sending ? "Sending..." : "Send"}
         </button>
       </form>
+
+      {groupInfoModalOpen && group && (
+        <GroupInfoModal 
+        modalHandler={groupInfoModalHandler}
+        name={group.name} 
+        description={group.description} 
+        members={group.members} 
+        owner={group.owner}/>
+      )}
     </div>
   );
 }
