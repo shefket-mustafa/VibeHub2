@@ -13,6 +13,7 @@ import {
 } from "../redux/slices/postsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import PageContainer from "./PageContainer";
+import ImageModal from "../components/FeedImageModal";
 // import type { UploadStatusType } from "../types/TStypes";
 dayjs.extend(relativeTime);
 // If you don’t extend it, dayjs(...).fromNow() will throw an error because the function doesn’t exist yet.
@@ -22,6 +23,7 @@ export default function Feed() {
   const posts = useAppSelector((state) => state.posts.items);
   const dispatch = useAppDispatch();
   const {setShowCommentsFor} = useUser();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const {
     register,
@@ -166,11 +168,11 @@ export default function Feed() {
               </p>
 
               {p.image && (
-  <div className="mt-3 rounded-lg overflow-hidden border border-neutral-800 bg-neutral-950/30">
+  <div onClick={() => setSelectedImage(p.image)} className="mt-3 rounded-lg overflow-hidden border border-neutral-800 bg-neutral-950/30">
     <img
       src={p.image}
       alt="post"
-      className="w-full max-h-80 object-cover transition-transform duration-300 hover:scale-[1.02]"
+      className="w-full max-h-80 object-cover transition-transform cursor-pointer duration-300 hover:scale-[1.02]"
       loading="lazy"
     />
   </div>
@@ -210,6 +212,12 @@ export default function Feed() {
             </li>
           ))}
         </ul>
+
+        <ImageModal
+  imageUrl={selectedImage || ""}
+  isOpen={!!selectedImage}
+  onClose={() => setSelectedImage(null)}
+/>
 
     </PageContainer>
   );
