@@ -1,102 +1,99 @@
-// src/hooks/useSocket.ts
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { useUser } from "./user";
-import type { DirectMessages } from "../types/TStypes";
 import { useChat } from "../context/ChatContext";
+import type { DirectMessages } from "../types/TStypes";
 
-// Let Socket.IO manage connection; don't force-connect repeatedly
+// --- SINGLE socket instance shared by all components ---
 export const socket: Socket = io(import.meta.env.VITE_API_URL, {
   transports: ["websocket"],
-  // autoConnect defaults to true; that's fine for this pattern
+  autoConnect: true,
 });
 
 export function useSocket() {
   const { user } = useUser();
+  const { openChat } = useChat();
   const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
   const [messages, setMessages] = useState<DirectMessages[]>([]);
-  const { openChat } = useChat();
 
+  // ---- CONNECT / ONLINE USERS / PRIVATE MESSAGES ----
   useEffect(() => {
-    // Wait until we actually know who the user is
     if (!user?.id) return;
 
-    // ---- listeners (stable references) ----
-    const onConnect = () => {
-      // Emit only after the transport is connected
-      socket.emit("userOnline", user.id);
+    const handleConnect = () => socket.emit("userOnline", user.id);
+    const handleOnlineUsers = (users: string[]) => setOnlineUsers(users);
+    const handlePrivateMessage = (message: DirectMessages) => {
+      setMessages(prev => (prev.some(m => m._id === message._id) ? prev : [...prev, message]));
+      if (message.recipientId === user.id) openChat(message.senderId, "");
     };
 
-    const onOnlineUsers = (users: string[]) => {
-      setOnlineUsers(users);
-    };
+    socket.on("connect", handleConnect);
+    socket.on("onlineUsers", handleOnlineUsers);
+    socket.on("privateMessage", handlePrivateMessage);
 
-    const onPrivateMessage = (message: DirectMessages) => {
-      setMessages((prev) => {
-        if (prev.some((m) => m._id === message._id)) return prev;
-        return [...prev, message];
-      });
+    if (socket.connected) socket.emit("userOnline", user.id);
 
-      if (message.recipientId === user.id) {
-        // NOTE: your openChat signature is (id, username). You're passing an ID twice here.
-        // This line is unrelated to the online indicator, but it's likely a bug:
-        // openChat(message.senderId, message.recipientId);
-        // If you only track IDs in ChatContext, change your openChat type to (id: string) instead.
-        openChat(message.senderId as any, "" as any);
-      }
-    };
-
-    // ---- register listeners ----
-    socket.on("connect", onConnect);
-    if (socket.connected) {
-      // If already connected (fast HMR), emit now too
-      socket.emit("userOnline", user.id);
-    }
-    socket.on("onlineUsers", onOnlineUsers);
-    socket.on("privateMessage", onPrivateMessage);
-
-    // ---- cleanup ONLY listeners (do NOT disconnect here unless logging out) ----
     return () => {
-      socket.off("connect", onConnect);
-      socket.off("onlineUsers", onOnlineUsers);
-      socket.off("privateMessage", onPrivateMessage);
+      socket.off("connect", handleConnect);
+      socket.off("onlineUsers", handleOnlineUsers);
+      socket.off("privateMessage", handlePrivateMessage);
     };
-  }, [user?.id]); // only re-run when the actual user id changes  
+  }, [user?.id, openChat]);
 
-  // When the user logs out, explicitly disconnect and clear state
+  // ---- DISCONNECT ON LOGOUT ----
   useEffect(() => {
     if (!user) {
       if (socket.connected) {
-        // manually telling the server we're going offline
         socket.emit("userOffline");
         socket.disconnect();
       }
       setOnlineUsers([]);
       setMessages([]);
-    } else {
-      // if user logs back in, reconnect and re-emit online status
-      if (!socket.connected) {
-        socket.connect();
-      }
+    } else if (!socket.connected) {
+      socket.connect();
     }
   }, [user]);
-  const sendPrivateMessage = (recipientId: string, content: string) => {
-    if (!user?.id) return;
-    socket.connect(); // ensure connected before sending (no-op if already)
-    socket.emit("privateMessage", { senderId: user.id, recipientId, content });
+
+  // ---- GROUP HELPERS ----
+  const joinGroup = (groupId: string): void => {
+    if (!socket.connected) return;
+    socket.emit("joinGroup", groupId);
+    return; // <-- make absolutely sure this function returns nothing
+  };
+  
+  const leaveGroup = (groupId: string): void => {
+    if (!socket.connected) return;
+    socket.emit("leaveGroup", groupId);
+    return; // <-- same here
+  };
+  
+  const sendGroupMessage = (groupId: string, content: string): void => {
+    if (!user?.id || !socket.connected) return;
+    socket.emit("groupMessage", { groupId, senderId: user.id, content });
+    return;
   };
 
-  return { socket, onlineUsers, messages, sendPrivateMessage };
+  const sendPrivateMessage: (recipientId: string, content: string) => void = (recipientId, content) => {
+    if (!user?.id || !socket.connected) return;
+    void socket.emit("privateMessage", { senderId: user.id, recipientId, content }); // <— voided
+  };
+
+  return {
+    socket,
+    onlineUsers,
+    messages,
+    sendPrivateMessage,
+    joinGroup,
+    leaveGroup,
+    sendGroupMessage,
+  };
 }
 
-
+// ---- HISTORY FETCH ----
 export async function getChatHistory(friendId: string, token: string) {
   const res = await fetch(`${import.meta.env.VITE_API_URL}/messages/${friendId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { Authorization: `Bearer ${token}` },
   });
-
   const data = await res.json();
   return data.messages || [];
 }

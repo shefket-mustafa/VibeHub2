@@ -12,6 +12,9 @@ export type Post = {
   comments: Comment[];
 };
 
+
+
+
 export type User = {
   id: string;
   username: string;

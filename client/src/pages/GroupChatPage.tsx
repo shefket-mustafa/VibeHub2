@@ -1,29 +1,85 @@
 // src/pages/GroupChatPage.tsx
 import { useNavigate, useParams } from "react-router";
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useGetGroupQuery, useGetGroupMessagesQuery, useSendGroupMessageMutation } from "../redux/services/groupsApi";
 import dayjs from "dayjs";
+import { useSocket } from "../hooks/useSocket";
+import type { GroupMessages } from "../types/TStypes";
 
 export default function GroupChatPage() {
   const { id } = useParams<{ id: string }>();
+  const groupId = id ?? "";
   const [text, setText] = useState("");
   const navigate = useNavigate();
-
+  const { joinGroup, leaveGroup, sendGroupMessage, socket } = useSocket();
   // Queries
   const { data: group, isLoading: loadingGroup } = useGetGroupQuery(id!);
-  const { data: messages = [], isLoading: loadingMessages } = useGetGroupMessagesQuery(id!);
+  const { data: baseMessages = [], isLoading: loadingMessages } = useGetGroupMessagesQuery(id!);
   const [sendMessage, { isLoading: sending }] = useSendGroupMessageMutation();
 
-  const handleSend = async (e: React.FormEvent) => {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  
+  const [liveMessages, setLiveMessages] = useState<GroupMessages[]>([]);
+  if (!id) return <p className="text-white">Invalid group.</p>;
+  if (!groupId) return <p className="text-white">Invalid group.</p>;
+
+  useEffect(() => {
+    if (!groupId) return;
+
+    joinGroup(id);
+
+    return () => {
+      leaveGroup(groupId);
+    };
+
+  }, [groupId ]);
+
+  // reset live buffer when group changes or baseMessages refetch
+  useEffect(() => {
+    setLiveMessages([]);
+  }, [id]);
+
+  useEffect(() => {
+    if (!socket || !id) return;
+  
+    const handleGroupMessage = (msg: GroupMessages) => {
+      if (msg.group === id) {
+        setLiveMessages((prev) => {
+          if (prev.some((m) => m._id === msg._id)) return prev;
+          return [...prev, msg];
+        });
+      }
+    };
+  
+    socket.on("groupMessage", handleGroupMessage);
+  
+    // ✅ proper cleanup — React expects a void-returning function
+    return () => {
+      socket.off("groupMessage", handleGroupMessage);
+    };
+  }, [socket, id]);
+
+  // merge REST + live (dedupe by _id)
+  const combinedMessages = useMemo(() => {
+    const byId = new Set(baseMessages.map((m) => m._id));
+    const merged = [...baseMessages, ...liveMessages.filter((m) => !byId.has(m._id))]
+    //sorting oldest-> newest
+    return merged.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+  }, [baseMessages, liveMessages]);
+
+  useEffect(() => {
+
+    requestAnimationFrame(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    });
+  },[combinedMessages])
+
+  const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim()) return;
-
-    try {
-      await sendMessage({ id: id!, text }).unwrap();
-      setText(""); 
-    } catch (err) {
-      console.error("Failed to send message:", err);
-    }
+    // socket only — no REST POST to avoid duplicate + refetch
+    sendGroupMessage(id, text);
+    setText("");
   };
 
   if (loadingGroup || loadingMessages) return <p className="text-white">Loading chat...</p>;
@@ -39,7 +95,7 @@ export default function GroupChatPage() {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
-        {messages.map((m: any) => (
+        {combinedMessages.map((m: GroupMessages) => (
           <div key={m._id} className="flex gap-2">
             <span className="font-semibold text-orange-500">{m.sender?.username}:</span>
             <span>{m.text}</span>
@@ -48,6 +104,7 @@ export default function GroupChatPage() {
                 </span>
           </div>
         ))}
+        <div ref={bottomRef} />
       </div>
 
       {/* Input */}

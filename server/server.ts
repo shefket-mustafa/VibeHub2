@@ -13,6 +13,13 @@ import { groupsRoutes } from "./routes/groupsRoute.js";
 import {addUser, removeUser, getAllOnlineUsers, getUserSocketId} from "./socketStore.js"
 import { DirectMessages } from "./models/directMessages.js";
 import messagesRoutes from "./routes/messagesRoute.js";
+import { GroupMessages } from "./models/GroupMessages.js";
+
+export interface IUser {
+  _id: string;
+  username: string;
+  email: string;
+}
 
 dotenv.config(); //import .env variables
 
@@ -102,6 +109,46 @@ io.on("connection", (socket) => {
     io.emit("onlineUsers", getAllOnlineUsers());
     console.log("User manually logged out:", socket.id);
   });
+
+  socket.on("joinGroup", (groupId) => {
+    socket.join(groupId);
+    console.log(`${socket.id} joined group $${groupId}.`)
+  })
+
+  socket.on("leaveGroup", (groupId) => {
+    socket.leave(groupId);
+    console.log(`🚪 ${socket.id} left group ${groupId}`);
+  });
+
+  socket.on("groupMessage", async ({ groupId, senderId, content }) => {
+    try {
+      const message = await GroupMessages.create({
+        group: groupId,
+        sender: senderId,
+        text: content,
+      }); 
+
+      const populated = await message.populate<{sender: IUser}>("sender", "username email");
+
+      const safeMessage = {
+        _id: populated._id.toString(),
+        group: groupId,
+        sender: {
+          _id: populated.sender._id.toString(),
+          username: populated.sender.username,
+          email: populated.sender.email,
+        },
+        text: populated.text,
+        createdAt: populated.createdAt,
+      };
+      io.to(groupId).emit("groupMessage", safeMessage);
+        
+    
+      console.log(`💬 Group ${groupId}: ${content}`);
+    } catch (err) {
+      console.error("Error sending group message:", err);
+    }
+  });  
 
   socket.on("disconnect", () => {
     removeUser(socket.id)
