@@ -13,7 +13,7 @@ import GroupInfoModal from "../components/GroupInfoModal";
 export default function GroupsPage() {
   const [activeTab, setActiveTab] = useState<"your" | "discover">("your");
   const {user} = useUser()
-  const {groupInfoModalHandler, groupInfoModalOpen, selectedGroupHandler, selectedGroup} = useGroups();
+  const { groupInfoModalOpen, selectedGroupHandler, selectedGroup} = useGroups();
   
   
   const {data: discoverGroups=[], error: errorDiscoverGroups, isLoading: isLoadingDiscoverGroups} = useGetAllGroupsQuery();
