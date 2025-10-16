@@ -7,6 +7,7 @@ import { useSocket } from "../hooks/useSocket";
 import type { GroupMessages } from "../types/TStypes";
 import { FaCircleInfo } from "react-icons/fa6";
 import GroupInfoModal from "../components/GroupInfoModal";
+import { useGroups } from "../hooks/groups";
 
 export default function GroupChatPage() {
   const { id } = useParams<{ id: string }>();
@@ -18,13 +19,9 @@ export default function GroupChatPage() {
   const { data: group, isLoading: loadingGroup } = useGetGroupQuery(id!);
   const { data: baseMessages = [], isLoading: loadingMessages } = useGetGroupMessagesQuery(id!);
   const [sendMessage, { isLoading: sending }] = useSendGroupMessageMutation();
-  const [groupInfoModalOpen, setGroupInfoModalOpen] = useState(false);
-
+  const {groupInfoModalOpen, groupInfoModalHandler} = useGroups();
   console.log(sendMessage)
 
-  const groupInfoModalHandler = () => {
-    setGroupInfoModalOpen(prev => !prev)
-  }
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
   
@@ -139,7 +136,6 @@ export default function GroupChatPage() {
 
       {groupInfoModalOpen && group && (
         <GroupInfoModal 
-        modalHandler={groupInfoModalHandler}
         name={group.name} 
         description={group.description} 
         members={group.members} 

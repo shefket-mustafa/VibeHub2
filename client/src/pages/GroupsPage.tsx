@@ -5,12 +5,15 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import PageContainer from "./PageContainer";
 import { useDeleteGroupMutation, useGetAllGroupsQuery, useGetYourGroupsQuery, useJoinGroupMutation } from "../redux/services/groupsApi";
 import { useUser } from "../hooks/user";
+import { useGroups } from "../hooks/groups";
+import GroupInfoModal from "../components/GroupInfoModal";
 
 
 
 export default function GroupsPage() {
   const [activeTab, setActiveTab] = useState<"your" | "discover">("your");
   const {user} = useUser()
+  const {groupInfoModalHandler, groupInfoModalOpen, selectedGroupHandler, selectedGroup} = useGroups();
   
   
   const {data: discoverGroups=[], error: errorDiscoverGroups, isLoading: isLoadingDiscoverGroups} = useGetAllGroupsQuery();
@@ -122,16 +125,22 @@ export default function GroupsPage() {
 
 
           <div className="flex gap-3">
-            {g.owner === user?.id && (<button onClick={() => handleDeleteGroup(g._id)}
+
+            {g.owner._id === user?.id && (<button onClick={() => handleDeleteGroup(g._id)}
            className="text-sm cursor-pointer text-orange-400 hover:underline">
             Delete
           </button>)} 
+
+          {<button
+          onClick={()=>selectedGroupHandler(g)}
+          className="text-sm text-orange-400 cursor-pointer hover:underline"
+          >Info</button>}
           
           <Link
             to={`/groups/details/${g._id}/`}
             className="text-sm text-orange-400 hover:underline"
             >
-            View
+            Enter
           </Link>
             </div>
         </li>
@@ -155,7 +164,7 @@ export default function GroupsPage() {
           </div>
         </div>
         
-          <button onClick={() => handleJoinGroup(g._id)} className="text-sm text-black bg-orange-400 hover:bg-orange-500 px-3 py-1 rounded-lg transition">
+          <button onClick={() => handleJoinGroup(g._id)} className="text-sm text-black bg-orange-400 hover:bg-orange-500 px-3 py-1 cursor-pointer rounded-lg transition">
             Join
           </button>
         
@@ -165,7 +174,14 @@ export default function GroupsPage() {
   )}
 </ul>
       </div>
-
+      {groupInfoModalOpen && selectedGroup && (
+  <GroupInfoModal
+    name={selectedGroup.name}
+    description={selectedGroup.description}
+    members={selectedGroup.members}
+    owner={selectedGroup.owner}
+  />
+)}
     
     </div>
   </PageContainer>
