@@ -35,9 +35,9 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
   - View all groups you belong to ("Your Groups")
   - Discover groups you are not part of ("Discover")
   - Group chat system:
-    - View messages in real-time feed
+    - View messages in real-time feed using Socket.Io
     - Send messages to other group members
-    - Messages display sender information (username + email)
+    - Messages display sender information (username)
   - Fully integrated with RTK Query for fetching, joining, deleting, and messaging
 
  - **💬 Direct Messaging (NEW)**
