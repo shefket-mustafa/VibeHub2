@@ -74,6 +74,7 @@ export default function GroupsPage() {
 
         {/* Tabs */}
         <div className="flex gap-6 border-b border-neutral-800 mb-6">
+          {/* Your Groups */}
           <button
             className={`pb-2 cursor-pointer ${
               activeTab === "your"
@@ -84,6 +85,8 @@ export default function GroupsPage() {
           >
             Your Groups
           </button>
+
+            {/* Discover */}
           <button
             className={`pb-2 cursor-pointer ${
               activeTab === "discover"
@@ -163,10 +166,16 @@ export default function GroupsPage() {
             </p>
           </div>
         </div>
+
+        <div className="flex gap-3"> 
+        <button onClick={() => selectedGroupHandler(g)} className="text-sm text-black bg-orange-400 hover:bg-orange-500 px-3 py-1 cursor-pointer rounded-lg transition">
+            Info
+          </button>
         
           <button onClick={() => handleJoinGroup(g._id)} className="text-sm text-black bg-orange-400 hover:bg-orange-500 px-3 py-1 cursor-pointer rounded-lg transition">
             Join
           </button>
+        </div>
         
         
       </li>

@@ -25,7 +25,7 @@ export const groupsApi = createApi({
             }),
             invalidatesTags: ["Groups"]
         }),
-        getAllGroups: builder.query<GroupCreateRequest[], void>({
+        getAllGroups: builder.query<Group[], void>({
             query: () => ({
                 url: "groups/discover",
                 method: "GET"

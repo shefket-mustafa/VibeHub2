@@ -43,7 +43,7 @@ groupsRoutes.get("/discover", authMiddleware, async(req: RequestWithUser, res: e
 
 
     try{
-        const groups = await Group.find({members: {$nin: [req.user?.id]}})
+        const groups = await Group.find({members: {$nin: [req.user?.id]}}).populate("members", "username email").populate("owner", "username email")
         // Give me all groups where the members array does not include this user id.
         
         res.json(groups)
