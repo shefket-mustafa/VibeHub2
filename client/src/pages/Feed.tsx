@@ -166,12 +166,15 @@ export default function Feed() {
               </p>
 
               {p.image && (
-                <img
-                  src={p.image}
-                  alt="post"
-                  className="mt-2 rounded-lg max-h-60 object-cover"
-                />
-              )}
+  <div className="mt-3 rounded-lg overflow-hidden border border-neutral-800 bg-neutral-950/30">
+    <img
+      src={p.image}
+      alt="post"
+      className="w-full max-h-80 object-cover transition-transform duration-300 hover:scale-[1.02]"
+      loading="lazy"
+    />
+  </div>
+)}
 
 
               <div className="mt-3 flex justify-between items-center gap-4">
