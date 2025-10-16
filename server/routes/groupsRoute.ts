@@ -31,7 +31,7 @@ groupsRoutes.post("/create", authMiddleware, async (req: RequestWithUser,res: ex
 groupsRoutes.get("/my-groups", authMiddleware, async(req: RequestWithUser, res: express.Response) => {
 
     try{
-        const groups = await Group.find({members: req.user?.id});
+        const groups = await Group.find({members: req.user?.id}).populate("members", "username email").populate("owner", "username email");;
 
         res.json(groups)
     }catch(err){

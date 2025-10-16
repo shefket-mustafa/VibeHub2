@@ -26,8 +26,8 @@ export type UserContextType =
       user: User;
       setUser: (us: User) => void;
       logout: () => void;
-      showCommentsFor: string,
-      setShowCommentsFor: (id: string) => void
+      showCommentsFor: string;
+      setShowCommentsFor: (id: string) => void;
     }
   | undefined;
 
@@ -62,9 +62,35 @@ export type GroupInfoTypesModalHandler = {
   description: string;
   members: Members[];
   owner: Owner;
-  modalHandler: ()=> void
 }
 
+export type GroupContextType = {
+  groupInfoModalOpen: boolean;
+  groupInfoModalHandler: () => void;
+  selectedGroupHandler: (group: Group) => void
+  selectedGroup: Group | null
+}
+
+export type GroupCreateRequest = {
+  _id: string,
+  name: string,
+  description: string,
+  owner: string,
+  members: string[] | null
+}
+
+export type GroupsCreateResponse = {
+  message: string,
+  group: GroupCreateRequest
+
+}
+export type Group = {
+  _id: string,
+  name: string,
+  description: string,
+  members: Members[];
+  owner: Owner;
+}
 export type CommentModalProps = {
   postId: string;
   isOpen: boolean;
@@ -91,26 +117,6 @@ export type UserPreview = {
   
 }
 
-export type GroupCreateRequest = {
-  _id: string,
-  name: string,
-  description: string,
-  owner: string,
-  members: string[] | null
-}
-
-export type GroupsCreateResponse = {
-  message: string,
-  group: GroupCreateRequest
-
-}
-export type Group = {
-  _id: string,
-  name: string,
-  description: string,
-  owner: string,
-  members: string[]
-}
 
 export type Record = {
   userId: string,

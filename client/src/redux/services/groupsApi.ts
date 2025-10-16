@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { GroupCreateRequest, GroupInfoTypes, GroupMessages, GroupsCreateResponse } from "../../types/TStypes";
+import type { Group, GroupCreateRequest, GroupInfoTypes, GroupMessages, GroupsCreateResponse } from "../../types/TStypes";
 import type { CreateGroupData } from "../../zod/createGroupSchema";
 
 
@@ -32,7 +32,7 @@ export const groupsApi = createApi({
             }),
             providesTags: ["Groups"]
         }),
-        getYourGroups: builder.query<GroupCreateRequest[], void>({
+        getYourGroups: builder.query<Group[], void>({
             query: () => ({
                 url: "groups/my-groups",
                 method: "GET"

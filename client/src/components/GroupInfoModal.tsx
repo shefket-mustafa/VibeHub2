@@ -1,6 +1,9 @@
+import { useGroups } from "../hooks/groups";
 import type { GroupInfoTypesModalHandler, Members } from "../types/TStypes";
+import {v4 as uuidv4} from "uuid";
 
-export default function GroupInfo({ name, description, members, owner, modalHandler }: GroupInfoTypesModalHandler) {
+export default function GroupInfoModal({ name, description, members, owner }: GroupInfoTypesModalHandler) {
+    const {groupInfoModalHandler} = useGroups();
   return (
     <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
       {/* Modal Container */}
@@ -11,7 +14,7 @@ export default function GroupInfo({ name, description, members, owner, modalHand
           <h2 className="text-2xl font-bold text-orange-400">Group Info</h2>
           <button
             className="text-neutral-400 cursor-pointer hover:text-orange-400 text-2xl font-bold transition"
-            onClick={modalHandler}
+            onClick={groupInfoModalHandler}
           >
             ✕
           </button>
@@ -36,7 +39,7 @@ export default function GroupInfo({ name, description, members, owner, modalHand
           {/* Owner */}
           <div>
             <h3 className="text-xl font-semibold text-orange-300 mb-1">Owner</h3>
-            <p className="text-neutral-300">{owner.email}</p>
+            <p className="text-neutral-300">{owner.username}</p>
           </div>
 
           {/* Members */}
@@ -47,7 +50,7 @@ export default function GroupInfo({ name, description, members, owner, modalHand
                 members.map((m: Members) => (
                     
                   <span
-                    key={m._id}
+                    key={`${m._id}-${uuidv4()}`}
                     className="px-3 py-1 rounded-full bg-neutral-800 text-sm text-neutral-200 border border-neutral-700"
                   >
                     {m.email}
