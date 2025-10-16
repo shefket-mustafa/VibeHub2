@@ -1,4 +1,4 @@
-import type { GroupInfoTypes, GroupInfoTypesModalHandler, Members } from "../types/TStypes";
+import type { GroupInfoTypesModalHandler, Members } from "../types/TStypes";
 
 export default function GroupInfo({ name, description, members, owner, modalHandler }: GroupInfoTypesModalHandler) {
   return (
