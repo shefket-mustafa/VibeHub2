@@ -38,6 +38,33 @@ export type Comment = {
   createdAt: string;
 };
 
+export type Members = {
+  _id: string,
+  username: string,
+  email: string  
+}
+
+export type Owner = {
+  _id: string,
+  username: string,
+  email: string
+}
+
+export type GroupInfoTypes = {
+  name: string;
+  description: string;
+  members: Members[];
+  owner: Owner;
+}
+
+export type GroupInfoTypesModalHandler = {
+  name: string;
+  description: string;
+  members: Members[];
+  owner: Owner;
+  modalHandler: ()=> void
+}
+
 export type CommentModalProps = {
   postId: string;
   isOpen: boolean;
@@ -97,6 +124,8 @@ export type DirectMessages = {
   content: string,
   createdAt: string
 }
+
+
 
 export type GroupMessages = {
   _id: string,

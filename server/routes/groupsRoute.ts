@@ -55,7 +55,9 @@ groupsRoutes.get("/discover", authMiddleware, async(req: RequestWithUser, res: e
 groupsRoutes.get("/:id", authMiddleware, async(req: RequestWithUser, res: express.Response) => {
     try{
 
-        const group = await Group.findById(req.params.id).populate("members", "username email");
+        const group = await Group.findById(req.params.id)
+        .populate("members", "username email")
+        .populate("owner", "username email");;
         if (!group) return res.status(404).json({ message: "Group not found" });
         res.json(group);
     }catch(err){
