@@ -16,7 +16,8 @@ export default function GroupChatPage() {
   const { data: group, isLoading: loadingGroup } = useGetGroupQuery(id!);
   const { data: baseMessages = [], isLoading: loadingMessages } = useGetGroupMessagesQuery(id!);
   const [sendMessage, { isLoading: sending }] = useSendGroupMessageMutation();
-
+  console.log(sendMessage);
+  
   const bottomRef = useRef<HTMLDivElement | null>(null);
   
   const [liveMessages, setLiveMessages] = useState<GroupMessages[]>([]);
