@@ -19,6 +19,10 @@ export type User = {
   id: string;
   username: string;
   email: string;
+  bio: string;
+  age: string;
+  city: string;
+  profilePicture: string
 } | null;
 
 export type UserContextType =

@@ -21,6 +21,7 @@ import { isTokenValid } from "./helpers/tokenValidator";
 import GroupsPage from "./pages/GroupsPage";
 import CreateGroupPage from "./pages/GroupsCreate";
 import GroupChatPage from "./pages/GroupChatPage";
+import EditProfile from "./pages/EditProfile";
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
 
           {user && <Route path="/feed" element={<Feed />} />}
           {user && <Route path="/profile" element={<Profile />} />}
+          {user && <Route path="/editProfile" element={<EditProfile />} />}
           {user && <Route path="/friends" element={<FriendsPage />} />}
           {user && <Route path="/friends/all" element={<AllFriends />} />}
           {user && <Route path="/friends/suggestions" element={<FriendSuggestions />} />}

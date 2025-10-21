@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "../hooks/user";
 import type { Post } from "../types/TStypes";
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import { Link } from "react-router";
 
 export default function Profile() {
   const { user } = useUser();
@@ -33,10 +34,10 @@ export default function Profile() {
         <div>
           <h1 className="text-2xl font-bold text-white">{user.username}</h1>
           <p className="text-neutral-400">@{user.username.toLowerCase()}</p>
-          <p className="text-neutral-500 text-sm mt-1">{user.email}</p>
-          <button className="mt-3 px-4 py-1 rounded-lg bg-orange-500 text-black font-semibold hover:bg-white hover:text-black transition">
+          <p className="text-neutral-500 text-sm mt-1 mb-3">{user.email}</p>
+          <Link to="/editProfile" className="mt-5 px-4 py-1 rounded-lg bg-orange-500 text-black cursor-pointer font-semibold hover:bg-orange-600 hover:text-black transition">
             Edit Profile
-          </button>
+          </Link>
         </div>
       </div>
 
