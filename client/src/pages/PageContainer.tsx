@@ -31,7 +31,7 @@ export default function PageContainer({children}: PropsWithChildren){
         <div className="flex items-center gap-3 p-4 border-b border-neutral-700">
             <Link to="/profile">
           <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold">
-            {user?.username?.[0]?.toUpperCase() ?? "?"}
+            {user?.profilePicture || <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"/>}
           </div>
             </Link>
             <Link to="/profile">
