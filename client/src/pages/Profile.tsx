@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../hooks/user";
 import type { Post } from "../types/TStypes";
-import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import { Link } from "react-router";
 
 export default function Profile() {
@@ -29,7 +28,7 @@ export default function Profile() {
     <div className="max-w-3xl mx-auto py-10 px-5 space-y-8">
       {/* Header */}
       <div className="flex items-center gap-6 border-b border-neutral-800 pb-6">
-        <img className="rounded-full border-2 h-20 text-white border-orange-500" src={user.profilePicture || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Loading" />
+        <img className="rounded-full border-2 w-15 h-15 text-white border-orange-500" src={user.profilePicture || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Loading" />
         
         <div>
           <h1 className=" text-orange-500 text-2xl font-bold">{user.username}</h1>
