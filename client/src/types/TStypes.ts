@@ -17,8 +17,14 @@ export type Post = {
 
 export type User = {
   id: string;
+  _id?: string; 
   username: string;
   email: string;
+  bio: string;
+  age: string;
+  city: string;
+  country: string;
+  profilePicture: string
 } | null;
 
 export type UserContextType =

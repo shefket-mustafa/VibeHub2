@@ -14,6 +14,7 @@ import {addUser, removeUser, getAllOnlineUsers, getUserSocketId} from "./socketS
 import { DirectMessages } from "./models/directMessages.js";
 import messagesRoutes from "./routes/messagesRoute.js";
 import { GroupMessages } from "./models/GroupMessages.js";
+import userRoutes from "./routes/userRoutes.js";
 
 export interface IUser {
   _id: string;
@@ -45,6 +46,7 @@ app.use("/posts", postRoutes);
 app.use("/friends", friendsRoutes);
 app.use("/groups", groupsRoutes);
 app.use("/messages", messagesRoutes);
+app.use("/users", userRoutes);
 
 // --- SOCKET.IO SETUP ---  
 const server = http.createServer(app); //This creates the real HTTP server from our Express app.

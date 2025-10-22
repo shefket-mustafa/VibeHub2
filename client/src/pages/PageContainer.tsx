@@ -1,6 +1,6 @@
 import {  type PropsWithChildren } from "react";
 import { useUser } from "../hooks/user";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -29,9 +29,13 @@ export default function PageContainer({children}: PropsWithChildren){
       <div className="sticky hidden md:flex flex-col top-20 w-[260px] min-h-screen max-w-2xl border-neutral-800 bg-neutral-800/30 space-y-6 z-10">
         {/* User Profile  */}
         <div className="flex items-center gap-3 p-4 border-b border-neutral-700">
-          <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold">
-            {user?.username?.[0]?.toUpperCase() ?? "?"}
+            <Link to="/profile">
+          <div className="w-15 h-15 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold">
+            <img className="rounded-3xl" src={user?.profilePicture || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Loading..." />
+            
           </div>
+            </Link>
+            <Link to="/profile">
           <div>
             <p className="text-white font-medium">
               {user?.username ?? "Guest"}
@@ -40,6 +44,7 @@ export default function PageContainer({children}: PropsWithChildren){
               {user?.email ?? "anonymous"}
             </p>
           </div>
+            </Link>
         </div>
         {/* left section tags */}
         <div className="flex flex-col items-start gap-5 p-4 border-neutral-700 ">
