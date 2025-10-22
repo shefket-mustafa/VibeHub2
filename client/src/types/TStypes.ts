@@ -12,7 +12,11 @@ export type Post = {
   comments: Comment[];
 };
 
-
+export type Friends = {
+  _id: string,
+  username: string,
+  email: string
+}
 
 
 export type User = {

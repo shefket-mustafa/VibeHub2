@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../hooks/user";
-import type { Post } from "../types/TStypes";
+import type { Friends, Post } from "../types/TStypes";
 import { Link } from "react-router";
 
 export default function Profile() {
   const { user } = useUser();
   const baseUrl = import.meta.env.VITE_API_URL;
   const [posts, setPosts] = useState<Post[]>([]);
+  const [friends, setFriends] = useState<Friends[]>([])
 
   useEffect(() => {
     if (!user?.id) return;
@@ -15,6 +16,20 @@ export default function Profile() {
       .then((data) => setPosts(data))
       .catch((err) => console.error("Failed to fetch user posts:", err));
   }, [user, baseUrl]);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    fetch(`${baseUrl}/friends/all`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    })
+    .then((res) => res.json()
+  .then((data) => {
+    console.log(data);
+    
+    setFriends(data.friends)}))
+  },[])
 
   if (!user) {
     return (
@@ -55,8 +70,8 @@ export default function Profile() {
       {/* Stats */}
       <div className="flex gap-8 text-neutral-400">
         <span>{posts.length} Posts</span>
-        <span>120 Followers</span>
-        <span>200 Following</span>
+        <span>{friends.length} Friends</span>
+        
       </div>
 
       {/* Posts */}
