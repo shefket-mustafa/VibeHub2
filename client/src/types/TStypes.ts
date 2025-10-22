@@ -22,6 +22,7 @@ export type User = {
   bio: string;
   age: string;
   city: string;
+  country: string;
   profilePicture: string
 } | null;
 

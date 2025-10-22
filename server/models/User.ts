@@ -7,6 +7,7 @@ const userSchema = new Schema({
     bio: {type: String, default: ""},
     age: {type: String, default: ""},
     city: {type: String, default: ""},
+    country: {type: String, default: ""},
     profilePicture: {type: String, default: ""} //for Cloudinary
 }, {timestamps: true})
 

@@ -37,7 +37,7 @@ export default function Feed() {
   const contentValue = watch("content") || "";
   const { user } = useUser();
   const [file, setFile] = useState<File | null>(null);
- 
+  
   const onSubmit = async (data: FeedPostData) => {
     try {
       const formData = new FormData();
