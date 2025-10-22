@@ -1,10 +1,14 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import type { User } from "../types/TStypes";
 import { useUser } from "../hooks/user";
+import { useNavigate } from "react-router";
 
 export default function EditProfile(){
 
-    const { user } = useUser();
+    const baseUrl = import.meta.env.VITE_API_URL;
+    const { user, setUser } = useUser();
+    const navigate = useNavigate();
+    const [file, setFile] = useState<File | null>(null);
     const [formData, setFormData] = useState<Partial<User>>({
         id: "string",
         username: "",
@@ -32,6 +36,7 @@ export default function EditProfile(){
                 country: user.country || "",
                 profilePicture: user.profilePicture || ""
             })
+            setPreview(user.profilePicture || "")
         };
     },[user])
 
@@ -40,7 +45,44 @@ export default function EditProfile(){
         setFormData((prev) => ({...prev, [name]: value}))
     }
 
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if(e.target.files && e.target.files[0]){
+            const selected = e.target.files[0];
+            setFile(selected);
+            setPreview(URL.createObjectURL(selected)) //showing preview immediately
+        }
+    }
 
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+
+        try{
+            const data = new FormData();
+            data.append("username", formData?.username || "");
+            data.append("bio", formData?.bio || "");
+            data.append("age", String(formData?.age ?? ""));
+            data.append("city", formData?.city || "");
+            data.append("country", formData?.country || "");
+            if(file) data.append("profilePicture", file);
+
+              const res = await fetch(`${baseUrl}/users/editProfile/${user?._id || user?.id}`, {
+                method: "PUT",
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                body: data,
+              })
+
+              if (!res.ok) throw new Error("Failed to update profile");
+              const updated = await res.json();
+          
+              setUser({...updated, id: updated._id || updated.id }); // update context
+              navigate("/profile");
+
+        }catch(err){
+            console.error(err)
+        }
+    }
+
+   
 
 
     return(
@@ -48,7 +90,7 @@ export default function EditProfile(){
         <div className="max-w-2xl mx-auto py-10 px-5 text-white z-10">
       <h1 className="text-2xl font-bold mb-6">Edit Profile</h1>
 
-      <form  className="space-y-5 z-10">
+      <form onSubmit={handleSubmit}  className="space-y-5 z-10">
         {/* Profile Picture */}
         <div className="flex flex-col items-center z-10">
           <img
