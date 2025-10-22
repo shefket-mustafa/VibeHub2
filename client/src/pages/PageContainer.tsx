@@ -30,9 +30,9 @@ export default function PageContainer({children}: PropsWithChildren){
         {/* User Profile  */}
         <div className="flex items-center gap-3 p-4 border-b border-neutral-700">
             <Link to="/profile">
-          <div className="w-15 h-15 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold">
-            <img className="rounded-3xl" src={user?.profilePicture || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Loading..." />
-            
+          <div className="w-16 h-16 rounded-full overflow-hidden bg-orange-500 flex items-center justify-center text-black font-bold">
+            <img className="rounded-3xl object-cover w-full h-full" src={user?.profilePicture || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Loading..." />
+          
           </div>
             </Link>
             <Link to="/profile">

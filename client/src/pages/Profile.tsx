@@ -28,7 +28,9 @@ export default function Profile() {
     <div className="max-w-3xl mx-auto py-10 px-5 space-y-8">
       {/* Header */}
       <div className="flex items-center gap-6 border-b border-neutral-800 pb-6">
-        <img className="rounded-full border-2 w-15 h-15 text-white border-orange-500" src={user.profilePicture || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Loading" />
+        <div className="rounded-full w-16 h-16 overflow-hidden flex items-center justify-center">
+        <img className=" w-full h-full object-cover" src={user.profilePicture || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Loading" />
+        </div>
         
         <div>
           <h1 className=" text-orange-500 text-2xl font-bold">{user.username}</h1>

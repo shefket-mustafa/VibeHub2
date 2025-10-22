@@ -24,7 +24,16 @@ try{
             process.env.JWT_SECRET as string, {expiresIn: "2h"}
         )
 
-    return res.json({token, user: {id: existingUser._id, username: existingUser.username, email: existingUser.email}})
+    return res.json({token, user: {
+        id: existingUser._id, 
+        username: existingUser.username, 
+        email: existingUser.email, 
+        city: existingUser.city,
+        age: existingUser.age,
+        country: existingUser.country,
+        bio: existingUser.bio,
+        profilePicture: existingUser.profilePicture
+    }})
 }catch(err){
     console.error(err)
     return res.status(500).json({error: "Login failed!"})
