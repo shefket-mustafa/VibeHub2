@@ -46,7 +46,7 @@ app.use("/posts", postRoutes);
 app.use("/friends", friendsRoutes);
 app.use("/groups", groupsRoutes);
 app.use("/messages", messagesRoutes);
-app.use("/user", userRoutes);
+app.use("/users", userRoutes);
 
 // --- SOCKET.IO SETUP ---  
 const server = http.createServer(app); //This creates the real HTTP server from our Express app.

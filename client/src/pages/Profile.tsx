@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../hooks/user";
 import type { Post } from "../types/TStypes";
-import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import { Link } from "react-router";
 
 export default function Profile() {
@@ -10,7 +10,7 @@ export default function Profile() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user?.id) return;
     fetch(`${baseUrl}/posts/user/${user.id}`)
       .then((res) => res.json())
       .then((data) => setPosts(data))
@@ -29,13 +29,23 @@ export default function Profile() {
     <div className="max-w-3xl mx-auto py-10 px-5 space-y-8">
       {/* Header */}
       <div className="flex items-center gap-6 border-b border-neutral-800 pb-6">
-       
-        <EmojiPeopleIcon className=" rounded-full border-2 text-white border-orange-500" fontSize="large"/>
+        <img className="rounded-full border-2 h-20 text-white border-orange-500" src={user.profilePicture || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Loading" />
+        
         <div>
-          <h1 className="text-2xl font-bold text-white">{user.username}</h1>
+          <h1 className=" text-orange-500 text-2xl font-bold">{user.username}</h1>
+          {user.bio && <p className="text-white text-sm break-words whitespace-pre-wrap max-w-[300px]">{user.bio}</p>}
+          <div className="flex gap-3 text-neutral-500 text-sm">
+            {user.age && <span>🎂 {user.age}</span>}
+            {user.city && <span>📍 {user.city}</span>}
+            {user.country && <span>🌍 {user.country}</span>}
+          </div>
           <p className="text-neutral-400">@{user.username.toLowerCase()}</p>
           <p className="text-neutral-500 text-sm mt-1 mb-3">{user.email}</p>
-          <Link to="/editProfile" className="mt-5 px-4 py-1 rounded-lg bg-orange-500 text-black cursor-pointer font-semibold hover:bg-orange-600 hover:text-black transition">
+
+          <Link
+            to="/editProfile"
+            className="mt-5 px-4 py-1 rounded-lg bg-orange-500 text-black cursor-pointer font-semibold hover:bg-orange-600 hover:text-black transition"
+          >
             Edit Profile
           </Link>
         </div>
@@ -57,7 +67,9 @@ export default function Profile() {
               className="rounded-2xl border border-neutral-800 p-4 bg-neutral-900/30"
             >
               <div className="flex items-center justify-between text-sm text-neutral-400 mb-2">
-                <span className="font-medium text-orange-500">@{p.authorName}</span>
+                <span className="font-medium text-orange-500">
+                  @{p.authorName}
+                </span>
                 <span>{new Date(p.createdAt).toLocaleDateString()}</span>
               </div>
               <p className="text-white whitespace-pre-wrap">{p.content}</p>
