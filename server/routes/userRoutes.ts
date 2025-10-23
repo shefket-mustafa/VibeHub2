@@ -17,6 +17,19 @@ userRoutes.put("/editProfile/:id", authMiddleware, upload.single("profilePicture
         if(!req.user || req.user.id !== req.params.id) return res.status(403).json({error: "Unauthorized!"});
 
         const {username, bio, age, city, country} = req.body;
+
+        if(username){
+            const currentUser = await User.findById(req.params.id);
+            if(username !== currentUser?.username) {
+
+                const existingUsername = await User.findOne({ username });
+                if(existingUsername && existingUsername._id.toString() !== req.params.id) { 
+                    //existingUser._id is a MongoDB ObjectId thats why toString
+                    
+                    return res.status(400).json({error: "Username already taken!"})
+                }
+            }
+        }
         let profilePictureUrl = req.body.profilePicture;
 
         if(req.file){
