@@ -68,6 +68,8 @@ export default function EditProfile() {
       const updated = await res.json();
 
       setUser({ ...updated, id: updated._id || updated.id }); // update context
+
+      localStorage.setItem("user", JSON.stringify(updated))
       navigate("/profile");
     } catch (err) {
       setError("root", {

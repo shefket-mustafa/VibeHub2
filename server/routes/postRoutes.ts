@@ -8,6 +8,7 @@ import multer from "multer"
 import cloudinary from "../cloudinary.js";
 import streamifier from "streamifier";
 import type { UploadApiResponse } from "cloudinary";
+import User from "../models/User.js"
 
 const upload = multer({storage: multer.memoryStorage() });
 
@@ -46,11 +47,13 @@ postRoutes.post(
         return res.status(401).json({ error: "Not authenticated" });
       }
 
+      const user = await User.findById(req.user.id);
+
       const newPost = await Post.create({
         content,
         image: imageUrl,
-        authorId: req.user.id,
-        authorName: req.user.username,
+        authorId: user?._id,
+        authorName: user?.username,
       });
 
       return res.status(201).json(newPost);
@@ -179,6 +182,7 @@ postRoutes.post(
 
       const post = await Post.findById(req.params.id);
       if (!post) return res.status(404).json({ error: "Post not found" });
+
 
       post.comments.push({
         authorId: req.user.id,
