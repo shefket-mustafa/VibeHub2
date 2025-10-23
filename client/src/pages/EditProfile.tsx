@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { useUser } from "../hooks/user";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
