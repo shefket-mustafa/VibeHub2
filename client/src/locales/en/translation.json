@@ -31,9 +31,19 @@
           "forgot": {
             "title": "Forgot Password",
             "email": "Enter your email",
-            "button": "Send a reset link"
+            "button1": "Send a reset link",
+            "button2": "Sending"
           }
-        }
+        },
+
+          "navbar": {
+            "home": "Home",
+            "feed": "Feed",
+            "friends": "Friends",
+            "groups": "Groups",
+            "profile": "Profile",
+            "logout": "Logout"
+          }
 
         
       }
