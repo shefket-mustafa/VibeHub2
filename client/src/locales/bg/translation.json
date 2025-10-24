@@ -1,51 +1,62 @@
-
 {
-
-    "auth": {
-      "login": {
-        "title": "Влез във ",
-        "email": "Имейл",
-        "emailPlaceholder": "you@example.com",
-        "password": "Парола",
-        "passwordPlaceholder": "••••••••",
-        "forgot": "Забравена парола?",
-        "button1": "Вход",
-        "button2": "Влизане..",
-        "noAccount": "Нямаш акаунт?",
-        "createProfile": "Създай профил"
-      },
-      "register": {
-        "title": "Създай своят акаунт",
-        "username": "Потребителско име",
-        "usernamePlaceholder": "избери потребителско име",
-        "email": "Имейл",
-        "emailPlaceholder": "you@example.com",
-        "password": "Парола",
-        "passwordPlaceholder": "••••••••",
-        "confirmPassword": "Потвърди паролата",
-        "confirmPasswordPlaceholder": "••••••••",
-        "button1": "Създай акаунт",
-        "button2": "Създаване..",
-        "haveAccount": "Вече имаш акаунт?",
-        "signIn": "Влез"
-      },
-      "forgot": {
-        "title": "Забравена парола",
-        "email": "Въведи имейла си",
-        "button1": "Изпрати линк за възстановяване",
-        "button2": "Изпращане.."
-      }
+  "auth": {
+    "login": {
+      "title": "Влез във ",
+      "email": "Имейл",
+      "emailPlaceholder": "you@example.com",
+      "password": "Парола",
+      "passwordPlaceholder": "••••••••",
+      "forgot": "Забравена парола?",
+      "button1": "Вход",
+      "button2": "Влизане..",
+      "noAccount": "Нямаш акаунт?",
+      "createProfile": "Създай профил"
     },
-
-    "navbar": {
-      "home": "Начало",
-      "feed": "Новини",
-      "friends": "Приятели",
-      "groups": "Групи",
-      "profile": "Профил",
-      "logout": "Изход"
+    "register": {
+      "title": "Създай своят акаунт",
+      "username": "Потребителско име",
+      "usernamePlaceholder": "избери потребителско име",
+      "email": "Имейл",
+      "emailPlaceholder": "you@example.com",
+      "password": "Парола",
+      "passwordPlaceholder": "••••••••",
+      "confirmPassword": "Потвърди паролата",
+      "confirmPasswordPlaceholder": "••••••••",
+      "button1": "Създай акаунт",
+      "button2": "Създаване..",
+      "haveAccount": "Вече имаш акаунт?",
+      "signIn": "Влез"
+    },
+    "forgot": {
+      "title": "Забравена парола",
+      "email": "Въведи имейла си",
+      "button1": "Изпрати линк за възстановяване",
+      "button2": "Изпращане.."
     }
+  },
 
+  "navbar": {
+    "home": "Начало",
+    "feed": "Новини",
+    "friends": "Приятели",
+    "groups": "Групи",
+    "profile": "Профил",
+    "logout": "Изход"
+  },
 
+  "feed": {
+    "placeholder": "Сподели вайб...",
+    "choose": "Избери файл",
+     "post1": "Качи",
+    "post2": "Качване...",
+    "friends": "Приятели",
+    "groups": "Групи",
+    "memories": "Спомени",
+    "online": "Онлайн",
+     "comments": "Коментари",
+    "delete": "Изтрий",
+    "noFriends": "Не сте добавили приятели",
+    "sponsored": "Спонсорирани от",
+    "ad": "Може да си поставите рекламите тук за 150$/м"
   }
-  
+}

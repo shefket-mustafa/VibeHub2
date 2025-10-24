@@ -8,6 +8,7 @@ import CommentModal from "../components/CommentModal";
 import { useGetAllFriendsQuery } from "../redux/services/friendsApi";
 import { useSocket } from "../hooks/useSocket";
 import { useChat } from "../context/ChatContext";
+import { useTranslation } from "react-i18next";
 
 
 export default function PageContainer({children}: PropsWithChildren){
@@ -18,6 +19,7 @@ export default function PageContainer({children}: PropsWithChildren){
     const {user} = useUser();
     const navigate = useNavigate();
     const {openChat} = useChat();
+    const {t} = useTranslation();
 
 
     
@@ -54,7 +56,7 @@ export default function PageContainer({children}: PropsWithChildren){
               className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
             >
               <PeopleAltIcon className="text-orange-500" />
-              <p className="text-white">Friends</p>
+              <p className="text-white">{t("feed.friends")}</p>
             </div>
             
             <div
@@ -62,7 +64,7 @@ export default function PageContainer({children}: PropsWithChildren){
               className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
             >
               <GroupsIcon className="text-orange-500" />
-              <p className="text-white">Groups</p>
+              <p className="text-white">{t("feed.groups")}</p>
             </div>
 
             <div
@@ -70,7 +72,7 @@ export default function PageContainer({children}: PropsWithChildren){
               className="flex gap-3 items-center cursor-pointer hover:bg-neutral-700/30 rounded-lg px-3 py-2 transition"
             >
               <BrowseGalleryIcon className="text-orange-500" />
-              <p className="text-white">Memories</p>
+              <p className="text-white">{t("feed.memories")}</p>
             </div>
 
           </div>
@@ -78,10 +80,10 @@ export default function PageContainer({children}: PropsWithChildren){
 
         {/* Contacts */}
         <div className="p-4 border-t border-neutral-700">
-          <p className="text-lg font-semibold mb-3 text-orange-500">Online</p>
+          <p className="text-lg font-semibold mb-3 text-orange-500">{t("feed.online")}</p>
          
           <ul className="space-y-2">
-        {friends.length ===0 ? (<p className="text-neutral-500">You haven't added any friends :/</p>) : friends.map((friend) => (
+        {friends.length ===0 ? (<p className="text-neutral-500">{t("feed.noFriends")} :/</p>) : friends.map((friend) => (
           <li key={friend._id} className="flex items-center gap-3">
             {/* green or gray circle */}
             <div
@@ -111,7 +113,7 @@ export default function PageContainer({children}: PropsWithChildren){
           {/* Sponsored tag */}
           <div className="p-4 border-b border-neutral-700">
             <p className="text-lg font-semibold mb-3 text-orange-500">
-              Sponsored by
+              {t("feed.sponsored")}
             </p>
             <div className="space-y-3">
               {[1, 2, 3].map((n) => (
@@ -125,7 +127,7 @@ export default function PageContainer({children}: PropsWithChildren){
                     className="w-full h-32 object-cover bg-no-repeat bg-center"
                   />
                   <p className="text-sm text-white p-2">
-                    You can place your ads here for 150$/m
+                    {t("feed.ad")}
                   </p>
                 </div>
               ))}

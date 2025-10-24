@@ -174,7 +174,7 @@ export default function Navbar() {
 
         {user && (
           <button onClick={logout} className="hidden md:flex cursor-pointer hover:underline">
-            Logout
+            {t("navbar.logout")}
           </button>
         )}
       </div>

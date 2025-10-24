@@ -1,51 +1,61 @@
+{
+  "auth": {
+    "login": {
+      "title": "Sign in to ",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "forgot": "Forgot password?",
+      "button1": "Sign In",
+      "button2": "Signing In",
+      "noAccount": "Don’t have an account?",
+      "createProfile": "Create a profile"
+    },
+    "register": {
+      "title": "Create your account",
+      "username": "Username",
+      "usernamePlaceholder": "choose a username",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "confirmPassword": "Confirm password",
+      "confirmPasswordPlaceholder": "••••••••",
+      "button1": "Create Account",
+      "button2": "Creating..",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "forgot": {
+      "title": "Forgot Password",
+      "email": "Enter your email",
+      "button1": "Send a reset link",
+      "button2": "Sending"
+    }
+  },
 
-    {
+  "navbar": {
+    "home": "Home",
+    "feed": "Feed",
+    "friends": "Friends",
+    "groups": "Groups",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
 
-        "auth": {
-          "login": {
-            "title": "Sign in to ",
-            "email": "Email",
-            "emailPlaceholder": "you@example.com",
-            "password": "Password",
-            "forgot": "Forgot password?",
-            "button1": "Sign In",
-            "button2": "Signing In",
-            "noAccount": "Don’t have an account?",
-            "createProfile": "Create a profile"
-          },
-          "register": {
-            "title": "Create your account",
-            "username": "Username",
-            "usernamePlaceholder": "choose a username",
-            "email": "Email",
-            "emailPlaceholder": "you@example.com",
-            "password": "Password",
-            "passwordPlaceholder": "••••••••",
-            "confirmPassword": "Confirm password",
-            "confirmPasswordPlaceholder": "••••••••",
-            "button1": "Create Account",
-            "button2": "Creating..",
-            "haveAccount": "Already have an account?",
-            "signIn": "Sign in"
-          },
-          "forgot": {
-            "title": "Forgot Password",
-            "email": "Enter your email",
-            "button1": "Send a reset link",
-            "button2": "Sending"
-          }
-        },
-
-          "navbar": {
-            "home": "Home",
-            "feed": "Feed",
-            "friends": "Friends",
-            "groups": "Groups",
-            "profile": "Profile",
-            "logout": "Logout"
-          }
-
-        
-      }
-
-      
+  "feed": {
+    "placeholder": "Share a vibe...",
+    "choose": "Choose a file",
+    "post1": "Post",
+    "post2": "Posting...",
+    "friends": "Friends",
+    "groups": "Groups",
+    "memories": "Memories",
+    "online": "Online",
+    "comments": "Comments",
+    "delete": "Delete",
+    "noFriends": "You haven't added any friends",
+    "sponsored": "Sponsored By",
+    "ad": "You can place your ads here for 150$/m"
+  }
+}
