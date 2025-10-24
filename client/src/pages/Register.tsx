@@ -2,12 +2,12 @@ import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { registerSchema, type RegisterFormData } from "../zod/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import {useTranslation} from "react-i18next";
 
 
 export default function RegisterPage() {
   
-
+  const { t } = useTranslation();
   const baseUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const {
@@ -43,9 +43,9 @@ export default function RegisterPage() {
 
   return (
     <section className="w-full max-w-sm z-10">
-      <h1 className="text-3xl font-bold text-center mb-6">
-        Create your <span className="text-orange-500">VibeHub</span> account
-      </h1>
+      
+      <h1 className="text-3xl font-bold text-center mb-6 text-orange-500">{t("auth.register.title")}</h1>
+
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -56,12 +56,12 @@ export default function RegisterPage() {
 
         <div className="space-y-1">
           <label htmlFor="username" className="text-sm text-neutral-300">
-            Username
+          {t("auth.register.username")}
           </label>
           <input
             id="username"
             type="text"
-            placeholder="choose a username"
+            placeholder={t("auth.register.usernamePlaceholder")}
             {...register("username")}
             className="w-full rounded-lg bg-neutral-200 border border-neutral-800 px-3 py-2 outline-none focus:border-orange-500"
           />
@@ -72,7 +72,7 @@ export default function RegisterPage() {
 
         <div className="space-y-1">
           <label htmlFor="email" className="text-sm text-neutral-300">
-            Email
+          {t("auth.register.email")}
           </label>
           <input
             id="email"
@@ -88,7 +88,7 @@ export default function RegisterPage() {
 
         <div className="space-y-1">
           <label htmlFor="password" className="text-sm text-neutral-300">
-            Password
+          {t("auth.register.password")}
           </label>
           <input
             id="password"
@@ -104,7 +104,7 @@ export default function RegisterPage() {
 
         <div className="space-y-1">
           <label htmlFor="password" className="text-sm text-neutral-300">
-            Confirm password
+          {t("auth.register.confirmPassword")}
           </label>
           <input
             id="confirmPassword"
@@ -125,17 +125,17 @@ export default function RegisterPage() {
           disabled={isSubmitting}
           className="w-full rounded-xl px-4 py-2 bg-orange-500 cursor-pointer text-black font-semibold hover:bg-orange-400 transition"
         >
-          {isSubmitting ? "Creating..." : "Create Account"}
+          {isSubmitting ? t("auth.register.button2") : t("auth.register.button1")}
         </button>
       </form>
 
       <p className="text-sm text-neutral-400 text-center mt-4">
-        Already have an account?{" "}
+      {t("auth.register.haveAccount")}{"  "}
         <Link
           to="/auth/login"
           className="text-orange-500 cursor-pointer hover:underline"
         >
-          Sign in
+          {t("auth.register.signIn")}
         </Link>
       </p>
     </section>

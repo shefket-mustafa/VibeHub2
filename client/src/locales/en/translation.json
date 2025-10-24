@@ -1,0 +1,41 @@
+
+    {
+
+        "auth": {
+          "login": {
+            "title": "Sign in to ",
+            "email": "Email",
+            "emailPlaceholder": "you@example.com",
+            "password": "Password",
+            "forgot": "Forgot password?",
+            "button1": "Sign In",
+            "button2": "Signing In",
+            "noAccount": "Don’t have an account?",
+            "createProfile": "Create a profile"
+          },
+          "register": {
+            "title": "Create your account",
+            "username": "Username",
+            "usernamePlaceholder": "choose a username",
+            "email": "Email",
+            "emailPlaceholder": "you@example.com",
+            "password": "Password",
+            "passwordPlaceholder": "••••••••",
+            "confirmPassword": "Confirm password",
+            "confirmPasswordPlaceholder": "••••••••",
+            "button1": "Create Account",
+            "button2": "Creating..",
+            "haveAccount": "Already have an account?",
+            "signIn": "Sign in"
+          },
+          "forgot": {
+            "title": "Forgot Password",
+            "email": "Enter your email",
+            "button": "Send a reset link"
+          }
+        }
+
+        
+      }
+
+      

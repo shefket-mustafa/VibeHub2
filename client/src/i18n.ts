@@ -1,8 +1,9 @@
 import i18n from "i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
-import { initReactI18next } from "react-i18next";
-import en from "./en/translation.json";
-import bg from "./bg/translation.json";
+import LanguageDetector from 'i18next-browser-languagedetector'
+import { initReactI18next } from "react-i18next"; 
+
+import en from "./locales/en/translation.json";
+import bg from "./locales/bg/translation.json";
 
 
 i18n
@@ -22,7 +23,6 @@ i18n
         en: { translation: en },
         bg: { translation: bg },
       },
-    },
-  );
+    });
 
   export default i18n;

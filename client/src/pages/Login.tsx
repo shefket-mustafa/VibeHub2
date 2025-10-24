@@ -3,10 +3,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { loginSchema, type LoginFormData } from "../zod/loginSchema";
 import { useUser } from "../hooks/user";
+import { useTranslation } from "react-i18next";
 
 export default function AuthPage() {
   const baseUrl = import.meta.env.VITE_API_URL;
   const { setUser } = useUser();
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -41,9 +43,10 @@ export default function AuthPage() {
 
   return (
     <section className="w-full flex flex-col justify-center max-w-sm mx-auto z-10">
-      <h1 className="text-3xl font-bold text-center mb-6">
-        Sign in to <span className="text-orange-500">VibeHub</span>
-      </h1>
+       <h1 className="text-3xl font-bold text-center mb-6">
+      {t("auth.login.title")}{" "}
+      <span className="text-orange-500">VibeHub</span>
+    </h1>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -55,7 +58,7 @@ export default function AuthPage() {
         {/* errors caught by setError on api response */}
         <div className="space-y-1">
           <label htmlFor="email" className="text-sm text-neutral-300">
-            Email
+          {t("auth.login.email")}{" "}
           </label>
           <input
             id="email"
@@ -71,13 +74,13 @@ export default function AuthPage() {
         <div className="space-y-1">
           <div className="flex items-center justify-between">
             <label htmlFor="password" className="text-sm text-neutral-300">
-              Password
+            {t("auth.login.password")}{" "}
             </label>
             <Link
               to="/auth/forgot"
               className="text-sm text-orange-500 hover:underline"
             >
-              Forgot password?
+              {t("auth.login.forgot")}
             </Link>
           </div>
           <input
@@ -96,7 +99,7 @@ export default function AuthPage() {
           disabled={isSubmitting}
           className="w-full rounded-xl px-4 py-2 cursor-pointer bg-orange-500 text-black font-semibold hover:bg-orange-400 transition"
         >
-          {isSubmitting ? "Signing in..." : "Sign In"}
+          {isSubmitting ? t("auth.login.button2") : t("auth.login.button1")}
         </button>
         <div className="relative my-2">
           <div className="absolute inset-0 flex items-center">
@@ -106,12 +109,14 @@ export default function AuthPage() {
         </div>
       </form>
 
-      <p className="text-sm text-neutral-400 text-center mt-4">
-        Don’t have an account?{" "}
+          <div className = "flex gap-3 justify-center">
+      <span className="text-sm text-neutral-400 text-center mt-4">
+      {t("auth.login.noAccount")}{"  "}
         <Link to="/auth/register" className="text-orange-400 hover:underline">
-          Create a profile
+        {t("auth.login.createProfile")}
         </Link>
-      </p>
+      </span>
+      </div>
     </section>
   );
 }

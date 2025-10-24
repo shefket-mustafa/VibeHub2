@@ -1,0 +1,41 @@
+
+{
+
+    "auth": {
+      "login": {
+        "title": "Влез във ",
+        "email": "Имейл",
+        "emailPlaceholder": "you@example.com",
+        "password": "Парола",
+        "passwordPlaceholder": "••••••••",
+        "forgot": "Забравена парола?",
+        "button1": "Вход",
+        "button2": "Влизане..",
+        "noAccount": "Нямаш акаунт?",
+        "createProfile": "Създай профил"
+      },
+      "register": {
+        "title": "Създай своят акаунт",
+        "username": "Потребителско име",
+        "usernamePlaceholder": "избери потребителско име",
+        "email": "Имейл",
+        "emailPlaceholder": "you@example.com",
+        "password": "Парола",
+        "passwordPlaceholder": "••••••••",
+        "confirmPassword": "Потвърди паролата",
+        "confirmPasswordPlaceholder": "••••••••",
+        "button1": "Създай акаунт",
+        "button2": "Създаване..",
+        "haveAccount": "Вече имаш акаунт?",
+        "signIn": "Влез"
+      },
+      "forgot": {
+        "title": "Забравена парола",
+        "email": "Въведи имейла си",
+        "button": "Изпрати линк за възстановяване"
+      }
+    }
+
+
+  }
+  
