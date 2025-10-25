@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useChat } from "../context/ChatContext";
 import { useSendFriendRequestMutation } from "../redux/services/friendsApi";
 import type { FriendsCardType } from "../types/TStypes";
@@ -9,6 +10,7 @@ export default function FriendSuggestionCards({ name, mutualFriends, image, id }
 
   const [sendFriendRequest, { isLoading, isSuccess }] = useSendFriendRequestMutation();
   const { openChat } = useChat(); 
+  const {t} = useTranslation();
   const handleAddFriend = async (id: string) => {
 
     try{
@@ -33,8 +35,7 @@ export default function FriendSuggestionCards({ name, mutualFriends, image, id }
           <p className="font-medium text-base sm:text-lg truncate">{name}</p>
           {mutualFriends.length > 0 && (
             <p className="text-sm text-neutral-400">
-              {mutualFriends.length} mutual friend
-              {mutualFriends.length > 1 && "s"}
+              {mutualFriends.length} {t("friends.mutual")}
             </p>
           )}
         </div>
@@ -49,14 +50,14 @@ export default function FriendSuggestionCards({ name, mutualFriends, image, id }
                 : "bg-orange-500 hover:bg-orange-600"
             }`}
           >
-            {isSuccess ? "Request Sent" : isLoading ? "Adding..." : "Add"}
+            {isSuccess ? t("friends.suggestions.sent") : isLoading ? t("friends.suggestions.adding") : t("friends.suggestions.add")}
           </button>
 
           <button
             onClick={() => openChat(id, name)}
             className="flex-1 cursor-pointer py-2 rounded-md text-sm font-semibold bg-neutral-700 hover:bg-neutral-600 transition"
           >
-            Message
+            {t("friends.suggestions.message")}
           </button>
         </div>
       </div>

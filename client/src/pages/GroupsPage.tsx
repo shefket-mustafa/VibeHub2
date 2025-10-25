@@ -7,6 +7,7 @@ import { useDeleteGroupMutation, useGetAllGroupsQuery, useGetYourGroupsQuery, us
 import { useUser } from "../hooks/user";
 import { useGroups } from "../hooks/groups";
 import GroupInfoModal from "../components/GroupInfoModal";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -14,7 +15,7 @@ export default function GroupsPage() {
   const [activeTab, setActiveTab] = useState<"your" | "discover">("your");
   const {user} = useUser()
   const { groupInfoModalOpen, selectedGroupHandler, selectedGroup} = useGroups();
-  
+  const {t} = useTranslation();
   
   const {data: discoverGroups=[], error: errorDiscoverGroups, isLoading: isLoadingDiscoverGroups} = useGetAllGroupsQuery();
   const {data: yourGroups=[], error: errorMyGroups, isLoading: isLoadingYourGroups} = useGetYourGroupsQuery();
@@ -66,9 +67,9 @@ export default function GroupsPage() {
       <div className="w-full flex-1 max-w-5xl mx-auto space-y-6 py-20 px-5">
         {/* Header + Create button */}
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold text-white">Groups</h1>
+          <h1 className="text-2xl font-bold text-white">{t("groups.main.title")}</h1>
           <Link to='/groups/create' className="rounded-xl px-4 py-2 bg-orange-400 text-black cursor-pointer font-semibold hover:bg-orange-500 transition">
-            + Create Group
+            + {t("groups.main.create")}
           </Link>
         </div>
 
@@ -83,7 +84,7 @@ export default function GroupsPage() {
             }`}
             onClick={() => setActiveTab("your")}
           >
-            Your Groups
+            {t("groups.main.yourGroups")}
           </button>
 
             {/* Discover */}
@@ -95,7 +96,7 @@ export default function GroupsPage() {
             }`}
             onClick={() => setActiveTab("discover")}
           >
-            Discover
+            {t("groups.main.discover")}
           </button>
         </div>
 
@@ -103,13 +104,13 @@ export default function GroupsPage() {
          {error && <p className="text-sm text-red-500">{error}</p>}
 
 {/* Loading */}
-{isLoading && <p className="text-sm text-neutral-400">Loading...</p>}
+{isLoading && <p className="text-sm text-neutral-400">{t("groups.main.loading")}</p>}
 
         {/* Group List */}
         <ul className="space-y-4">
   {activeTab === "your" ? (
     yourGroups.length === 0 ? (
-      <p className="text-sm text-neutral-400">You haven&apos;t joined any groups!</p>
+      <p className="text-sm text-neutral-400">{t("groups.main.notJoined")}</p>
     ) : (
       yourGroups.map((g) => (
         <li
@@ -121,7 +122,7 @@ export default function GroupsPage() {
             <div>
               <p className="text-white font-medium">{g.name}</p>
               <p className="text-sm text-neutral-400">
-                {g.members?.length} {g.members?.length === 1 ? "member" : "members"} 
+                {g.members?.length} {g.members?.length === 1 ? t("groups.main.member") : t("groups.main.members")} 
               </p>
             </div>
           </div>
@@ -131,26 +132,26 @@ export default function GroupsPage() {
 
             {g.owner._id === user?.id && (<button onClick={() => handleDeleteGroup(g._id)}
            className="text-sm cursor-pointer text-orange-400 hover:underline">
-            Delete
+            {t("groups.main.delete")}
           </button>)} 
 
           {<button
           onClick={()=>selectedGroupHandler(g)}
           className="text-sm text-orange-400 cursor-pointer hover:underline"
-          >Info</button>}
+          >{t("groups.main.info")}</button>}
           
           <Link
             to={`/groups/details/${g._id}/`}
             className="text-sm text-orange-400 hover:underline"
             >
-            Enter
+            {t("groups.main.enter")}
           </Link>
             </div>
         </li>
       ))
     )
   ) : discoverGroups?.length === 0 ? (
-    <p className="text-sm text-neutral-400">No groups left to discover!</p>
+    <p className="text-sm text-neutral-400">{t("groups.main.noDiscover")}</p>
   ) : (
     discoverGroups?.map((g) => (
       <li
@@ -169,11 +170,11 @@ export default function GroupsPage() {
 
         <div className="flex gap-3"> 
         <button onClick={() => selectedGroupHandler(g)} className="text-sm text-black bg-orange-400 hover:bg-orange-500 px-3 py-1 cursor-pointer rounded-lg transition">
-            Info
+            {t("groups.main.info")}
           </button>
         
           <button onClick={() => handleJoinGroup(g._id)} className="text-sm text-black bg-orange-400 hover:bg-orange-500 px-3 py-1 cursor-pointer rounded-lg transition">
-            Join
+            {t("groups.main.join")}
           </button>
         </div>
         

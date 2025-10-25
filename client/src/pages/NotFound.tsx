@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import { FaGhost } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export default function NotFound() {
 
+  const {t} = useTranslation();
   const navigate = useNavigate();
   return (
     <section className="w-full flex flex-col items-center justify-center min-h-screen text-center bg-neutral-950 text-white px-6 z-10">
@@ -16,7 +18,7 @@ export default function NotFound() {
         <FaGhost className="text-orange-500 text-7xl mb-4 animate-bounce" />
         <h1 className="text-6xl font-bold mb-2">404</h1>
         <p className="text-lg text-neutral-400 mb-6">
-          Whoooops... looks like this vibe doesn’t exist 👻
+          {t("notFound.oops")} 👻
         </p>
         <button
           onClick={() => navigate(-1)}

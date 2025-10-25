@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { CommentModalProps } from "../types/TStypes";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addComent, fetchComments } from "../redux/slices/postsSlice";
+import { useTranslation } from "react-i18next";
 
 export default function CommentModal({
   postId,
@@ -13,6 +14,7 @@ export default function CommentModal({
   const comments = post?.comments || [];
   const dispatch = useAppDispatch();
   const [newComment, setNewComment] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -47,7 +49,7 @@ export default function CommentModal({
       >
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-neutral-700">
-          <h2 className="text-lg font-semibold">Comments</h2>
+          <h2 className="text-lg font-semibold">{t("comments.title")}</h2>
           <button
             onClick={onClose}
             className="text-orange-400 cursor-pointer hover:text-orange-200"
@@ -59,7 +61,7 @@ export default function CommentModal({
         {/* Comment list */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
           {comments.length === 0 ? (
-            <p className="text-neutral-400">No comments yet.</p>
+            <p className="text-neutral-400">{t("comments.empty")}</p>
           ) : (
             comments.map((c) => (
               <div key={c._id} className="border-b border-neutral-700 pb-2">
@@ -78,7 +80,7 @@ export default function CommentModal({
           <input
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Write a comment..."
+            placeholder={t("comments.placeHolder")}
             className="flex-1 rounded-md bg-neutral-800 border border-neutral-600 px-3 py-2 text-white outline-none"
           />
           <button
@@ -86,7 +88,7 @@ export default function CommentModal({
             disabled={!newComment.trim()}
             className="bg-orange-500 hover:bg-orange-400 disabled:opacity-50 rounded-lg px-4"
           >
-            Post
+            {t("comments.post")}
           </button>
         </div>
       </div>

@@ -14,6 +14,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import PageContainer from "./PageContainer";
 import ImageModal from "../components/FeedImageModal";
+import { useTranslation } from "react-i18next";
 // import type { UploadStatusType } from "../types/TStypes";
 dayjs.extend(relativeTime);
 // If you don’t extend it, dayjs(...).fromNow() will throw an error because the function doesn’t exist yet.
@@ -24,6 +25,7 @@ export default function Feed() {
   const dispatch = useAppDispatch();
   const {setShowCommentsFor} = useUser();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const {
     register,
@@ -105,7 +107,7 @@ export default function Feed() {
           )}{" "}
           {/* errors caught by setError on api response */}
           <textarea
-            placeholder="Share a vibe..."
+            placeholder={t("feed.placeholder")}
             className="w-full h-24 resize-none rounded-md bg-neutral-200 border border-neutral-400 p-3 outline-none focus:border-orange-500"
             maxLength={500}
             {...register("content")}
@@ -133,7 +135,7 @@ export default function Feed() {
                 </div>
               )}
               <label htmlFor="post-image" className="cursor-pointer text-center overflow-hidden max-w-lg bg-orange-400 max-h-10 md:max-h-8 text-black hover:bg-orange-500 py-2 px-4 rounded-xl transition font-semibold">
-                Choose a file
+                {t("feed.choose")}
               </label>
 
               <button
@@ -141,7 +143,7 @@ export default function Feed() {
                 disabled={isSubmitting}
                 className="rounded-xl max-h-10 md:max-h-8 px-4 py-2 bg-orange-400 text-black cursor-pointer font-semibold hover:bg-orange-500 transition"
               >
-                {isSubmitting ? "Posting..." : "Post"}
+                {isSubmitting ? t("feed.post2") : t("feed.post1")}
               </button>
             </div>
           </div>
@@ -194,7 +196,7 @@ export default function Feed() {
                     onClick={() => setShowCommentsFor(p._id)}
                     className="text-sm text-black bg-orange-400 hover:bg-orange-500 transition px-3 py-1 rounded-lg cursor-pointer "
                   >
-                    💬 Comments
+                    💬 {t("feed.comments")}
                   </button>
 
                   {user?.id === p.authorId.toString() ? (
@@ -202,7 +204,7 @@ export default function Feed() {
                       onClick={() => onDelete(p._id)}
                       className="px-3 py-1 cursor-pointer hover:bg-orange-600 transition rounded-lg bg-orange-400"
                     >
-                      Delete
+                      {t("feed.delete")}
                     </button>
                   ) : (
                     ""

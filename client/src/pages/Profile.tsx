@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useUser } from "../hooks/user";
 import type { Friends, Post } from "../types/TStypes";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
 
 export default function Profile() {
   const { user } = useUser();
   const baseUrl = import.meta.env.VITE_API_URL;
   const [posts, setPosts] = useState<Post[]>([]);
   const [friends, setFriends] = useState<Friends[]>([])
+  const {t} = useTranslation();
 
   useEffect(() => {
     if (!user?.id) return;
@@ -34,7 +36,7 @@ export default function Profile() {
   if (!user) {
     return (
       <div className="max-w-3xl mx-auto py-10 text-center text-white">
-        <p>You need to log in to view your profile.</p>
+        <p>{t("profile.error")}</p>
       </div>
     );
   }
@@ -49,7 +51,7 @@ export default function Profile() {
         
         <div>
           <h1 className=" text-orange-500 text-2xl font-bold">{user.username}</h1>
-          {user.bio && <p className="text-white text-sm break-words whitespace-pre-wrap max-w-[300px]">{user.bio}</p>}
+          {user.bio && <p className="text-white text-sm whitespace-pre-wrap max-w-[300px]">{user.bio}</p>}
           <div className="flex gap-3 text-neutral-500 text-sm">
             {user.age && <span>🎂 {user.age}</span>}
             {user.city && <span>📍 {user.city}</span>}
@@ -62,15 +64,15 @@ export default function Profile() {
             to="/editProfile"
             className="mt-5 px-4 py-1 rounded-lg bg-orange-500 text-black cursor-pointer font-semibold hover:bg-orange-600 hover:text-black transition"
           >
-            Edit Profile
+            {t("profile.edit")}
           </Link>
         </div>
       </div>
 
       {/* Stats */}
       <div className="flex gap-8 text-neutral-400">
-        <span>{posts.length} Posts</span>
-        <span>{friends.length} Friends</span>
+        <span>{posts.length} {t("profile.posts")}</span>
+        <span>{friends.length} {t("profile.friends")}</span>
         
       </div>
 
@@ -92,7 +94,7 @@ export default function Profile() {
             </div>
           ))
         ) : (
-          <p className="text-neutral-500">No posts yet.</p>
+          <p className="text-neutral-500">{t("profile.noPosts")}</p>
         )}
       </div>
     </div>

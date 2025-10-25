@@ -4,11 +4,12 @@ import { useForm } from "react-hook-form";
 import { forgotSchema, type ForgotPasswordType } from "../zod/forgotSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
+import {useTranslation} from "react-i18next";
 
 export default function ForgottenPassword() {
   const [email, setEmail] = useState<string>("");
   const navigate = useNavigate();
-
+  const {t} = useTranslation();
   const {
     register,
     handleSubmit,
@@ -56,7 +57,7 @@ export default function ForgottenPassword() {
   return (
     <div className="z-10 max-w-sm w-full rounded-2xl max-auto my-12 bg-neutral-900/80 p-4 shadow-2xl backdrop:-blur">
       <h2 className="text-3xl font-bold text-center mb-6 text-orange-500">
-        Forgot Password
+      {t("auth.forgot.title")}
       </h2>
 
       <div>
@@ -71,7 +72,7 @@ export default function ForgottenPassword() {
           <input
             {...register("email")}
             type="email"
-            placeholder="Enter your email"
+            placeholder={t("auth.forgot.email")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full py-2 px-3 rounded-md bg-neutral-100 text-black placeholder-gray-500 border-neutral-700 focus: outline-none focus: ring-2 focus:ring-orange-500"
@@ -84,7 +85,7 @@ export default function ForgottenPassword() {
             disabled={isSubmitting}
             className="w-full py-2 cursor-pointer rounded-xl bg-orange-500 hover:bg-orange-400 text-black font-semibold transition"
           >
-            {isSubmitting ? "Sending..." : "Send a reset link"}
+            {isSubmitting ? t("auth.forgot.button2") : t("auth.forgot.button1")}
           </button>
         </form>
       </div>

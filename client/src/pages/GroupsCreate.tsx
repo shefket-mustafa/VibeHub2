@@ -5,6 +5,7 @@ import PageContainer from "./PageContainer";
 import { createGroupSchema, type CreateGroupData } from "../zod/createGroupSchema";
 import { useCreateGroupMutation } from "../redux/services/groupsApi";
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -17,6 +18,7 @@ export default function CreateGroupPage() {
   } = useForm<CreateGroupData>({
     resolver: zodResolver(createGroupSchema),
   });
+  const {t} = useTranslation();
 const [createGroup] = useCreateGroupMutation();
 const navigate = useNavigate();
 
@@ -43,14 +45,14 @@ const navigate = useNavigate();
     
     <PageContainer>
       <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6 z-20">
-        <h1 className="text-2xl font-bold text-white mb-6">Create a Group</h1>
+        <h1 className="text-2xl font-bold text-white mb-6">{t("groups.create.title")}</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {errors.root && (
             <p className="text-sm text-red-400">{errors.root.message}</p>
           )}{" "}
           <div>
-            <label className="block text-sm text-white mb-1">Group Name</label>
+            <label className="block text-sm text-white mb-1">{t("groups.create.name")}</label>
             <input
               {...register("name")}
               className="w-full rounded-md p-2 bg-neutral-800 text-white border border-neutral-600 focus:border-orange-500 outline-none"
@@ -61,7 +63,7 @@ const navigate = useNavigate();
           </div>
 
           <div>
-            <label className="block text-sm text-white mb-1">Description</label>
+            <label className="block text-sm text-white mb-1">{t("groups.create.descr")}</label>
             <textarea
               {...register("description")}
               className="w-full rounded-md p-2 bg-neutral-800 text-white border border-neutral-600 focus:border-orange-500 outline-none"
@@ -89,7 +91,7 @@ const navigate = useNavigate();
             onClick={() => console.log("🟠 Button clicked")}
             className="w-full rounded-xl cursor-pointer px-4 py-2 bg-orange-400 text-black font-semibold hover:bg-orange-500 transition"
           >
-            {isSubmitting ? "Creating..." : "Create Group"}
+            {isSubmitting ? t("groups.create.creating") : t("groups.create.create")}
           </button>
         </form>
       </div>

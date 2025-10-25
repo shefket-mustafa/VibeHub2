@@ -1,11 +1,13 @@
+import { useTranslation } from "react-i18next";
+
 export default function Contact() {
+  const {t} = useTranslation();
     return (
       <section className="max-w-5xl mx-auto px-6 py-16 text-center text-neutral-200">
-        <h1 className="text-4xl font-bold text-orange-500 mb-6">Contact Us</h1>
+        <h1 className="text-4xl font-bold text-orange-500 mb-6">{t("contact.title")}</h1>
   
         <p className="text-lg text-neutral-400 mb-10">
-          Have questions, suggestions, or just want to connect?  
-          Reach out to us anytime at{" "}
+          {t("contact.text")}{" "}
           <a
             href="mailto:shefket.must@gmail.com"
             className="text-orange-400 hover:underline"

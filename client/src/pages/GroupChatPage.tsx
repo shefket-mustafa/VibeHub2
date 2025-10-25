@@ -8,6 +8,7 @@ import type { GroupMessages } from "../types/TStypes";
 import { FaCircleInfo } from "react-icons/fa6";
 import GroupInfoModal from "../components/GroupInfoModal";
 import { useGroups } from "../hooks/groups";
+import { useTranslation } from "react-i18next";
 
 export default function GroupChatPage() {
   const { id } = useParams<{ id: string }>();
@@ -15,6 +16,7 @@ export default function GroupChatPage() {
   const [text, setText] = useState("");
   const navigate = useNavigate();
   const { joinGroup, leaveGroup, sendGroupMessage, socket } = useSocket();
+  const {t} = useTranslation();
   // Queries
   const { data: group, isLoading: loadingGroup } = useGetGroupQuery(id!);
   const { data: baseMessages = [], isLoading: loadingMessages } = useGetGroupMessagesQuery(id!);
@@ -26,8 +28,8 @@ export default function GroupChatPage() {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   
   const [liveMessages, setLiveMessages] = useState<GroupMessages[]>([]);
-  if (!id) return <p className="text-white">Invalid group.</p>;
-  if (!groupId) return <p className="text-white">Invalid group.</p>;
+  if (!id) return <p className="text-white">{t("groups.chat.error")}</p>;
+  if (!groupId) return <p className="text-white">{t("groups.chat.error")}</p>;
 
   useEffect(() => {
     if (!groupId) return;
@@ -88,7 +90,7 @@ export default function GroupChatPage() {
     setText("");
   };
 
-  if (loadingGroup || loadingMessages) return <p className="text-white">Loading chat...</p>;
+  if (loadingGroup || loadingMessages) return <p className="text-white">{t("groups.main.loading")}</p>;
 
   return (
     <div className="h-[600px] w-3/4 flex flex-col justify-center m-10 rounded-lg bg-neutral-900 text-white z-10">
@@ -99,7 +101,7 @@ export default function GroupChatPage() {
         <FaCircleInfo onClick={groupInfoModalHandler} className="text-orange-500 hover:text-orange-600 cursor-pointer"/>
       </div>
         <button className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg text-black font-semibold transition cursor-pointer"
-         onClick={() => navigate(-1)}>Back</button>
+         onClick={() => navigate(-1)}>{t("groups.chat.back")}</button>
       </div>
 
       {/* Messages */}
@@ -123,14 +125,14 @@ export default function GroupChatPage() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           className="flex-1 bg-neutral-800 text-white rounded-lg px-3 py-2 focus:outline-none"
-          placeholder="Type a message..."
+          placeholder={t("groups.chat.type")}
         />
         <button
           type="submit"
           disabled={sending}
           className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg text-black font-semibold transition cursor-pointer"
         >
-          {sending ? "Sending..." : "Send"}
+          {sending ? t("groups.chat.sending") : t("groups.chat.send")}
         </button>
       </form>
 

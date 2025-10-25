@@ -1,0 +1,248 @@
+{
+  "gettingStarted": {
+  "title": "Welcome to",
+  "subtitle": "Your space to share vibes, connect with friends, and discover new stories. Let’s kick things off and get you started.",
+  "button": "Get Started"
+  },
+
+  "auth": {
+    "login": {
+      "title": "Sign in to ",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "forgot": "Forgot password?",
+      "button1": "Sign In",
+      "button2": "Signing In",
+      "noAccount": "Don’t have an account?",
+      "createProfile": "Create a profile"
+    },
+    "register": {
+      "title": "Create your account",
+      "username": "Username",
+      "usernamePlaceholder": "choose a username",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "confirmPassword": "Confirm password",
+      "confirmPasswordPlaceholder": "••••••••",
+      "button1": "Create Account",
+      "button2": "Creating..",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "forgot": {
+      "title": "Forgot Password",
+      "email": "Enter your email",
+      "button1": "Send a reset link",
+      "button2": "Sending"
+    }
+  },
+
+  "navbar": {
+    "home": "Home",
+    "feed": "Feed",
+    "friends": "Friends",
+    "groups": "Groups",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+
+  "feed": {
+    "placeholder": "Share a vibe...",
+    "choose": "Choose a file",
+    "post1": "Post",
+    "post2": "Posting...",
+    "friends": "Friends",
+    "groups": "Groups",
+    "memories": "Memories",
+    "online": "Online",
+    "comments": "Comments",
+    "delete": "Delete",
+    "noFriends": "You haven't added any friends",
+    "sponsored": "Sponsored By",
+    "ad": "You can place your ads here for 150$/m"
+  },
+
+   "friends": {
+    "title": "Friends",
+    "mutual": "mutual friends",
+    "requests": {
+      "title": "Friend requests",
+      "loading": "Loading...",
+      "error": "Failed to fetch requests!",
+      "empty": "No requests found!",
+      "accept": "Accept",
+      "accepting": "Accepting...",
+      "accepted": "Accepted",
+      "decline": "Decline"
+    },
+
+    "all": {
+      "title": "All friends",
+      "message": "Message",
+      "remove": "Remove"
+    },
+
+      "suggestions": {
+      "title": "Friend suggestions",
+      "loading": "Loading...",
+      "error": "Failed to load suggestions",
+      "empty": "No suggestions",
+      "add": "Add",
+      "adding": "Adding...",
+      "sent": "Request Sent",
+      "message": "Message"
+    },
+
+    "sidebar": {
+      "requests": "Requests",
+      "all": "All friends",
+      "suggestions": "Suggestions",
+      "settings": "Settings"
+    },
+
+      "notifications": {
+      "newRequest": "📩 New request arrived, refreshing list...",
+      "removed": "Friend removed!",
+      "declined": "Request declined!",
+      "sent": "Friend request sent!",
+      "failed": "Failed to send request"
+    }
+
+  },
+
+  "comments": {
+    "title": "Comments",
+    "empty": "No comments yet.",
+    "placeHolder": "Write a comment...",
+    "post": "Post"
+  },
+
+  "groups":{
+    "main": {
+      "title": "Groups",
+      "create": "Create Group",
+      "yourGroups": "Your Groups",
+      "discover": "Discover",
+      "loading": "Loading...",
+      "notJoined": "You haven&apos;t joined any groups!",
+      "member": "member",
+      "members": "members",
+      "delete": "Delete",
+      "info": "Info",
+      "enter": "Enter",
+      "join": "Join",
+      "noDiscover": "No groups left to discover!"
+    },
+    "chat":{
+      "error": "Invalid group.",
+      "back": "Back",
+      "type": "Type a message...",
+      "send": "Send",
+      "sending": "Sending.."
+    },
+    "info": {
+      "title": "Group Info",
+      "name": "Name",
+      "descr": "Description",
+      "noDescr": "No description available.",
+      "owner": "Owner",
+      "untitled": "Untitled Group",
+      "members": "Members",
+      "noMembers": "No members yet."
+    },
+    "create": {
+      "title": "Create a Group",
+      "name": "Group Name",
+      "descr": "Description",
+      "create": "Create Group",
+      "creating": "Creating.."
+    }
+  },
+
+  "notFound": {
+    "oops": "Whoooops... looks like this vibe doesn’t exist"
+  },
+
+  "profile":{
+      "edit": "Edit Profile",
+      "posts": "Posts",
+      "friends": "Friends",
+      "noPosts": "No posts yet.",
+      "error": "You need to log in to view your profile."
+  },
+
+  "edit":{
+    "title": "Edit Profile",
+    "change": "Change Picture",
+    "username": "Username",
+    "bio": "Bio",
+    "age": "Age",
+    "city": "City",
+    "country": "Country",
+    "save": "Save Changes",
+    "saving": "Saving.."
+  },
+
+  "footer": {
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
+
+    "faq": {
+    "title": "Frequently Asked Questions",
+    "question1": "What is VibeHub?",
+    "answer1": "VibeHub is a social platform where you can connect with others, share posts, like, and comment. It's built with React, Express, and MongoDB.",
+
+    "question2": "How do I create an account?",
+    "answer2": "Click on 'Register' in the navigation menu, fill out your username, email, and password, and you’ll be ready to join the community.",
+
+    "question3": "I forgot my password, what should I do?",
+    "answer3": "Use the 'Forgot Password' link on the login page. You’ll receive an email with a reset link that expires after 15 minutes.",
+
+    "question4": "Is my data secure?",
+    "answer4": "Yes. Passwords are encrypted with bcrypt and authentication uses JWT tokens. We never store your raw password.",
+
+    "question5": "Can I delete my posts?",
+    "answer5": "Yes. Any post you create can be deleted at any time from your profile or the feed.",
+
+    "question6": "What’s coming next?",
+    "answer6": "We’re working on adding friends, groups, and memories features. Stay tuned for updates!"
+  },
+
+  
+  "about": {
+    "title": "About VibeHub",
+    "intro": {
+      "part1": "VibeHub is a social platform where authenticity meets community. Built with",
+      "highlight": " React, Express, and MongoDB",
+      "part2": ", it’s designed to connect people through meaningful posts, discussions, and shared vibes. Whether you’re here to share your story, engage with others, or simply explore, VibeHub provides a space for everyone."
+    },
+    "mission": {
+      "title": "Mission",
+      "text": "Our mission is to empower creators and everyday users with a platform that prioritizes community, freedom, and good vibes."
+    },
+    "tech": {
+      "title": "Technology",
+      "text1": "VibeHub is powered by modern technologies:",
+      "text2": " for the frontend,",
+      "text3": " for the backend, and styled with"
+    },
+    "vision": {
+      "title": "Vision",
+      "text": "We believe in creating a safe and engaging space where ideas, creativity, and conversations thrive — shaping the social platforms of tomorrow."
+    },
+    "footer2": "Built with ❤️ by the VibeHub team"
+  },
+
+  "contact": {
+    "title": "Contact us",
+    "text": "Have questions, suggestions, or just want to connect? Reach out to us anytime at"
+  }
+
+}
+
