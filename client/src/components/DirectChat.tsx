@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { getChatHistory, useSocket } from "../hooks/useSocket";
 import { useUser } from "../hooks/user";
 import type { DirectMessages } from "../types/TStypes";
+import { useTranslation } from "react-i18next";
 
 interface DirectChatProps {
   recipientId: string;
@@ -16,6 +17,7 @@ export function DirectChat({ recipientId, recipientName, onClose }: DirectChatPr
   const [content, setContent] = useState("");
   const [chatHistory, setChatHistory] = useState<DirectMessages[]>([]);
   const chatRef = useRef<HTMLDivElement>(null);
+  const {t} = useTranslation();
 
 //   Load chat history once on open
   useEffect(() => {
@@ -79,7 +81,7 @@ export function DirectChat({ recipientId, recipientName, onClose }: DirectChatPr
       >
         {allMessages.length === 0 && (
           <p className="text-neutral-500 text-sm text-center mt-4">
-            No messages yet
+            {t("directChat.noMessages")}
           </p>
         )}
         {allMessages.map((m) => (
@@ -102,14 +104,14 @@ export function DirectChat({ recipientId, recipientName, onClose }: DirectChatPr
           value={content}
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
-          placeholder="Type a message..."
+          placeholder={t("directChat.type")}
           className="flex-1 bg-neutral-800 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
         />
         <button
           onClick={handleSend}
           className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg px-3 py-2 text-sm font-medium transition"
         >
-          Send
+          {t("directChat.send")}
         </button>
       </div>
     </div>

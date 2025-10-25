@@ -242,6 +242,12 @@
   "contact": {
     "title": "Contact us",
     "text": "Have questions, suggestions, or just want to connect? Reach out to us anytime at"
+  },
+
+  "directChat": {
+    "noMessages": "No messages yet",
+    "send": "Send",
+    "type": "Type a message.."
   }
 
 }
