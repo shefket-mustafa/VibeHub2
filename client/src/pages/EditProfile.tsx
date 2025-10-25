@@ -7,12 +7,14 @@ import {
   type EditProfileType,
 } from "../zod/editProfileSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslation } from "react-i18next";
 
 export default function EditProfile() {
   const baseUrl = import.meta.env.VITE_API_URL;
   const { user, setUser } = useUser();
   const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
+  const {t} = useTranslation();
 
   const [preview, setPreview] = useState<string>("");
   const {
@@ -81,7 +83,7 @@ export default function EditProfile() {
 
   return (
     <div className="max-w-2xl mx-auto py-10 px-5 text-white z-10">
-      <h1 className="text-2xl font-bold mb-6">Edit Profile</h1>
+      <h1 className="text-2xl font-bold mb-6">{t("edit.title")}</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 z-10">
         {errors.root && (
@@ -97,7 +99,7 @@ export default function EditProfile() {
             className="w-24 h-24 rounded-full object-cover border-2 border-orange-500"
           />
           <label className="mt-3 cursor-pointer text-orange-400 hover:text-orange-500">
-            Change Picture
+            {t("edit.change")}
             <input
               type="file"
               accept="image/*"
@@ -109,7 +111,7 @@ export default function EditProfile() {
         {/* Username */}
         <div>
           <label className="block text-sm text-neutral-400 mb-1">
-            Username
+            {t("edit.username")}
           </label>
           <input
             type="text"
@@ -122,7 +124,7 @@ export default function EditProfile() {
         </div>
         {/* Bio */}
         <div>
-          <label className="block text-sm text-neutral-400 mb-1">Bio</label>
+          <label className="block text-sm text-neutral-400 mb-1">{t("edit.bio")}</label>
           <textarea
             {...register("bio")}
             rows={4}
@@ -134,7 +136,7 @@ export default function EditProfile() {
         </div>
         {/* Age */}
         <div>
-          <label className="block text-sm text-neutral-400 mb-1">Age</label>
+          <label className="block text-sm text-neutral-400 mb-1">{t("edit.age")}</label>
           <input
             type="number"
             {...register("age")}
@@ -148,7 +150,7 @@ export default function EditProfile() {
         </div>
         {/* City */}
         <div>
-          <label className="block text-sm text-neutral-400 mb-1">City</label>
+          <label className="block text-sm text-neutral-400 mb-1">{t("edit.city")}</label>
           <input
             type="text"
             {...register("city")}
@@ -160,7 +162,7 @@ export default function EditProfile() {
         </div>
         {/* Country */}
         <div>
-          <label className="block text-sm text-neutral-400 mb-1">Country</label>
+          <label className="block text-sm text-neutral-400 mb-1">{t("edit.country")}</label>
           <input
             type="text"
             {...register("country")}
@@ -176,7 +178,7 @@ export default function EditProfile() {
           disabled={isSubmitting}
           className="w-full mt-6 bg-orange-500 text-black py-2 cursor-pointer rounded-lg font-semibold hover:bg-orange-600 transition"
         >
-          {isSubmitting ? "Saving..." : "Save Changes"}
+          {isSubmitting ? t("edit.saving") : t("edit.save")}
         </button>
       </form>
     </div>

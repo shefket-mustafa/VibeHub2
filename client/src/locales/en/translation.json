@@ -164,7 +164,85 @@
 
   "notFound": {
     "oops": "Whoooops... looks like this vibe doesn’t exist"
+  },
+
+  "profile":{
+      "edit": "Edit Profile",
+      "posts": "Posts",
+      "friends": "Friends",
+      "noPosts": "No posts yet.",
+      "error": "You need to log in to view your profile."
+  },
+
+  "edit":{
+    "title": "Edit Profile",
+    "change": "Change Picture",
+    "username": "Username",
+    "bio": "Bio",
+    "age": "Age",
+    "city": "City",
+    "country": "Country",
+    "save": "Save Changes",
+    "saving": "Saving.."
+  },
+
+  "footer": {
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
+
+    "faq": {
+    "title": "Frequently Asked Questions",
+    "question1": "What is VibeHub?",
+    "answer1": "VibeHub is a social platform where you can connect with others, share posts, like, and comment. It's built with React, Express, and MongoDB.",
+
+    "question2": "How do I create an account?",
+    "answer2": "Click on 'Register' in the navigation menu, fill out your username, email, and password, and you’ll be ready to join the community.",
+
+    "question3": "I forgot my password, what should I do?",
+    "answer3": "Use the 'Forgot Password' link on the login page. You’ll receive an email with a reset link that expires after 15 minutes.",
+
+    "question4": "Is my data secure?",
+    "answer4": "Yes. Passwords are encrypted with bcrypt and authentication uses JWT tokens. We never store your raw password.",
+
+    "question5": "Can I delete my posts?",
+    "answer5": "Yes. Any post you create can be deleted at any time from your profile or the feed.",
+
+    "question6": "What’s coming next?",
+    "answer6": "We’re working on adding friends, groups, and memories features. Stay tuned for updates!"
+  },
+
+  
+  "about": {
+    "title": "About VibeHub",
+    "intro": {
+      "part1": "VibeHub is a social platform where authenticity meets community. Built with",
+      "highlight": " React, Express, and MongoDB",
+      "part2": ", it’s designed to connect people through meaningful posts, discussions, and shared vibes. Whether you’re here to share your story, engage with others, or simply explore, VibeHub provides a space for everyone."
+    },
+    "mission": {
+      "title": "Mission",
+      "text": "Our mission is to empower creators and everyday users with a platform that prioritizes community, freedom, and good vibes."
+    },
+    "tech": {
+      "title": "Technology",
+      "text1": "VibeHub is powered by modern technologies:",
+      "text2": " for the frontend,",
+      "text3": " for the backend, and styled with"
+    },
+    "vision": {
+      "title": "Vision",
+      "text": "We believe in creating a safe and engaging space where ideas, creativity, and conversations thrive — shaping the social platforms of tomorrow."
+    },
+    "footer2": "Built with ❤️ by the VibeHub team"
+  },
+
+  "contact": {
+    "title": "Contact us",
+    "text": "Have questions, suggestions, or just want to connect? Reach out to us anytime at"
   }
 
-
 }
+
