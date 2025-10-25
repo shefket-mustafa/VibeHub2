@@ -248,6 +248,12 @@
     "noMessages": "No messages yet",
     "send": "Send",
     "type": "Type a message.."
+  },
+
+  "resetPass": {
+    "title": "Reset Password",
+    "pass": "New Password",
+    "confirmPass": "Confirm Password"
   }
 
 }
