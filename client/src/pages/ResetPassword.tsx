@@ -1,14 +1,17 @@
 import { useForm } from "react-hook-form";
 import { resetSchema, type resetPasswordType } from "../zod/resetSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useNavigate, useParams } from "react-router";
+import { useTranslation } from "react-i18next";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 
 
 export default function ResetPassword() {
   const { token } = useParams<string>();
   const navigate = useNavigate();
-    const resetToken = token
+    const resetToken = token;
+    const {t} = useTranslation();
 
 
   const {
@@ -49,7 +52,7 @@ export default function ResetPassword() {
   return (
     <div className="z-10 max-w-sm w-full rounded-2xl max-auto my-12 bg-neutral-900/80 p-6 shadow-2xl backdrop:-blur">
       <h2 className="text-3xl font-bold text-center mb-6 text-orange-500">
-        Reset Password
+        {t("resetPass.title")}
       </h2>
 
       <div >
@@ -59,14 +62,14 @@ export default function ResetPassword() {
           <input
             {...register("password")}
             type="password"
-            placeholder="******"
+            placeholder={t("resetPass.pass")}
             className="w-full py-2 px-3 rounded-md bg-neutral-100 text-black placeholder-gray-500 border-neutral-700 focus: outline-none focus: ring-2 focus:ring-orange-500"
           />
           {errors.password && (<p className="text-sm text-red-500" >{errors.password.message}</p>)}
           <input
           {...register("confirmPassword")}
             type="password"
-            placeholder="******"
+            placeholder={t("resetPass.confirmPass")}
             className="w-full py-2 px-3 rounded-md bg-neutral-100 text-black placeholder-gray-500 border-neutral-700 focus: outline-none focus: ring-2 focus:ring-orange-500"
           />
            {errors.confirmPassword && (<p className="text-sm text-red-500" >{errors.confirmPassword.message}</p>)}
