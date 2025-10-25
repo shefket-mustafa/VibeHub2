@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useChat } from "../context/ChatContext";
 import { useRemoveFriendMutation } from "../redux/services/friendsApi";
 import type { FriendsCardType } from "../types/TStypes";
@@ -7,6 +8,7 @@ import type { FriendsCardType } from "../types/TStypes";
 
 export default function AllFriendsCard({ name, mutualFriends, image, id }: FriendsCardType){
 
+  const {t} = useTranslation();
   const [removeFriend] = useRemoveFriendMutation();
   const {openChat} = useChat();
   const removeFriendHandler = async (friendId: string) => {
@@ -30,8 +32,8 @@ export default function AllFriendsCard({ name, mutualFriends, image, id }: Frien
           <p className="font-medium text-base sm:text-lg truncate">{name}</p>
           {mutualFriends.length > 0 && (
             <p className="text-sm text-neutral-400">
-              {mutualFriends.length} mutual friend
-              {mutualFriends.length > 1 && "s"}
+              {mutualFriends.length} {t("friends.mutual")}
+              
             </p>
           )}
         </div>
@@ -41,14 +43,14 @@ export default function AllFriendsCard({ name, mutualFriends, image, id }: Frien
             onClick={() => openChat(id, name)}
             className="flex-1 cursor-pointer py-2 rounded-md text-sm font-semibold bg-orange-500 hover:bg-orange-600 transition"
           >
-            Message
+            {t("friends.all.message")}
           </button>
 
           <button
             onClick={() => removeFriendHandler(id)}
             className="flex-1 cursor-pointer py-2 rounded-md text-sm font-semibold bg-neutral-700 hover:bg-neutral-600 transition"
           >
-            Remove
+            {t("friends.all.remove")}
           </button>
         </div>
       </div>

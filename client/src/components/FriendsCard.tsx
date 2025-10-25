@@ -1,4 +1,5 @@
 
+import { useTranslation } from "react-i18next";
 import { useAcceptFriendRequestMutation, useDeclineFriendRequestMutation } from "../redux/services/friendsApi";
 import type { FriendsCardType } from "../types/TStypes";
 
@@ -11,6 +12,7 @@ export default function FriendsCard({
 
   const [acceptFriendRequest, {isLoading, isSuccess}] = useAcceptFriendRequestMutation();
   const [declineFriendRequest] = useDeclineFriendRequestMutation();
+  const {t} = useTranslation();
 
   const acceptRequestHandler = async (id: string) => {
 
@@ -49,8 +51,7 @@ export default function FriendsCard({
           <p className="font-medium text-base sm:text-lg truncate">{name}</p>
           {mutualFriends.length > 0 && (
             <p className="text-sm text-neutral-400">
-              {mutualFriends.length} mutual friend
-              {mutualFriends.length > 1 && "s"}
+              {mutualFriends.length} {t("friends.mutual")}
             </p>
           )}
         </div>
@@ -65,14 +66,14 @@ export default function FriendsCard({
                 : "bg-orange-500 hover:bg-orange-600"
             }`}
           >
-            {isSuccess ? "Accepted" : isLoading ? "Accepting..." : "Accept"}
+            {isSuccess ? t("friends.requests.accepted") : isLoading ? t("friends.requests.accepting") : t("friends.requests.accept")}
           </button>
 
           <button
             onClick={() => cancelRequestHandler(id)}
             className="flex-1 cursor-pointer py-2 rounded-md text-sm font-semibold bg-neutral-700 hover:bg-neutral-600 transition"
           >
-            Decline
+            {t("friends.requests.decline")}
           </button>
         </div>
       </div>

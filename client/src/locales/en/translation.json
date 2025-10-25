@@ -1,4 +1,10 @@
 {
+  "gettingStarted": {
+  "title": "Welcome to",
+  "subtitle": "Your space to share vibes, connect with friends, and discover new stories. Let’s kick things off and get you started.",
+  "button": "Get Started"
+  },
+
   "auth": {
     "login": {
       "title": "Sign in to ",
@@ -57,5 +63,80 @@
     "noFriends": "You haven't added any friends",
     "sponsored": "Sponsored By",
     "ad": "You can place your ads here for 150$/m"
+  },
+
+   "friends": {
+    "title": "Friends",
+    "mutual": "mutual friends",
+    "requests": {
+      "title": "Friend requests",
+      "loading": "Loading...",
+      "error": "Failed to fetch requests!",
+      "empty": "No requests found!",
+      "accept": "Accept",
+      "accepting": "Accepting...",
+      "accepted": "Accepted",
+      "decline": "Decline"
+    },
+
+    "all": {
+      "title": "All friends",
+      "message": "Message",
+      "remove": "Remove"
+    },
+
+      "suggestions": {
+      "title": "Friend suggestions",
+      "loading": "Loading...",
+      "error": "Failed to load suggestions",
+      "empty": "No suggestions",
+      "add": "Add",
+      "adding": "Adding...",
+      "sent": "Request Sent",
+      "message": "Message"
+    },
+
+    "sidebar": {
+      "requests": "Requests",
+      "all": "All friends",
+      "suggestions": "Suggestions",
+      "settings": "Settings"
+    },
+
+      "notifications": {
+      "newRequest": "📩 New request arrived, refreshing list...",
+      "removed": "Friend removed!",
+      "declined": "Request declined!",
+      "sent": "Friend request sent!",
+      "failed": "Failed to send request"
+    }
+
+  },
+
+  "comments": {
+    "title": "Comments",
+    "empty": "No comments yet.",
+    "placeHolder": "Write a comment...",
+    "post": "Post"
+  },
+
+  "groups":{
+    "main": {
+      "title": "Groups",
+      "create": "Create Group",
+      "yourGroups": "Your Groups",
+      "discover": "Discover",
+      "loading": "Loading...",
+      "notJoined": "You haven&apos;t joined any groups!",
+      "member": "member",
+      "members": "members",
+      "delete": "Delete",
+      "info": "Info",
+      "enter": "Enter",
+      "join": "Join",
+      "noDiscover": "No groups left to discover!"
+    }
   }
+
+
 }
