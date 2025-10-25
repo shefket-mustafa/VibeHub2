@@ -58,6 +58,11 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
          - You can minimize or close it anytime
          - If someone messages you, the chat window will automatically appear
   
+- **Internationalization (i18n) — Language Toggle**
+  - VibeHub now supports English (EN) and Bulgarian (BG) through an integrated i18n system powered by i18next and react-i18next.
+
+
+
 ---
 
 ## 🛠️ Tech Stack
