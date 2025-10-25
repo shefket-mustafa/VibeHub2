@@ -135,7 +135,35 @@
       "enter": "Enter",
       "join": "Join",
       "noDiscover": "No groups left to discover!"
+    },
+    "chat":{
+      "error": "Invalid group.",
+      "back": "Back",
+      "type": "Type a message...",
+      "send": "Send",
+      "sending": "Sending.."
+    },
+    "info": {
+      "title": "Group Info",
+      "name": "Name",
+      "descr": "Description",
+      "noDescr": "No description available.",
+      "owner": "Owner",
+      "untitled": "Untitled Group",
+      "members": "Members",
+      "noMembers": "No members yet."
+    },
+    "create": {
+      "title": "Create a Group",
+      "name": "Group Name",
+      "descr": "Description",
+      "create": "Create Group",
+      "creating": "Creating.."
     }
+  },
+
+  "notFound": {
+    "oops": "Whoooops... looks like this vibe doesn’t exist"
   }
 
 
