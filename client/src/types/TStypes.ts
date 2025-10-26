@@ -124,7 +124,16 @@ export type UserPreview = {
   _id: string,
   username: string,
   email: string
+  profilePicture: string
   
+}
+
+export interface IncomingRequest {
+  _id: string;
+  requestId: string;
+  username: string;
+  email?: string;
+  profilePicture?: string;
 }
 
 
@@ -161,7 +170,6 @@ export type ErrorType = {
 
 export type UploadStatusType = "idle" | "uploading" | "successfull" | "failed";
 
-export type IncomingRequest = UserPreview & { requestId: string };
 
 
 export type FriendRequest = {

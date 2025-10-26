@@ -106,8 +106,8 @@ friendsRoutes.get("/all", authMiddleware, async(req: RequestWithUser, res: expre
             $or: [{recipient: userId}, {requester: userId}],
             status: "accepted"
         })
-        .populate("requester", "_id username email")
-        .populate("recipient", "_id username email")
+        .populate("requester", "_id username email profilePicture")
+        .populate("recipient", "_id username email profilePicture")
 
         const friends = requests.map((req) => {
             if(req.requester._id.toString() === userId){
@@ -136,8 +136,8 @@ friendsRoutes.get("/incoming", authMiddleware, async(req: RequestWithUser, res: 
             recipient: userId,
             status: "pending"
         })
-        .populate("requester", "_id username email")
-
+        .populate("requester", "_id username email profilePicture")
+        // console.log(incomingRequests.map(r => r.requester.profilePicture));
         return res.json({incomingRequests})
 
     }catch(err){
@@ -229,7 +229,7 @@ friendsRoutes.get("/suggestions", authMiddleware, async(req: RequestWithUser, re
         const suggestions = await User.find({
             _id: {$nin: Array.from(excludedIds)}
             
-        }).select("_id username email")
+        }).select("_id username email profilePicture")
         .limit(20)
 
         return res.json({ suggestions })

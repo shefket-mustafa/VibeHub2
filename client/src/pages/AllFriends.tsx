@@ -1,5 +1,4 @@
 
-import friendImage from "../assets/friends-item.avif"
 import AllFriendsCard from "../components/AllFriendsCard";
 import FriendsLayout from "../layout/FriendsLayout";
 import { useGetAllFriendsQuery } from "../redux/services/friendsApi";
@@ -24,7 +23,7 @@ export default function AllFriends() {
             id={data._id}
             name={data.username}
             mutualFriends={[]}
-            image={friendImage}
+            image={data.profilePicture || "https://scontent-otp1-1.xx.fbcdn.net/v/t1.30497-1/453178253_471506465671661_2781666950760530985_n.png?stp=dst-png_s480x480&_nc_cat=110&ccb=1-7&_nc_sid=136b72&_nc_ohc=owXgrBh0NC4Q7kNvwG5jXCy&_nc_oc=Adk_eXC5wIUX7cwEMi3OxHi_aIh4mnNMTWFIiJfVFPmQ9EoOCzSbYUcRIYE2hUoUfvI&_nc_zt=24&_nc_ht=scontent-otp1-1.xx&oh=00_AfeCAAJ5fwFkeDtjsRl7Bl4swGQeSLSM-WKLwNg2GSVpCA&oe=6925A6FA"}
           />
         ))}
       </div>
