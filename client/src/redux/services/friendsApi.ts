@@ -25,9 +25,9 @@ export const friendsApi = createApi({
         }),
         getIncoming: builder.query<IncomingRequest[], void>({
             query: () => "friends/incoming",
-            transformResponse: (response: {incomingRequests: {_id: string, requester: UserPreview}[] }) => 
+            transformResponse: (response: {incomingRequests: {_id: string, requester: IncomingRequest}[] }) => 
                  response.incomingRequests.map(r => ({
-                    requestId: r._id,
+                    // requestId: r._id,
                     ...r.requester
                  })),
                  providesTags: ["Friends"],
