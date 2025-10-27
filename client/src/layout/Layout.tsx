@@ -19,7 +19,7 @@ export default function Layout( { children }: PropsWithChildren) {
 
 
       <main   className={`min-h-screen flex-1 bg-neutral-800 ${
-          isFriendsPage ? "pt-1" : "flex items-center justify-center"
+          isFriendsPage ? "pt-1" : location.pathname.startsWith("/profile") ? "pt-20" : "flex items-center justify-center"
         }`}
       >
         {children}
