@@ -14,8 +14,6 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
 import FriendsPage from "./components/Friends";
-import AllFriends from "./pages/AllFriends";
-import FriendSuggestions from "./pages/FriendSuggestions";
 import { useEffect } from "react";
 import { isTokenValid } from "./helpers/tokenValidator";
 import GroupsPage from "./pages/GroupsPage";
@@ -23,18 +21,16 @@ import CreateGroupPage from "./pages/GroupsCreate";
 import GroupChatPage from "./pages/GroupChatPage";
 import EditProfile from "./pages/EditProfile";
 
-
 function App() {
   const { user, logout } = useUser();
 
   useEffect(() => {
-
     const token = localStorage.getItem("token");
 
-    if(token && !isTokenValid(token)){
-     logout()
+    if (token && !isTokenValid(token)) {
+      logout();
     }
-  },[]);
+  }, [logout]);
 
   return (
     <>
@@ -43,20 +39,21 @@ function App() {
         <Routes>
           <Route path="/" element={<GettingStartedPage />} />
           <Route path="/auth/forgot" element={<ForgottenPassword />} />
-          <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
+          <Route
+            path="/auth/reset-password/:token"
+            element={<ResetPassword />}
+          />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/faq" element={<FAQ/>} />
-          <Route path="/groups" element={<GroupsPage/>} />
-          <Route path="/groups/details/:id" element={<GroupChatPage/>} />
-          <Route path="/groups/create" element={<CreateGroupPage/>} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/groups" element={<GroupsPage />} />
+          <Route path="/groups/details/:id" element={<GroupChatPage />} />
+          <Route path="/groups/create" element={<CreateGroupPage />} />
 
           {user && <Route path="/feed" element={<Feed />} />}
           {user && <Route path="/profile" element={<Profile />} />}
           {user && <Route path="/editProfile" element={<EditProfile />} />}
           {user && <Route path="/friends" element={<FriendsPage />} />}
-          {user && <Route path="/friends/all" element={<AllFriends />} />}
-          {user && <Route path="/friends/suggestions" element={<FriendSuggestions />} />}
 
           {!user && <Route path="/auth/login" element={<Login />} />}
           {!user && <Route path="/auth/register" element={<Register />} />}
