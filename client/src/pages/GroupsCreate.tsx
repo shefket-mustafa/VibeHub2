@@ -2,12 +2,13 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PageContainer from "./PageContainer";
-import { createGroupSchema, type CreateGroupData } from "../zod/createGroupSchema";
+import {
+  createGroupSchema,
+  type CreateGroupData,
+} from "../zod/createGroupSchema";
 import { useCreateGroupMutation } from "../redux/services/groupsApi";
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
-
-
 
 export default function CreateGroupPage() {
   const {
@@ -18,41 +19,41 @@ export default function CreateGroupPage() {
   } = useForm<CreateGroupData>({
     resolver: zodResolver(createGroupSchema),
   });
-  const {t} = useTranslation();
-const [createGroup] = useCreateGroupMutation();
-const navigate = useNavigate();
-
+  const { t } = useTranslation();
+  const [createGroup] = useCreateGroupMutation();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: CreateGroupData) => {
     console.log("✅ Form submitted with:", data);
-    try{
-      const result = await createGroup(data).unwrap()
+    try {
+      const result = await createGroup(data).unwrap();
       console.log("✅ Group created:", result);
       console.log(result);
-      navigate("/groups")
-
-    }catch(err){
+      navigate("/groups");
+    } catch (err) {
       console.error("❌ Error while creating group:", err);
       setError("root", {
         type: "server",
-        message: String(err)
-      })
+        message: String(err),
+      });
     }
-
   };
-  
+
   return (
-    
     <PageContainer>
-      <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6 z-20">
-        <h1 className="text-2xl font-bold text-white mb-6">{t("groups.create.title")}</h1>
+      <div className="card z-20">
+        <h1 className="text-2xl font-bold text-white mb-6">
+          {t("groups.create.title")}
+        </h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {errors.root && (
+          {errors.root && (
             <p className="text-sm text-red-400">{errors.root.message}</p>
           )}{" "}
           <div>
-            <label className="block text-sm text-white mb-1">{t("groups.create.name")}</label>
+            <label className="block text-sm text-white mb-1">
+              {t("groups.create.name")}
+            </label>
             <input
               {...register("name")}
               className="w-full rounded-md p-2 bg-neutral-800 text-white border border-neutral-600 focus:border-orange-500 outline-none"
@@ -61,19 +62,21 @@ const navigate = useNavigate();
               <p className="text-sm text-red-400">{errors.name.message}</p>
             )}
           </div>
-
           <div>
-            <label className="block text-sm text-white mb-1">{t("groups.create.descr")}</label>
+            <label className="block text-sm text-white mb-1">
+              {t("groups.create.descr")}
+            </label>
             <textarea
               {...register("description")}
               className="w-full rounded-md p-2 bg-neutral-800 text-white border border-neutral-600 focus:border-orange-500 outline-none"
               rows={4}
             />
             {errors.description && (
-              <p className="text-sm text-red-400">{errors.description.message}</p>
+              <p className="text-sm text-red-400">
+                {errors.description.message}
+              </p>
             )}
           </div>
-
           {/* <div>
             <label className="block text-sm text-white mb-1">Group Type</label>
             <select
@@ -84,14 +87,15 @@ const navigate = useNavigate();
               <option value="private">Private</option>
             </select>
           </div> */}
-
           <button
             type="submit"
             disabled={isSubmitting}
             onClick={() => console.log("🟠 Button clicked")}
-            className="w-full rounded-xl cursor-pointer px-4 py-2 bg-orange-400 text-black font-semibold hover:bg-orange-500 transition"
+            className="w-full btn-primary"
           >
-            {isSubmitting ? t("groups.create.creating") : t("groups.create.create")}
+            {isSubmitting
+              ? t("groups.create.creating")
+              : t("groups.create.create")}
           </button>
         </form>
       </div>
