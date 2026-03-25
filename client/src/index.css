@@ -1,4 +1,76 @@
-
 @import "tailwindcss";
 
+/* Project utility components - plain CSS fallbacks (avoid @apply to be compatible with different setups) */
 
+/* Card container used across pages for consistent spacing and elevation */
+.card {
+  border-radius: 1rem; /* rounded-2xl */
+  border: 1px solid rgba(71, 85, 105, 0.45); /* neutral-ish */
+  background: rgba(17, 24, 39, 0.45); /* neutral-900/40 */
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+}
+
+/* Glassy surface for overlays, modals and footers */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Primary buttons - orange brand */
+.btn-primary {
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: #f97316; /* orange-500 */
+  color: #000;
+  font-weight: 600;
+  transition:
+    background-color 160ms ease-in-out,
+    transform 160ms ease;
+}
+.btn-primary:hover {
+  background: #fb923c;
+  transform: translateY(-1px);
+}
+
+/* Form inputs - consistent look for text fields */
+.form-input {
+  width: 100%;
+  border-radius: 0.5rem;
+  background: #e5e7eb; /* neutral-200 */
+  border: 1px solid #1f2937; /* neutral-800 */
+  padding: 0.5rem 0.75rem;
+  outline: none;
+}
+.form-input:focus {
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+  border-color: #f97316;
+}
+
+.muted {
+  color: rgba(156, 163, 175, 1);
+} /* neutral-400 */
+.brand {
+  color: #f97316;
+}
+
+/* subtle elevated list item for groups/friends */
+.list-item {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(71, 85, 105, 0.45);
+  padding: 1rem;
+  background: rgba(17, 24, 39, 0.55);
+  transition: background-color 150ms ease;
+}
+.list-item:hover {
+  background: rgba(31, 41, 55, 0.4);
+}
+
+/* small helpers */
+.center-max {
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+}
