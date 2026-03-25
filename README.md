@@ -153,7 +153,7 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 3. **Add environment variables**  
    Create a `.env` file in `/server` with:
 
-        MONGODB_URI=your_mongodb_atlas_uri
+        MONGO_URI=your_mongodb_atlas_uri
         JWT_SECRET=your_secret_key
         PORT=3000
 
