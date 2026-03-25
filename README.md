@@ -120,7 +120,13 @@ VibeHub is a full-stack social platform built with **React (TypeScript)**, **Exp
 
 ---
 
-## 🌐 Live Demo
+## 🌐 Deployment + Live Demo
+
+Server deployed on Render:
+https://vibehub2-server-depl.onrender.com
+
+FE deployed on Vercel:
+https://vibe-hub2.vercel.app
 
 👉 [VibeHub Live Demo](https://vibe-hub2.vercel.app/)
 
