@@ -2,21 +2,26 @@ import { useTranslation } from "react-i18next";
 import { BsFillGearFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router";
 
-export default function FriendsLayout({ children }: { children: React.ReactNode }) {
+export default function FriendsLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const location = useLocation();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const isActive = (path: string) =>
     location.pathname === path
-      ? "text-orange-500 bg-neutral-700/40"
-      : "text-white hover:text-orange-500 hover:bg-neutral-700/40";
+      ? "text-orange-400 bg-gradient-to-r from-neutral-800/40 to-transparent shadow-inner"
+      : "text-neutral-200 hover:text-orange-400 hover:bg-neutral-800/20";
 
   return (
     <section className="w-full flex flex-col md:flex-row mt-20 px-4 md:px-10 z-10">
-      {/* Sidebar */}
       <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-neutral-700 p-4 mb-4 md:mb-0 z-10">
         <div className="flex justify-between items-center border-b border-neutral-700 pb-2 mb-4">
-          <p className="text-2xl font-bold text-orange-500">{t("friends.title")}</p>
+          <p className="text-2xl font-bold text-orange-500">
+            {t("friends.title")}
+          </p>
           <BsFillGearFill className="text-white cursor-pointer hover:text-orange-500" />
         </div>
 
@@ -42,7 +47,6 @@ export default function FriendsLayout({ children }: { children: React.ReactNode 
         </nav>
       </div>
 
-      {/* Main content */}
       <div className="flex-1 px-4 md:px-10">{children}</div>
     </section>
   );

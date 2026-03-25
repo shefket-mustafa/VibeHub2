@@ -89,7 +89,6 @@ export function useSocket() {
   };
 }
 
-// ---- HISTORY FETCH ----
 export async function getChatHistory(friendId: string, token: string) {
   const res = await fetch(`${import.meta.env.VITE_API_URL}/messages/${friendId}`, {
     headers: { Authorization: `Bearer ${token}` },

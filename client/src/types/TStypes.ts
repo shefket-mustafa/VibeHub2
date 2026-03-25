@@ -1,5 +1,3 @@
-
-
 export type Post = {
   _id: string;
   authorName: string;
@@ -13,22 +11,22 @@ export type Post = {
 };
 
 export type Friends = {
-  _id: string,
-  username: string,
-  email: string
-}
-
+  _id: string;
+  username: string;
+  email: string;
+  profilePicture: string;
+};
 
 export type User = {
   id: string;
-  _id?: string; 
+  _id?: string;
   username: string;
   email: string;
   bio: string;
   age: string;
   city: string;
   country: string;
-  profilePicture: string
+  profilePicture: string;
 } | null;
 
 export type UserContextType =
@@ -49,58 +47,57 @@ export type Comment = {
 };
 
 export type Members = {
-  _id: string,
-  username: string,
-  email: string  
-}
+  _id: string;
+  username: string;
+  email: string;
+};
 
 export type Owner = {
-  _id: string,
-  username: string,
-  email: string
-}
+  _id: string;
+  username: string;
+  email: string;
+};
 
 export type GroupInfoTypes = {
   name: string;
   description: string;
   members: Members[];
   owner: Owner;
-}
+};
 
 export type GroupInfoTypesModalHandler = {
   name: string;
   description: string;
   members: Members[];
   owner: Owner;
-}
+};
 
 export type GroupContextType = {
   groupInfoModalOpen: boolean;
   groupInfoModalHandler: () => void;
-  selectedGroupHandler: (group: Group) => void
-  selectedGroup: Group | null
-}
+  selectedGroupHandler: (group: Group) => void;
+  selectedGroup: Group | null;
+};
 
 export type GroupCreateRequest = {
-  _id: string,
-  name: string,
-  description: string,
-  owner: string,
-  members: string[] | null
-}
+  _id: string;
+  name: string;
+  description: string;
+  owner: string;
+  members: string[] | null;
+};
 
 export type GroupsCreateResponse = {
-  message: string,
-  group: GroupCreateRequest
-
-}
+  message: string;
+  group: GroupCreateRequest;
+};
 export type Group = {
-  _id: string,
-  name: string,
-  description: string,
+  _id: string;
+  name: string;
+  description: string;
   members: Members[];
   owner: Owner;
-}
+};
 export type CommentModalProps = {
   postId: string;
   isOpen: boolean;
@@ -121,12 +118,11 @@ export type PostsState = {
 };
 
 export type UserPreview = {
-  _id: string,
-  username: string,
-  email: string
-  profilePicture: string
-  
-}
+  _id: string;
+  username: string;
+  email: string;
+  profilePicture: string;
+};
 
 export interface IncomingRequest {
   _id: string;
@@ -136,41 +132,36 @@ export interface IncomingRequest {
   profilePicture?: string;
 }
 
-
 export type Record = {
-  userId: string,
-  sockedId: string
-}
+  userId: string;
+  sockedId: string;
+};
 
 export type DirectMessages = {
-  _id: string,
-  senderId: string,
-  recipientId: string,
-  content: string,
-  createdAt: string
-}
-
-
+  _id: string;
+  senderId: string;
+  recipientId: string;
+  content: string;
+  createdAt: string;
+};
 
 export type GroupMessages = {
-  _id: string,
-  group: string,
+  _id: string;
+  group: string;
   sender: {
-    _id: string,
-    username: string,
-    email: string
-  },
-  text: string,
-  createdAt: string
-}
+    _id: string;
+    username: string;
+    email: string;
+  };
+  text: string;
+  createdAt: string;
+};
 
 export type ErrorType = {
-  err: string | null
-}
+  err: string | null;
+};
 
 export type UploadStatusType = "idle" | "uploading" | "successfull" | "failed";
-
-
 
 export type FriendRequest = {
   _id: string;
