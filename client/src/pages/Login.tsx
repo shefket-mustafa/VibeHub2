@@ -42,7 +42,7 @@ export default function AuthPage() {
   };
 
   return (
-    <section className="w-full flex flex-col justify-center max-w-sm mx-auto z-10">
+    <section className="w-full flex flex-col justify-center max-w-sm mx-auto z-10 mt-30">
       <h1 className="text-3xl font-bold text-center mb-6 text-white">
         {t("auth.login.title")}{" "}
         <span className="bg-linear-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">
