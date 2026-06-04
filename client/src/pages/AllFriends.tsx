@@ -11,7 +11,12 @@ export default function AllFriends() {
       {isLoading && <p className="muted">Loading...</p>}
       {error && <p className="text-red-500">Failed to fetch friends!</p>}
       {allFriends.length === 0 && (
-        <p className="text-white">No friends added!</p>
+        <div className="vh-card py-8 text-center">
+          <p className="text-white mb-2">You don't have any friends yet.</p>
+          <p className="text-sm muted mb-4">
+            Discover people to connect with on the suggestions tab.
+          </p>
+        </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 py-6">

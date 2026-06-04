@@ -44,7 +44,7 @@ export default function RegisterPage() {
         {t("auth.register.title")}
       </h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="card space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="vh-card space-y-4">
         {errors.root && <p className="text-red-400">{errors.root.message}</p>}
 
         <div className="space-y-1">
@@ -56,7 +56,7 @@ export default function RegisterPage() {
             type="text"
             placeholder={t("auth.register.usernamePlaceholder")}
             {...register("username")}
-            className="form-input"
+            className="vh-input"
           />
           {errors.username && (
             <p className="text-xs text-red-400">{errors.username.message}</p>
@@ -72,7 +72,7 @@ export default function RegisterPage() {
             type="email"
             placeholder="you@example.com"
             {...register("email")}
-            className="form-input"
+            className="vh-input"
           />
           {errors.email && (
             <p className="text-xs text-red-400">{errors.email.message}</p>
@@ -88,7 +88,7 @@ export default function RegisterPage() {
             type="password"
             placeholder="••••••••"
             {...register("password")}
-            className="form-input"
+            className="vh-input"
           />
           {errors.password && (
             <p className="text-xs text-red-400">{errors.password.message}</p>
@@ -104,7 +104,7 @@ export default function RegisterPage() {
             type="password"
             placeholder="••••••••"
             {...register("confirmPassword")}
-            className="form-input"
+            className="vh-input"
           />
           {errors.confirmPassword && (
             <p className="text-xs text-red-400">
@@ -113,11 +113,7 @@ export default function RegisterPage() {
           )}
         </div>
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full btn-primary"
-        >
+        <button type="submit" disabled={isSubmitting} className="w-full vh-btn">
           {isSubmitting
             ? t("auth.register.button2")
             : t("auth.register.button1")}

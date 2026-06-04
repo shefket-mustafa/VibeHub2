@@ -22,7 +22,7 @@ export default function Navbar() {
   const { t } = useTranslation();
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-sm bg-linear-to-r from-orange-500 via-orange-500 to-orange-600 shadow-md border-b border-neutral-800 flex px-6 md:px-10 justify-between items-center text-white">
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-linear-to-r from-neutral-950/95 via-neutral-900/90 to-neutral-950/95 shadow-lg border-b border-orange-500/20 flex px-4 md:px-8 justify-between items-center text-white">
       <div className="flex gap-15">
         <div className="flex items-center">
           <Link
@@ -33,7 +33,7 @@ export default function Navbar() {
             VibeHub
           </Link>
         </div>
-        <div className=" max-w-5xl p-4 hidden md:flex  items-center gap-6">
+        <div className=" max-w-5xl p-2 hidden md:flex  items-center gap-6">
           {user && (
             <Link to="/feed" className="hover:underline">
               {t("navbar.feed")}
@@ -160,7 +160,7 @@ export default function Navbar() {
         </List>
       </Drawer>
 
-      <div className="max-w-5xl p-4 flex items-center gap-4">
+      <div className="max-w-5xl p-2 flex items-center gap-4">
         <div className="relative group">
           <GrLanguage className="cursor-pointer text-lg text-white" />
           <div

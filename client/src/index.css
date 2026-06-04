@@ -74,3 +74,177 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+/* VibeHub Modern Design System (Phase 2) - Dark + Glowing */
+
+/* Enhanced card with glassmorphism and glow effect */
+.vh-card {
+  border-radius: 1rem;
+  background: rgba(23, 23, 28, 0.75);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  padding: 1rem;
+  box-shadow:
+    0 8px 32px rgba(249, 115, 22, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.vh-card:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow:
+    0 12px 40px rgba(249, 115, 22, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Premium gradient button with glow */
+.vh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+  color: #ffffff;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 4px 15px rgba(249, 115, 22, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 200ms ease;
+  cursor: pointer;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.vh-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 25px rgba(249, 115, 22, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #fb923c 0%, #fbbf24 100%);
+}
+.vh-btn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 2px 10px rgba(249, 115, 22, 0.3),
+    inset 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Modern glowing input */
+.vh-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  background: rgba(30, 30, 35, 0.8);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  transition: all 200ms ease;
+}
+.vh-input::placeholder {
+  color: rgba(156, 163, 175, 0.6);
+}
+.vh-input:focus {
+  outline: none;
+  border-color: rgba(249, 115, 22, 0.8);
+  box-shadow:
+    0 0 20px rgba(249, 115, 22, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  background: rgba(30, 30, 35, 0.95);
+}
+
+.vh-section-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.vh-user-preview {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  transition: all 200ms ease;
+}
+.vh-user-preview:hover {
+  opacity: 0.9;
+}
+.vh-user-preview .avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(249, 115, 22, 0.3);
+  flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.15);
+}
+.vh-user-preview .meta {
+  line-height: 1;
+  flex: 1;
+}
+.vh-user-preview .meta .name {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.95rem;
+}
+.vh-user-preview .meta .sub {
+  font-size: 0.8rem;
+  color: rgba(156, 163, 175, 0.8);
+  margin-top: 0.25rem;
+}
+
+/* Modern friend card styling */
+.friend-card {
+  border-radius: 1.25rem;
+  background: linear-gradient(
+    135deg,
+    rgba(23, 23, 28, 0.8) 0%,
+    rgba(31, 31, 36, 0.9) 100%
+  );
+  border: 1px solid rgba(249, 115, 22, 0.15);
+  overflow: hidden;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+.friend-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow:
+    0 20px 50px rgba(249, 115, 22, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.friend-card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 300ms ease;
+}
+.friend-card:hover .friend-card-image {
+  transform: scale(1.05);
+}
+
+/* Post card styling */
+.post-card {
+  border-radius: 1rem;
+  background: rgba(23, 23, 28, 0.75);
+  border: 1px solid rgba(249, 115, 22, 0.15);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  transition: all 300ms ease;
+}
+.post-card:hover {
+  border-color: rgba(249, 115, 22, 0.3);
+  box-shadow:
+    0 12px 40px rgba(249, 115, 22, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}

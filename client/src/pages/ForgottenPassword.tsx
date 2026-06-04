@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form";
 import { forgotSchema, type ForgotPasswordType } from "../zod/forgotSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 export default function ForgottenPassword() {
   const [email, setEmail] = useState<string>("");
   const navigate = useNavigate();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -27,7 +27,7 @@ export default function ForgottenPassword() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
-      }
+      },
     );
 
     const result = await res.json();
@@ -39,7 +39,7 @@ export default function ForgottenPassword() {
     }
     const token = result.token;
 
-    if(!token) return;
+    if (!token) return;
 
     const resetLink = `https://vibe-hub2.vercel.app/auth/reset-password/${token}`;
 
@@ -47,7 +47,7 @@ export default function ForgottenPassword() {
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
       { to_email: email, link: resetLink },
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
     );
 
     alert("Check your inbox for the reset link!");
@@ -55,40 +55,60 @@ export default function ForgottenPassword() {
   };
 
   return (
-    <div className="z-10 max-w-sm w-full rounded-2xl max-auto my-12 bg-neutral-900/80 p-4 shadow-2xl backdrop:-blur">
-      <h2 className="text-3xl font-bold text-center mb-6 text-orange-500">
-      {t("auth.forgot.title")}
-      </h2>
+    <section className="w-full flex items-center justify-center py-20 px-4 z-10 min-h-screen">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-white mb-2">
+            {t("auth.forgot.title")}
+          </h2>
+          <p className="text-neutral-400">
+            Enter your email to receive a reset link
+          </p>
+        </div>
 
-      <div>
         <form
-          className="flex flex-col gap-4"
+          className="vh-card space-y-4"
           onSubmit={handleSubmit(forgotHandler)}
         >
           {errors.root && (
-            <p className="text-sm text-red-500">{errors.root.message}</p>
+            <p className="text-sm text-red-400">{errors.root.message}</p>
           )}
 
-          <input
-            {...register("email")}
-            type="email"
-            placeholder={t("auth.forgot.email")}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full py-2 px-3 rounded-md bg-neutral-100 text-black placeholder-gray-500 border-neutral-700 focus: outline-none focus: ring-2 focus:ring-orange-500"
-          />
-          {errors.email && (
-            <p className="text-xs text-red-400">{errors.email.message}</p>
-          )}
+          <div className="space-y-1">
+            <label className="text-sm text-neutral-400">
+              {t("auth.forgot.email")}
+            </label>
+            <input
+              {...register("email")}
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="vh-input"
+            />
+            {errors.email && (
+              <p className="text-xs text-red-400">{errors.email.message}</p>
+            )}
+          </div>
 
           <button
             disabled={isSubmitting}
-            className="w-full py-2 cursor-pointer rounded-xl bg-orange-500 hover:bg-orange-400 text-black font-semibold transition"
+            className="vh-btn w-full text-base py-2.5"
           >
             {isSubmitting ? t("auth.forgot.button2") : t("auth.forgot.button1")}
           </button>
         </form>
+
+        <p className="text-center text-sm text-neutral-400 mt-6">
+          Remember your password?{" "}
+          <a
+            href="/auth/login"
+            className="text-orange-400 hover:underline font-semibold"
+          >
+            Sign in
+          </a>
+        </p>
       </div>
-    </div>
+    </section>
   );
 }

@@ -45,43 +45,72 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="z-10 max-w-sm w-full mx-auto my-12 card">
-      <h2 className="text-3xl font-bold text-center mb-6 text-orange-500">
-        {t("resetPass.title")}
-      </h2>
+    <section className="w-full flex items-center justify-center py-20 px-4 z-10 min-h-screen">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-white mb-2">
+            {t("resetPass.title")}
+          </h2>
+          <p className="text-neutral-400">
+            Create a new password for your account
+          </p>
+        </div>
 
-      <div>
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+        <form className="vh-card space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {errors.root && (
-            <p className="text-sm text-red-500">{errors.root.message}</p>
+            <p className="text-sm text-red-400">{errors.root.message}</p>
           )}
 
-          <input
-            {...register("password")}
-            type="password"
-            placeholder={t("resetPass.pass")}
-            className="form-input"
-          />
-          {errors.password && (
-            <p className="text-sm text-red-500">{errors.password.message}</p>
-          )}
-          <input
-            {...register("confirmPassword")}
-            type="password"
-            placeholder={t("resetPass.confirmPass")}
-            className="form-input"
-          />
-          {errors.confirmPassword && (
-            <p className="text-sm text-red-500">
-              {errors.confirmPassword.message}
-            </p>
-          )}
+          <div className="space-y-1">
+            <label className="text-sm text-neutral-400">
+              {t("resetPass.pass")}
+            </label>
+            <input
+              {...register("password")}
+              type="password"
+              placeholder="••••••••"
+              className="vh-input"
+            />
+            {errors.password && (
+              <p className="text-xs text-red-400">{errors.password.message}</p>
+            )}
+          </div>
 
-          <button className="w-full btn-primary" disabled={isSubmitting}>
+          <div className="space-y-1">
+            <label className="text-sm text-neutral-400">
+              {t("resetPass.confirmPass")}
+            </label>
+            <input
+              {...register("confirmPassword")}
+              type="password"
+              placeholder="••••••••"
+              className="vh-input"
+            />
+            {errors.confirmPassword && (
+              <p className="text-xs text-red-400">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
+
+          <button
+            disabled={isSubmitting}
+            className="vh-btn w-full text-base py-2.5"
+          >
             {isSubmitting ? "Resetting..." : "Reset password"}
           </button>
         </form>
+
+        <p className="text-center text-sm text-neutral-400 mt-6">
+          Remember your password?{" "}
+          <a
+            href="/auth/login"
+            className="text-orange-400 hover:underline font-semibold"
+          >
+            Sign in
+          </a>
+        </p>
       </div>
-    </div>
+    </section>
   );
 }

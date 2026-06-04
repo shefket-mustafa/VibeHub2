@@ -111,9 +111,14 @@ export default function FriendsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-6">
         {activeTab === "requests" ? (
           incoming.length === 0 ? (
-            <p className="text-white col-span-full">
-              {t("friends.requests.empty")}
-            </p>
+            <div className="col-span-full">
+              <div className="vh-card py-8 text-center">
+                <p className="text-white mb-2">{t("friends.requests.empty")}</p>
+                <p className="text-sm muted">
+                  No incoming requests. You're all caught up 🎉
+                </p>
+              </div>
+            </div>
           ) : (
             incoming.map((data) => (
               <FriendsCard
@@ -130,9 +135,16 @@ export default function FriendsPage() {
           )
         ) : activeTab === "all" ? (
           allFriends.length === 0 ? (
-            <p className="text-white col-span-full">
-              {t("friends.sidebar.all")} - No friends added!
-            </p>
+            <div className="col-span-full">
+              <div className="vh-card py-8 text-center">
+                <p className="text-white mb-2">
+                  {t("friends.sidebar.all")} - No friends added!
+                </p>
+                <p className="text-sm muted">
+                  Try the suggestions tab to find people to add.
+                </p>
+              </div>
+            </div>
           ) : (
             allFriends.map((data) => (
               <AllFriendsCard
@@ -148,9 +160,16 @@ export default function FriendsPage() {
             ))
           )
         ) : suggestions.length === 0 ? (
-          <p className="text-white col-span-full">
-            {t("friends.suggestions.empty")}
-          </p>
+          <div className="col-span-full">
+            <div className="vh-card py-8 text-center">
+              <p className="text-white mb-2">
+                {t("friends.suggestions.empty")}
+              </p>
+              <p className="text-sm muted">
+                Invite friends or explore groups to find new people.
+              </p>
+            </div>
+          </div>
         ) : (
           suggestions.map((data) => (
             <FriendSuggestionCards

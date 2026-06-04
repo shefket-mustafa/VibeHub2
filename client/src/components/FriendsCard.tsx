@@ -34,30 +34,28 @@ export default function FriendsCard({
     }
   };
   return (
-    <div
-      key={id}
-      className="flex flex-col bg-neutral-800/60 border border-neutral-700/80 rounded-lg overflow-hidden shadow-md hover:shadow-xl hover:border-orange-400/50 transition-all duration-300 h-full max-w-xs mx-auto"
-    >
-      <img src={image} alt={name} className="h-32 w-full object-cover" />
+    <div key={id} className="friend-card flex flex-col h-full">
+      <div className="relative w-full h-44 overflow-hidden">
+        <img src={image} alt={name} className="friend-card-image" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
+      </div>
 
-      <div className="flex flex-col justify-between flex-1 p-3 text-white">
+      <div className="flex flex-col justify-between flex-1 p-4 text-white">
         <div>
-          <p className="font-semibold text-sm truncate">{name}</p>
+          <p className="font-bold text-base truncate">{name}</p>
           {mutualFriends.length > 0 && (
-            <p className="text-xs text-neutral-400 mt-0.5">
+            <p className="text-xs text-orange-300/70 mt-1">
               {mutualFriends.length} {t("friends.mutual")}
             </p>
           )}
         </div>
 
-        <div className="flex flex-col gap-1.5 mt-3">
+        <div className="flex flex-col gap-2 mt-4">
           <button
             onClick={() => acceptRequestHandler(id)}
             disabled={isLoading || isSuccess}
-            className={`w-full py-1.5 px-2 rounded-md cursor-pointer text-xs font-semibold transition-all ${
-              isSuccess
-                ? "bg-green-600/60 text-gray-300 cursor-not-allowed"
-                : "bg-orange-500 hover:bg-orange-600 text-white"
+            className={`vh-btn w-full text-xs py-2 ${
+              isSuccess ? "opacity-60 cursor-not-allowed" : ""
             }`}
           >
             {isSuccess
@@ -69,7 +67,7 @@ export default function FriendsCard({
 
           <button
             onClick={() => cancelRequestHandler(id)}
-            className="w-full cursor-pointer py-1.5 px-2 rounded-md text-xs font-semibold bg-neutral-700 hover:bg-neutral-600 transition-all text-white"
+            className="w-full cursor-pointer py-1.5 px-2 rounded-md text-xs font-semibold bg-neutral-700/50 hover:bg-neutral-600/70 transition-all text-white border border-neutral-600/30"
           >
             {t("friends.requests.decline")}
           </button>

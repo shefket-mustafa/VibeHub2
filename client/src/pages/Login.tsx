@@ -43,11 +43,14 @@ export default function AuthPage() {
 
   return (
     <section className="w-full flex flex-col justify-center max-w-sm mx-auto z-10">
-      <h1 className="text-3xl font-bold text-center mb-6">
-        {t("auth.login.title")} <span className="text-orange-500">VibeHub</span>
+      <h1 className="text-3xl font-bold text-center mb-6 text-white">
+        {t("auth.login.title")}{" "}
+        <span className="bg-linear-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">
+          VibeHub
+        </span>
       </h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="card space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="vh-card space-y-4">
         {errors.root && (
           <p className="text-sm text-red-400">{errors.root.message}</p>
         )}{" "}
@@ -61,7 +64,7 @@ export default function AuthPage() {
             type="email"
             placeholder="you@example.com"
             {...register("email")}
-            className="form-input"
+            className="vh-input"
           />
           {errors.email && (
             <p className="text-xs text-red-400">{errors.email.message}</p>
@@ -84,17 +87,13 @@ export default function AuthPage() {
             type="password"
             placeholder="••••••••"
             {...register("password")}
-            className="form-input"
+            className="vh-input"
           />
           {errors.password && (
             <p className="text-xs text-red-400">{errors.password.message}</p>
           )}
         </div>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full btn-primary"
-        >
+        <button type="submit" disabled={isSubmitting} className="w-full vh-btn">
           {isSubmitting ? t("auth.login.button2") : t("auth.login.button1")}
         </button>
         <div className="relative my-2">
