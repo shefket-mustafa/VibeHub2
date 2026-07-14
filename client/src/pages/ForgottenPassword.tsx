@@ -55,7 +55,7 @@ export default function ForgottenPassword() {
   };
 
   return (
-    <section className="w-full flex items-center justify-center py-20 px-4 z-10 min-h-screen">
+    <section className="w-full flex justify-center py-20 px-4 z-10 min-h-screen">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-white mb-2">

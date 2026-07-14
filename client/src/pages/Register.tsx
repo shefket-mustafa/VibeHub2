@@ -39,7 +39,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <section className="w-full max-w-sm mx-auto z-10">
+    <section className="w-full max-w-sm mx-auto z-10 mt-20">
       <h1 className="text-3xl font-bold text-center mb-6 brand">
         {t("auth.register.title")}
       </h1>
