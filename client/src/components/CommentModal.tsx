@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import type { CommentModalProps } from "../types/TStypes";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addComent, fetchComments } from "../redux/slices/postsSlice";
@@ -10,7 +11,9 @@ export default function CommentModal({
   onClose,
 }: CommentModalProps) {
   const baseUrl = import.meta.env.VITE_API_URL;
-  const post = useAppSelector((state) => state.posts.items.find((p) => p._id === postId));
+  const post = useAppSelector((state) =>
+    state.posts.items.find((p) => p._id === postId),
+  );
   const comments = post?.comments || [];
   const dispatch = useAppDispatch();
   const [newComment, setNewComment] = useState("");
@@ -20,32 +23,41 @@ export default function CommentModal({
     if (!isOpen) return;
 
     const fetchAllComments = async () => {
-     await dispatch(fetchComments(postId))
+      await dispatch(fetchComments(postId));
     };
     fetchAllComments();
   }, [isOpen, postId, baseUrl]);
 
   const handleAddComment = async () => {
     try {
-
-      await dispatch(addComent({postId, newComment}))
-      setNewComment("")
-
-    }catch(err){
-      console.error(err)
+      await dispatch(addComent({ postId, newComment }));
+      setNewComment("");
+    } catch (err) {
+      console.error(err);
     }
   };
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
-  return (
+  const modalContent = (
     <div
       onClick={onClose}
-      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-neutral-900 text-white rounded-xl shadow-lg w-full max-w-lg h-[80vh] flex flex-col"
+        className="bg-neutral-900 text-white rounded-xl shadow-lg w-full max-w-lg max-h-[80vh] flex flex-col overflow-hidden"
       >
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-neutral-700">
@@ -94,4 +106,6 @@ export default function CommentModal({
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
